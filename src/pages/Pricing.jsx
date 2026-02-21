@@ -205,12 +205,13 @@ function PricingCard({ tier, isAnnual, index }) {
           <div className="mb-8">
             {price !== null ? (
               <div className="flex items-baseline gap-1">
-                <span className="text-5xl font-bold text-white">${price}</span>
+                <span className="text-4xl md:text-5xl font-bold text-white">${price}</span>
                 <span className="text-gray-400 text-lg">/mo</span>
               </div>
             ) : (
-              <div className="flex items-baseline">
-                <span className="text-5xl font-bold text-white">Custom</span>
+              <div className="flex items-baseline gap-1">
+                <span className="text-4xl md:text-5xl font-bold text-white">Custom</span>
+                <span className="text-gray-400 text-lg">/mo</span>
               </div>
             )}
             {price !== null && isAnnual && (
@@ -247,8 +248,8 @@ function PricingCard({ tier, isAnnual, index }) {
 function PricingCardsSection({ isAnnual }) {
   return (
     <section className="py-24 relative">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+      <div className="max-w-6xl mx-auto px-6 md:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
           {pricingTiers.map((tier, i) => (
             <PricingCard key={tier.name} tier={tier} isAnnual={isAnnual} index={i} />
           ))}
@@ -271,7 +272,7 @@ function ComparisonCell({ value }) {
 function FeatureComparisonSection() {
   return (
     <section className="py-24 relative">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6 md:px-8">
         <SectionHeading subtitle="Compare Plans" title="Feature Comparison" />
 
         <motion.div
@@ -439,7 +440,7 @@ export default function Pricing() {
 
       {/* 2. Pricing Toggle + Pricing Cards */}
       <section className="pt-24 relative">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6 md:px-8">
           <PricingToggle isAnnual={isAnnual} setIsAnnual={setIsAnnual} />
         </div>
       </section>
