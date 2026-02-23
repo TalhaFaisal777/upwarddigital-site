@@ -29,7 +29,7 @@ const blogPosts = [
     title: "10 Social Media Trends Shaping 2024",
     excerpt:
       "From short-form video dominance to AI-powered personalization, these trends are reshaping how brands connect with audiences...",
-    author: "Sarah Chen",
+    author: "Muhammad Talha",
     date: "Dec 10, 2024",
     readTime: "8 min",
     gradient: "from-pink-500 via-rose-500 to-orange-400",

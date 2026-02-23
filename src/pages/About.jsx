@@ -17,7 +17,7 @@ import SectionHeading from "@/components/common/SectionHeading"
 
 const teamMembers = [
   { name: "Muhammad Talha", title: "CEO & Founder", initials: "MT", gradient: "from-primary to-cyan-accent" },
-  { name: "Sarah Chen", title: "Creative Director", initials: "SC", gradient: "from-purple-500 to-pink-500" },
+
   { name: "James Wilson", title: "Head of Development", initials: "JW", gradient: "from-emerald-500 to-teal-500" },
   { name: "Maya Patel", title: "SEO Director", initials: "MP", gradient: "from-orange-500 to-amber-500" },
   { name: "Ryan Cooper", title: "Marketing Strategist", initials: "RC", gradient: "from-primary to-indigo-500" },
