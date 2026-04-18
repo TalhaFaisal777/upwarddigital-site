@@ -38,7 +38,7 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Call Us",
-    value: "+1 (555) 123-4567",
+    value: "+1 (201) 304-0657",
     note: "Mon-Fri 9AM-6PM PST",
   },
   {

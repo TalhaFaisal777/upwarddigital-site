@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Search, Clock, ArrowRight, Mail, Users } from "lucide-react"
+import { Search, Clock, ArrowRight } from "lucide-react"
 import { Link } from "react-router-dom"
 import PageHero from "@/components/common/PageHero"
 import SectionHeading from "@/components/common/SectionHeading"
@@ -331,47 +331,6 @@ export default function Blog() {
         )}
       </section>
 
-      {/* Section 5: Newsletter Signup Banner */}
-      <section className="max-w-6xl mx-auto px-6 md:px-8 pb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6 }}
-        >
-          <Card className="border-primary/30 bg-gradient-to-r from-dark-card to-primary/5 overflow-hidden relative">
-            {/* Decorative accent */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-blue-400 to-primary" />
-
-            <div className="p-8 md:p-12 text-center max-w-2xl mx-auto">
-              <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 mb-6">
-                <Mail className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">
-                Subscribe to Our Newsletter
-              </h3>
-              <p className="text-gray-400 mb-8 leading-relaxed">
-                Get weekly insights on digital marketing, SEO, and web
-                development delivered straight to your inbox.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center gap-3 max-w-md mx-auto">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1"
-                />
-                <Button className="w-full sm:w-auto whitespace-nowrap">
-                  Subscribe
-                </Button>
-              </div>
-              <div className="flex items-center justify-center gap-2 mt-4 text-sm text-gray-500">
-                <Users className="w-4 h-4" />
-                <span>Join 5,000+ marketers</span>
-              </div>
-            </div>
-          </Card>
-        </motion.div>
-      </section>
     </main>
   )
 }
