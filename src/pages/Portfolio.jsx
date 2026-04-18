@@ -8,80 +8,67 @@ import { Badge } from "@/components/ui/badge"
 import SectionHeading from "@/components/common/SectionHeading"
 import PageHero from "@/components/common/PageHero"
 
-const categories = ["All", "Web Design", "SEO", "Marketing", "Branding"]
+const categories = ["All", "Web Design", "SEO"]
+
+const screenshot = (url) =>
+  `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=800&h=500`
 
 const projects = [
   {
     id: 1,
-    name: "TechVentures Platform",
+    name: "Snowflake Limousine",
     category: "Web Design",
     description:
-      "A comprehensive SaaS platform redesign that increased user engagement by 40%.",
-    gradient: "from-blue-500 to-purple-600",
+      "Luxury chauffeur and airport transfer service across Colorado's mountain destinations.",
+    url: "https://snowflakelimo.com/",
   },
   {
     id: 2,
-    name: "GreenLeaf Organics",
+    name: "Dublin City Cab",
     category: "SEO",
     description:
-      "Organic search strategy that drove 350% traffic increase in 6 months.",
-    gradient: "from-green-500 to-teal-500",
+      "Taxi and airport transfer service for the Dublin, California area with strong local search presence.",
+    url: "https://dublincitycab.com/",
   },
   {
     id: 3,
-    name: "StyleHouse Boutique",
-    category: "Web Design",
+    name: "Tri-Valley Airport Shuttle",
+    category: "SEO",
     description:
-      "Luxury e-commerce experience with seamless checkout and 25% conversion boost.",
-    gradient: "from-pink-500 to-purple-600",
+      "Reliable Bay Area airport shuttle serving SFO, OAK, and SJC with optimized local rankings.",
+    url: "https://trivalleyairportshuttle.com/",
   },
   {
     id: 4,
-    name: "DataFlow Analytics",
-    category: "Marketing",
+    name: "Direct Shopfront",
+    category: "Web Design",
     description:
-      "Multi-channel campaign generating 200+ qualified leads monthly.",
-    gradient: "from-cyan-500 to-blue-600",
+      "Architectural fabrication and glazing specialist delivering shopfronts, shutters, and partitions across the UK.",
+    url: "https://directshopfront.com/",
   },
   {
     id: 5,
-    name: "FitLife App",
-    category: "Branding",
+    name: "Formosa Bathrooms & Kitchens",
+    category: "Web Design",
     description:
-      "Complete brand identity and app design for a fitness tech startup.",
-    gradient: "from-orange-500 to-red-500",
+      "Bathroom and kitchen design and installation specialist based in West Yorkshire.",
+    url: "https://formosabathrooms.co.uk/",
   },
   {
     id: 6,
-    name: "CloudSync Solutions",
-    category: "Web Design",
+    name: "CR Glass Door & Window",
+    category: "SEO",
     description:
-      "Enterprise dashboard with real-time analytics and intuitive UX.",
-    gradient: "from-indigo-500 to-blue-600",
+      "Toronto-based glass, door, and window installation and repair service ranking for local search.",
+    url: "https://crglassdoorandwindow.ca/",
   },
   {
     id: 7,
-    name: "EcoTravel Agency",
-    category: "Marketing",
+    name: "GA Konnect LLC",
+    category: "Web Design",
     description:
-      "Social media strategy that grew following from 5K to 100K in 8 months.",
-    gradient: "from-emerald-500 to-cyan-500",
-  },
-  {
-    id: 8,
-    name: "NovaTech Industries",
-    category: "SEO",
-    description:
-      "Technical SEO overhaul resulting in #1 rankings for 50+ keywords.",
-    gradient: "from-violet-500 to-indigo-600",
-  },
-  {
-    id: 9,
-    name: "ArtisanBrew Co",
-    category: "Branding",
-    description:
-      "Craft brewery rebrand that increased brand recognition by 60%.",
-    gradient: "from-amber-500 to-orange-500",
+      "Professional car and limo service across Atlanta with airport, executive, and event transportation.",
+    url: "https://gakonnectllc.com/",
   },
 ]
 
@@ -150,35 +137,43 @@ export default function Portfolio() {
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.4, delay: index * 0.08 }}
                 >
-                  <Card className="overflow-hidden group hover:border-primary/30 transition-all duration-500">
-                    {/* Image / Gradient Area */}
-                    <div className="relative h-56 overflow-hidden">
-                      <div
-                        className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-80`}
-                      />
-                      {/* Pattern overlay */}
-                      <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[length:20px_20px]" />
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block h-full"
+                  >
+                    <Card className="overflow-hidden group hover:border-primary/30 transition-all duration-500 h-full">
+                      {/* Screenshot Area */}
+                      <div className="relative h-56 overflow-hidden bg-dark-lighter">
+                        <img
+                          src={screenshot(project.url)}
+                          alt={`${project.name} website screenshot`}
+                          loading="lazy"
+                          className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                        />
 
-                      {/* Dark hover overlay with button */}
-                      <div className="absolute inset-0 bg-dark/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                        <Button variant="outline" size="default" className="gap-2">
-                          <ExternalLink className="w-4 h-4" />
-                          View Project
-                        </Button>
+                        {/* Dark hover overlay with button */}
+                        <div className="absolute inset-0 bg-dark/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                          <Button variant="outline" size="default" className="gap-2 pointer-events-none">
+                            <ExternalLink className="w-4 h-4" />
+                            Visit Website
+                          </Button>
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Card Body */}
-                    <CardContent className="pt-5 pb-6 space-y-3">
-                      <Badge>{project.category}</Badge>
-                      <h3 className="text-lg font-semibold text-white">
-                        {project.name}
-                      </h3>
-                      <p className="text-gray-400 text-sm leading-relaxed">
-                        {project.description}
-                      </p>
-                    </CardContent>
-                  </Card>
+                      {/* Card Body */}
+                      <CardContent className="pt-5 pb-6 space-y-3">
+                        <Badge>{project.category}</Badge>
+                        <h3 className="text-lg font-semibold text-white">
+                          {project.name}
+                        </h3>
+                        <p className="text-gray-400 text-sm leading-relaxed">
+                          {project.description}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </a>
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -213,9 +208,9 @@ export default function Portfolio() {
                     </h3>
                   </div>
                   <p className="text-gray-400 leading-relaxed">
-                    TechVentures had an outdated platform struggling with poor
-                    user engagement, high bounce rates, and a complex onboarding
-                    process that frustrated new users.
+                    Snowflake Limousine needed a modern booking experience that
+                    reflected their premium service and made it effortless for
+                    travelers to reserve airport transfers across Colorado.
                   </p>
                 </CardContent>
               </Card>
@@ -239,9 +234,9 @@ export default function Portfolio() {
                     </h3>
                   </div>
                   <p className="text-gray-400 leading-relaxed">
-                    We redesigned the entire UX from the ground up, implementing
-                    a modern React-based SPA, streamlining the onboarding flow,
-                    and creating an intuitive dashboard experience.
+                    We built a polished, mobile-first website with a streamlined
+                    quote and booking flow, clear fleet presentation, and local
+                    SEO foundations to capture high-intent travelers.
                   </p>
                 </CardContent>
               </Card>
