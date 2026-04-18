@@ -24,6 +24,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion"
+import { useNoIndex } from "@/hooks/useNoIndex"
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -515,6 +516,7 @@ function SocialLinksSection() {
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function Contact() {
+  useNoIndex()
   return (
     <main>
       {/* 1. Hero */}

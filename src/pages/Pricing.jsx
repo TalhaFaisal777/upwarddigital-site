@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
-import { Check, X, ShieldCheck } from "lucide-react"
+import { Check, X } from "lucide-react"
 import PageHero from "@/components/common/PageHero"
 import SectionHeading from "@/components/common/SectionHeading"
 import { Button } from "@/components/ui/button"
@@ -14,6 +14,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion"
+import { useNoIndex } from "@/hooks/useNoIndex"
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -329,33 +330,6 @@ function FeatureComparisonSection() {
   )
 }
 
-function MoneyBackSection() {
-  return (
-    <section className="py-24 relative">
-      <div className="max-w-3xl mx-auto px-6 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.5 }}
-          className="glass rounded-2xl p-12"
-        >
-          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
-            <ShieldCheck className="w-8 h-8 text-primary" />
-          </div>
-          <h3 className="text-2xl md:text-3xl font-bold mb-4">
-            30-Day Money-Back Guarantee
-          </h3>
-          <p className="text-gray-400 text-lg leading-relaxed max-w-xl mx-auto">
-            We're confident in our services. If you're not satisfied within the first 30
-            days, we'll provide a full refund — no questions asked.
-          </p>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
 function FaqSection() {
   return (
     <section className="py-24 relative">
@@ -386,47 +360,10 @@ function FaqSection() {
   )
 }
 
-function CtaSection() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }
-
-  return (
-    <section className="py-24 relative overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-            Still Not Sure Which Plan Is Right?
-          </h2>
-          <p className="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
-            Schedule a free consultation and we'll recommend the perfect plan for your
-            business goals.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/contact">
-              <Button size="lg">Schedule a Call</Button>
-            </Link>
-            <Button variant="outline" size="lg" onClick={scrollToTop}>
-              Compare Plans
-            </Button>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function Pricing() {
+  useNoIndex()
   const [isAnnual, setIsAnnual] = useState(false)
 
   return (
@@ -449,14 +386,8 @@ export default function Pricing() {
       {/* 3. Feature Comparison Table */}
       <FeatureComparisonSection />
 
-      {/* 4. Money-back Guarantee */}
-      <MoneyBackSection />
-
-      {/* 5. Pricing FAQ */}
+      {/* 4. Pricing FAQ */}
       <FaqSection />
-
-      {/* 6. CTA Section */}
-      <CtaSection />
     </main>
   )
 }

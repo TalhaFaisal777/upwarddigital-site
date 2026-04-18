@@ -542,6 +542,37 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ===== STILL NOT SURE SECTION ===== */}
+      <section className="py-24 relative overflow-hidden">
+        {/* Background glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+              Still Not Sure Which Plan Is Right?
+            </h2>
+            <p className="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
+              Schedule a free consultation and we'll recommend the perfect plan for your
+              business goals.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button asChild size="lg">
+                <Link to="/contact">Schedule a Call</Link>
+              </Button>
+              <Button asChild variant="outline" size="lg">
+                <Link to="/pricing">Compare Plans</Link>
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ===== CTA BANNER SECTION ===== */}
       <section className="py-24 md:py-32 relative">
         <div className="max-w-6xl mx-auto px-6 md:px-8">
