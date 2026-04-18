@@ -573,67 +573,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== CTA BANNER SECTION ===== */}
-      <section className="py-24 md:py-32 relative">
-        <div className="max-w-6xl mx-auto px-6 md:px-8">
-          <motion.div
-            {...fadeInUp}
-            transition={{ duration: 0.6 }}
-            className="relative rounded-3xl overflow-hidden"
-          >
-            {/* Gradient background */}
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-400" />
-            <div
-              className="absolute inset-0 opacity-10"
-              style={{
-                backgroundImage:
-                  "radial-gradient(circle at 20% 50%, rgba(255,255,255,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255,255,255,0.2) 0%, transparent 50%)",
-              }}
-            />
-
-            <div className="relative z-10 px-8 py-16 md:px-16 md:py-20 text-center">
-              <motion.h2
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4"
-              >
-                Ready to Grow Your Business?
-              </motion.h2>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-white/90 text-lg md:text-xl mb-8 max-w-xl mx-auto"
-              >
-                Let's discuss how we can help you achieve your digital goals.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                <Button
-                  asChild
-                  size="lg"
-                  className="bg-white text-blue-600 hover:bg-gray-100 shadow-lg shadow-black/20 hover:shadow-black/30 group"
-                >
-                  <Link to="/contact">
-                    Start Your Project
-                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </Button>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* ===== TRUSTED BY / LOGOS SECTION ===== */}
       <section className="py-16 md:py-20 border-t border-dark-border">
         <div className="max-w-6xl mx-auto px-6 md:px-8">
