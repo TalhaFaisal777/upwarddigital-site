@@ -10,9 +10,6 @@ import PageHero from "@/components/common/PageHero"
 
 const categories = ["All", "Web Design", "SEO"]
 
-const screenshot = (url) =>
-  `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=800&h=500`
-
 const projects = [
   {
     id: 1,
@@ -21,6 +18,7 @@ const projects = [
     description:
       "Luxury chauffeur and airport transfer service across Colorado's mountain destinations.",
     url: "https://snowflakelimo.com/",
+    image: "/portfolio/snowflake-limousine.jpg",
   },
   {
     id: 2,
@@ -29,6 +27,7 @@ const projects = [
     description:
       "Taxi and airport transfer service for the Dublin, California area with strong local search presence.",
     url: "https://dublincitycab.com/",
+    image: "/portfolio/dublin-city-cab.jpg",
   },
   {
     id: 3,
@@ -37,6 +36,7 @@ const projects = [
     description:
       "Reliable Bay Area airport shuttle serving SFO, OAK, and SJC with optimized local rankings.",
     url: "https://trivalleyairportshuttle.com/",
+    image: "/portfolio/tri-valley-airport-shuttle.jpg",
   },
   {
     id: 4,
@@ -45,6 +45,7 @@ const projects = [
     description:
       "Architectural fabrication and glazing specialist delivering shopfronts, shutters, and partitions across the UK.",
     url: "https://directshopfront.com/",
+    image: "/portfolio/direct-shopfront.jpg",
   },
   {
     id: 5,
@@ -53,6 +54,7 @@ const projects = [
     description:
       "Bathroom and kitchen design and installation specialist based in West Yorkshire.",
     url: "https://formosabathrooms.co.uk/",
+    image: "/portfolio/formosa-bathrooms.jpg",
   },
   {
     id: 6,
@@ -61,6 +63,7 @@ const projects = [
     description:
       "Toronto-based glass, door, and window installation and repair service ranking for local search.",
     url: "https://crglassdoorandwindow.ca/",
+    image: "/portfolio/cr-glass-door-and-window.jpg",
   },
   {
     id: 7,
@@ -69,6 +72,7 @@ const projects = [
     description:
       "Professional car and limo service across Atlanta with airport, executive, and event transportation.",
     url: "https://gakonnectllc.com/",
+    image: "/portfolio/ga-konnect.jpg",
   },
 ]
 
@@ -147,7 +151,7 @@ export default function Portfolio() {
                       {/* Screenshot Area */}
                       <div className="relative h-56 overflow-hidden bg-dark-lighter">
                         <img
-                          src={screenshot(project.url)}
+                          src={project.image}
                           alt={`${project.name} website screenshot`}
                           loading="lazy"
                           className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
