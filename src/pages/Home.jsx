@@ -11,7 +11,6 @@ import {
   Star,
   ChevronLeft,
   ChevronRight,
-  ArrowRight,
   Phone,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -226,15 +225,21 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.45 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Button asChild size="lg" className="group">
-              <Link to="/contact">
-                Get Started
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+            <Button asChild size="lg" className="gap-2">
+              <a href={PHONE_HREF}>
+                <Phone className="w-5 h-5" />
+                Call Us Now
+              </a>
             </Button>
-            <Button asChild variant="outline" size="lg">
-              <Link to="/portfolio">Our Work</Link>
-            </Button>
+            <a
+              href={WHATSAPP_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 h-11 px-8 rounded-md bg-[#25D366] text-white text-base font-medium hover:bg-[#1ebe5d] transition-colors"
+            >
+              <WhatsAppIcon className="w-5 h-5" />
+              WhatsApp
+            </a>
           </motion.div>
 
           {/* Scroll indicator */}
