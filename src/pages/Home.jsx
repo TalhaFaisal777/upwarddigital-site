@@ -12,6 +12,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ArrowRight,
+  Phone,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -20,6 +21,10 @@ import SectionHeading from "@/components/common/SectionHeading"
 import AnimatedCounter from "@/components/common/AnimatedCounter"
 import ServiceCard from "@/components/common/ServiceCard"
 import FloatingShapes from "@/components/common/FloatingShapes"
+import WhatsAppIcon from "@/components/common/WhatsAppIcon"
+
+const PHONE_HREF = "tel:+12013040657"
+const WHATSAPP_HREF = "https://wa.me/18302241590"
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -562,12 +567,21 @@ export default function Home() {
               business goals.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button asChild size="lg">
-                <Link to="/contact">Schedule a Call</Link>
+              <Button asChild size="lg" className="gap-2">
+                <a href={PHONE_HREF}>
+                  <Phone className="w-5 h-5" />
+                  Call Us Now
+                </a>
               </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link to="/pricing">Compare Plans</Link>
-              </Button>
+              <a
+                href={WHATSAPP_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 h-11 px-8 rounded-md bg-[#25D366] text-white text-base font-medium hover:bg-[#1ebe5d] transition-colors"
+              >
+                <WhatsAppIcon className="w-5 h-5" />
+                WhatsApp
+              </a>
             </div>
           </motion.div>
         </div>

@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import WhatsAppIcon from "@/components/common/WhatsAppIcon"
+
+const PHONE_HREF = "tel:+12013040657"
+const WHATSAPP_HREF = "https://wa.me/18302241590"
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -79,10 +83,22 @@ export default function Navbar() {
             </div>
 
             {/* CTA + Mobile Toggle */}
-            <div className="flex items-center gap-4">
-              <Link to="/contact" className="hidden lg:block">
-                <Button size="sm">Get a Quote</Button>
-              </Link>
+            <div className="flex items-center gap-2">
+              <Button asChild size="sm" className="hidden lg:inline-flex gap-2">
+                <a href={PHONE_HREF}>
+                  <Phone className="w-4 h-4" />
+                  Call Us Now
+                </a>
+              </Button>
+              <a
+                href={WHATSAPP_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Chat on WhatsApp"
+                className="hidden lg:inline-flex items-center justify-center w-9 h-9 rounded-md bg-[#25D366] text-white hover:bg-[#1ebe5d] transition-colors"
+              >
+                <WhatsAppIcon className="w-5 h-5" />
+              </a>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
                 className="lg:hidden p-2 text-gray-300 hover:text-white transition-colors"
@@ -155,10 +171,22 @@ export default function Navbar() {
                     </motion.div>
                   ))}
                 </div>
-                <div className="p-6 border-t border-dark-border">
-                  <Link to="/contact" className="block">
-                    <Button className="w-full">Get a Quote</Button>
-                  </Link>
+                <div className="p-6 border-t border-dark-border space-y-3">
+                  <Button asChild className="w-full gap-2">
+                    <a href={PHONE_HREF}>
+                      <Phone className="w-4 h-4" />
+                      Call Us Now
+                    </a>
+                  </Button>
+                  <a
+                    href={WHATSAPP_HREF}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full h-10 rounded-md bg-[#25D366] text-white text-sm font-medium hover:bg-[#1ebe5d] transition-colors"
+                  >
+                    <WhatsAppIcon className="w-5 h-5" />
+                    WhatsApp
+                  </a>
                 </div>
               </div>
             </motion.div>
