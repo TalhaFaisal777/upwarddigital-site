@@ -56,16 +56,12 @@ export default function Footer() {
         <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
           <div>
-            <Link to="/" className="flex items-center gap-2 text-2xl font-bold mb-4">
+            <Link to="/" aria-label="UpwardDigital home" className="inline-block mb-4">
               <img
-                src="/logo-icon.png"
-                alt="UpwardDigital logo"
-                className="h-9 w-9 object-contain"
+                src="/logo.png"
+                alt="UpwardDigital"
+                className="h-16 w-auto object-contain"
               />
-              <span className="flex items-baseline">
-                <span className="text-white">Upward</span>
-                <span className="text-primary">Digital</span>
-              </span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
               Elevating your digital presence with cutting-edge strategies,

@@ -49,16 +49,12 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 text-2xl font-bold">
+            <Link to="/" aria-label="UpwardDigital home" className="flex items-center">
               <img
                 src="/logo-icon.png"
-                alt="UpwardDigital logo"
-                className="h-9 w-9 object-contain"
+                alt="UpwardDigital"
+                className="h-10 w-10 object-contain"
               />
-              <span className="flex items-baseline">
-                <span className="text-white">Upward</span>
-                <span className="text-primary">Digital</span>
-              </span>
             </Link>
 
             {/* Desktop Nav */}
@@ -115,17 +111,11 @@ export default function Navbar() {
             >
               <div className="flex flex-col h-full">
                 <div className="flex items-center justify-between p-6 border-b border-dark-border">
-                  <span className="flex items-center gap-2 text-xl font-bold">
-                    <img
-                      src="/logo-icon.png"
-                      alt="UpwardDigital logo"
-                      className="h-7 w-7 object-contain"
-                    />
-                    <span className="flex items-baseline">
-                      <span className="text-white">Upward</span>
-                      <span className="text-primary">Digital</span>
-                    </span>
-                  </span>
+                  <img
+                    src="/logo-icon.png"
+                    alt="UpwardDigital"
+                    className="h-8 w-8 object-contain"
+                  />
                   <button
                     onClick={() => setMobileOpen(false)}
                     className="p-2 text-gray-400 hover:text-white"
