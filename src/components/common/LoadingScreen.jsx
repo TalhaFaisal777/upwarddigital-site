@@ -24,15 +24,16 @@ export default function LoadingScreen() {
             transition={{ duration: 0.5 }}
             className="flex flex-col items-center"
           >
+            <img
+              src="/logo.png"
+              alt="UpwardDigital"
+              className="w-44 h-auto mb-4"
+            />
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-              className="w-12 h-12 rounded-full border-2 border-primary/20 border-t-primary mb-6"
+              className="w-8 h-8 rounded-full border-2 border-primary/20 border-t-primary"
             />
-            <div className="text-2xl font-bold">
-              <span className="text-white">Upward</span>
-              <span className="text-primary">Digital</span>
-            </div>
           </motion.div>
         </motion.div>
       )}
