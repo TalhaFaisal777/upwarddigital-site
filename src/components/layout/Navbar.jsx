@@ -94,10 +94,10 @@ export default function Navbar() {
                 href={WHATSAPP_HREF}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Chat on WhatsApp"
-                className="hidden lg:inline-flex items-center justify-center w-9 h-9 rounded-md bg-[#25D366] text-white hover:bg-[#1ebe5d] transition-colors"
+                className="hidden lg:inline-flex items-center justify-center gap-2 h-9 px-4 rounded-md bg-[#25D366] text-white text-sm font-medium hover:bg-[#1ebe5d] transition-colors"
               >
-                <WhatsAppIcon className="w-5 h-5" />
+                <WhatsAppIcon className="w-4 h-4" />
+                WhatsApp
               </a>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
