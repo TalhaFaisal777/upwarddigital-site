@@ -7,8 +7,6 @@ import {
   Shield,
   TrendingUp,
   Heart,
-  Linkedin,
-  Twitter,
 } from "lucide-react"
 import PageHero from "@/components/common/PageHero"
 import SectionHeading from "@/components/common/SectionHeading"
@@ -234,23 +232,6 @@ function TeamMemberCard({ member, index }) {
             {member.initials}
           </div>
 
-          {/* Hover overlay with social icons */}
-          <div className="absolute inset-0 flex items-center justify-center gap-4 bg-dark-card/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <a
-              href="#"
-              aria-label={`${member.name} on LinkedIn`}
-              className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary/20 transition-colors duration-300"
-            >
-              <Linkedin className="w-5 h-5" />
-            </a>
-            <a
-              href="#"
-              aria-label={`${member.name} on Twitter`}
-              className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary/20 transition-colors duration-300"
-            >
-              <Twitter className="w-5 h-5" />
-            </a>
-          </div>
         </div>
 
         {/* Info */}

@@ -7,10 +7,8 @@ import {
   MapPin,
   Clock,
   Facebook,
-  Twitter,
   Instagram,
   Linkedin,
-  Youtube,
 } from "lucide-react"
 import PageHero from "@/components/common/PageHero"
 import SectionHeading from "@/components/common/SectionHeading"
@@ -109,11 +107,21 @@ const faqItems = [
 ]
 
 const socialLinks = [
-  { icon: Facebook, label: "Facebook", href: "#" },
-  { icon: Twitter, label: "Twitter", href: "#" },
-  { icon: Instagram, label: "Instagram", href: "#" },
-  { icon: Linkedin, label: "LinkedIn", href: "#" },
-  { icon: Youtube, label: "YouTube", href: "#" },
+  {
+    icon: Facebook,
+    label: "Facebook",
+    href: "https://www.facebook.com/upwarddigitalllcagency",
+  },
+  {
+    icon: Instagram,
+    label: "Instagram",
+    href: "https://www.instagram.com/upwarddigital.agency/",
+  },
+  {
+    icon: Linkedin,
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/upward-digital-90b7a2406/",
+  },
 ]
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
@@ -495,6 +503,8 @@ function SocialLinksSection() {
               <motion.a
                 key={social.label}
                 href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={social.label}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}

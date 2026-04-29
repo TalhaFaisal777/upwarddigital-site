@@ -4,10 +4,8 @@ import {
   Phone,
   MapPin,
   Facebook,
-  Twitter,
   Instagram,
   Linkedin,
-  Youtube,
   ArrowRight,
 } from "lucide-react";
 
@@ -30,11 +28,21 @@ const services = [
 ];
 
 const socialLinks = [
-  { icon: Facebook, href: "#", label: "Facebook" },
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Youtube, href: "#", label: "YouTube" },
+  {
+    icon: Facebook,
+    href: "https://www.facebook.com/upwarddigitalllcagency",
+    label: "Facebook",
+  },
+  {
+    icon: Instagram,
+    href: "https://www.instagram.com/upwarddigital.agency/",
+    label: "Instagram",
+  },
+  {
+    icon: Linkedin,
+    href: "https://www.linkedin.com/in/upward-digital-90b7a2406/",
+    label: "LinkedIn",
+  },
 ];
 
 export default function Footer() {
@@ -62,6 +70,8 @@ export default function Footer() {
                 <a
                   key={social.label}
                   href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={social.label}
                   className="w-10 h-10 rounded-lg bg-dark-card border border-dark-border flex items-center justify-center text-gray-400 hover:text-primary hover:border-primary/50 transition-all duration-300"
                 >
