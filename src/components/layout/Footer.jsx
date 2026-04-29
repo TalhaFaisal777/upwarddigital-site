@@ -51,7 +51,6 @@ export default function Footer() {
             <Link to="/" className="text-2xl font-bold inline-block mb-4">
               <span className="text-white">Upward</span>
               <span className="text-primary">Digital</span>
-              <span className="text-white">Co</span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
               Elevating your digital presence with cutting-edge strategies,
@@ -152,7 +151,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="py-6 border-t border-dark-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-gray-500 text-sm">
-            &copy; 2024 UpwardDigitalCo. All rights reserved.
+            &copy; 2024 UpwardDigital. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <a

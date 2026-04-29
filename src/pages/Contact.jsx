@@ -67,7 +67,7 @@ const budgetOptions = [
 
 const faqItems = [
   {
-    question: "What services does UpwardDigitalCo offer?",
+    question: "What services does UpwardDigital offer?",
     answer:
       "We offer comprehensive digital solutions including web design & development, SEO optimization, digital marketing (social media, PPC, email), brand strategy & design, and content marketing. Each service is tailored to your specific business needs and goals.",
   },
@@ -97,7 +97,7 @@ const faqItems = [
       "Absolutely! Visit our portfolio page to see case studies and examples of our work across different industries and service areas. We're happy to share specific examples relevant to your industry during our consultation.",
   },
   {
-    question: "What makes UpwardDigitalCo different?",
+    question: "What makes UpwardDigital different?",
     answer:
       "Our combination of data-driven strategy, creative excellence, and transparent communication sets us apart. We don't just execute tactics \u2014 we build comprehensive digital strategies aligned with your business objectives, backed by 10+ years of experience and a 98% client retention rate.",
   },

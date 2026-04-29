@@ -52,7 +52,6 @@ export default function Navbar() {
             <Link to="/" className="flex items-center gap-0 text-2xl font-bold">
               <span className="text-white">Upward</span>
               <span className="text-primary">Digital</span>
-              <span className="text-white">Co</span>
             </Link>
 
             {/* Desktop Nav */}
@@ -112,7 +111,6 @@ export default function Navbar() {
                   <span className="text-xl font-bold">
                     <span className="text-white">Upward</span>
                     <span className="text-primary">Digital</span>
-                    <span className="text-white">Co</span>
                   </span>
                   <button
                     onClick={() => setMobileOpen(false)}

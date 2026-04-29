@@ -85,7 +85,7 @@ function OurStorySection() {
             </h2>
             <p className="text-gray-400 text-lg leading-relaxed mb-5">
               Founded in 2015 by a group of passionate digital marketers,
-              UpwardDigitalCo was born from a simple belief: every business
+              UpwardDigital was born from a simple belief: every business
               deserves access to world-class digital strategy, regardless of its
               size. What started as a scrappy three-person team in Kalispell, Montana
               quickly grew into something much bigger.
@@ -412,7 +412,7 @@ export default function About() {
     <main>
       {/* 1. Hero */}
       <PageHero
-        title="About UpwardDigitalCo"
+        title="About UpwardDigital"
         subtitle="Our Story"
         description="Discover the team and vision behind one of the fastest-growing digital agencies."
       />

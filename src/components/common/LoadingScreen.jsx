@@ -32,7 +32,6 @@ export default function LoadingScreen() {
             <div className="text-2xl font-bold">
               <span className="text-white">Upward</span>
               <span className="text-primary">Digital</span>
-              <span className="text-white">Co</span>
             </div>
           </motion.div>
         </motion.div>
