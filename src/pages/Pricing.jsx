@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Link } from "react-router-dom"
 import { Check, X } from "lucide-react"
 import PageHero from "@/components/common/PageHero"
 import SectionHeading from "@/components/common/SectionHeading"
@@ -35,7 +34,7 @@ const pricingTiers = [
     ],
     buttonText: "Get Started",
     buttonVariant: "outline",
-    linkTo: "/contact",
+    linkTo: "tel:+12013040657",
   },
   {
     name: "Growth",
@@ -56,7 +55,7 @@ const pricingTiers = [
     ],
     buttonText: "Get Started",
     buttonVariant: "default",
-    linkTo: "/contact",
+    linkTo: "tel:+12013040657",
   },
   {
     name: "Enterprise",
@@ -78,7 +77,7 @@ const pricingTiers = [
     ],
     buttonText: "Contact Sales",
     buttonVariant: "outline",
-    linkTo: "/contact",
+    linkTo: "tel:+12013040657",
   },
 ]
 
@@ -231,7 +230,7 @@ function PricingCard({ tier, isAnnual, index }) {
           </ul>
 
           {/* CTA Button */}
-          <Link to={tier.linkTo} className="mt-auto">
+          <a href={tier.linkTo} className="mt-auto">
             <Button
               variant={tier.buttonVariant}
               size="lg"
@@ -239,7 +238,7 @@ function PricingCard({ tier, isAnnual, index }) {
             >
               {tier.buttonText}
             </Button>
-          </Link>
+          </a>
         </CardContent>
       </Card>
     </motion.div>

@@ -1,12 +1,15 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Link } from "react-router-dom"
-import { ExternalLink, Target, Lightbulb, TrendingUp } from "lucide-react"
+import { ExternalLink, Target, Lightbulb, TrendingUp, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import SectionHeading from "@/components/common/SectionHeading"
 import PageHero from "@/components/common/PageHero"
+import WhatsAppIcon from "@/components/common/WhatsAppIcon"
+
+const PHONE_HREF = "tel:+12013040657"
+const WHATSAPP_HREF = "https://wa.me/18302241590"
 
 const categories = ["All", "Web Design", "SEO"]
 
@@ -297,9 +300,23 @@ export default function Portfolio() {
             <p className="text-gray-400 text-lg max-w-xl mx-auto">
               Let's bring your vision to life with our expertise.
             </p>
-            <Button asChild size="lg" className="mt-4">
-              <Link to="/contact">Start Your Project</Link>
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
+              <Button asChild size="lg" className="gap-2">
+                <a href={PHONE_HREF}>
+                  <Phone className="w-5 h-5" />
+                  Call Us Now
+                </a>
+              </Button>
+              <a
+                href={WHATSAPP_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 h-11 px-8 rounded-md bg-[#25D366] text-white text-base font-medium hover:bg-[#1ebe5d] transition-colors"
+              >
+                <WhatsAppIcon className="w-5 h-5" />
+                WhatsApp
+              </a>
+            </div>
           </motion.div>
         </div>
       </section>

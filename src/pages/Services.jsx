@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { Link } from "react-router-dom"
 import {
   Code2,
   Search,
@@ -11,7 +10,6 @@ import {
   Target,
   Rocket,
   TrendingUp,
-  ArrowRight,
   Globe,
   FileText,
   Users,
@@ -20,9 +18,14 @@ import {
   Megaphone,
   PenTool,
   Layers,
+  Phone,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import WhatsAppIcon from "@/components/common/WhatsAppIcon"
+
+const PHONE_HREF = "tel:+12013040657"
+const WHATSAPP_HREF = "https://wa.me/18302241590"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import SectionHeading from "@/components/common/SectionHeading"
@@ -887,15 +890,21 @@ export default function Services() {
                   your goals.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button size="lg" asChild>
-                    <Link to="/contact">
-                      Start Your Project
-                      <ArrowRight className="w-5 h-5 ml-2" />
-                    </Link>
+                  <Button size="lg" asChild className="gap-2">
+                    <a href={PHONE_HREF}>
+                      <Phone className="w-5 h-5" />
+                      Call Us Now
+                    </a>
                   </Button>
-                  <Button variant="outline" size="lg" asChild>
-                    <Link to="/portfolio">View Our Work</Link>
-                  </Button>
+                  <a
+                    href={WHATSAPP_HREF}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 h-11 px-8 rounded-md bg-[#25D366] text-white text-base font-medium hover:bg-[#1ebe5d] transition-colors"
+                  >
+                    <WhatsAppIcon className="w-5 h-5" />
+                    WhatsApp
+                  </a>
                 </div>
               </div>
             </Card>
