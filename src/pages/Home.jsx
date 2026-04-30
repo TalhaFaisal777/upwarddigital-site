@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react"
 import { Link } from "react-router-dom"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import {
   Globe,
   Search,
@@ -13,7 +13,9 @@ import {
   ChevronRight,
   Phone,
   ArrowUpRight,
-  Sparkles,
+  ShieldCheck,
+  Award,
+  Users,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -24,6 +26,25 @@ import WhatsAppIcon from "@/components/common/WhatsAppIcon"
 
 const PHONE_HREF = "tel:+12013040657"
 const WHATSAPP_HREF = "https://wa.me/18302241590"
+
+const heroSlides = [
+  {
+    image: "/hero/team.jpg",
+    eyebrow: "Strategy & Execution",
+  },
+  {
+    image: "/hero/analytics.jpg",
+    eyebrow: "Data-Driven Marketing",
+  },
+  {
+    image: "/hero/laptop.jpg",
+    eyebrow: "Performance That Scales",
+  },
+  {
+    image: "/hero/meeting.jpg",
+    eyebrow: "Built On Partnership",
+  },
+]
 
 const services = [
   { icon: Globe, title: "Web Development", description: "Custom websites, web apps, and e-commerce platforms built for performance and scale.", link: "/services" },
@@ -84,6 +105,7 @@ const trustedBrands = [
 
 export default function Home() {
   const [activeTestimonial, setActiveTestimonial] = useState(0)
+  const [activeSlide, setActiveSlide] = useState(0)
 
   const nextTestimonial = useCallback(() => {
     setActiveTestimonial((p) => (p + 1) % testimonials.length)
@@ -97,65 +119,131 @@ export default function Home() {
     return () => clearInterval(id)
   }, [nextTestimonial])
 
+  useEffect(() => {
+    const id = setInterval(() => setActiveSlide((p) => (p + 1) % heroSlides.length), 5500)
+    return () => clearInterval(id)
+  }, [])
+
   return (
     <main className="overflow-hidden bg-cream">
-      {/* ==================== HERO ==================== */}
-      <section className="relative pt-40 pb-24 overflow-hidden">
-        {/* Background dots */}
-        <div className="absolute inset-0 opacity-[0.05] pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(circle, #1c1917 1px, transparent 1px)', backgroundSize: '28px 28px' }}
-        />
-        {/* Floating accent blurs */}
-        <div className="absolute top-20 -left-16 w-72 h-72 bg-blue-200/40 rounded-full blur-3xl" />
-        <div className="absolute -bottom-10 -right-16 w-80 h-80 bg-amber-200/30 rounded-full blur-3xl" />
+      {/* ==================== HERO BANNER (sliding background) ==================== */}
+      <section className="relative min-h-[90vh] md:min-h-screen flex items-end overflow-hidden">
+        {/* Sliding image carousel */}
+        <div className="absolute inset-0">
+          <AnimatePresence>
+            <motion.div
+              key={activeSlide}
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.4, ease: "easeInOut" }}
+              className="absolute inset-0 bg-center bg-cover"
+              style={{ backgroundImage: `url(${heroSlides[activeSlide].image})` }}
+            />
+          </AnimatePresence>
+          {/* Gradient overlays for text legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-stone-900/85 via-stone-900/55 to-stone-900/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-transparent to-stone-900/20" />
+        </div>
 
-        <div className="relative max-w-7xl mx-auto px-6 md:px-8">
+        {/* Content */}
+        <div className="relative z-10 max-w-7xl w-full mx-auto px-6 md:px-8 pt-40 pb-16 md:pb-24">
+          {/* Eyebrow */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            key={`eb-${activeSlide}`}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 bg-stone-900/5 px-4 py-1.5 rounded-full text-xs font-medium tracking-wide uppercase mb-10"
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-1.5 rounded-full text-xs font-medium tracking-[0.2em] uppercase text-white mb-8"
           >
-            <Sparkles className="w-3.5 h-3.5 text-primary" />
-            Digital agency · Est. 2015
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+            {heroSlides[activeSlide].eyebrow}
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-[clamp(2.75rem,8vw,7.5rem)] leading-[0.95] tracking-tight font-bold mb-8 max-w-5xl text-stone-900"
+            transition={{ duration: 0.7 }}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white max-w-4xl mb-6"
           >
-            Brands that <em className="font-serif italic font-medium text-primary">grow</em>,
-            <br />
-            sites that <em className="font-serif italic font-medium text-primary">convert</em>.
+            Building digital experiences that drive
+            <span className="block text-blue-400 mt-2">measurable growth.</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-            className="text-xl text-stone-600 max-w-2xl mb-12 leading-relaxed"
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="text-lg md:text-xl text-stone-200 max-w-2xl mb-10 leading-relaxed"
           >
-            We're a full-service digital studio building high-performance websites,
-            data-driven SEO, and marketing strategies for ambitious businesses.
+            UpwardDigital is a full-service agency delivering high-performance websites,
+            data-driven SEO, and digital marketing strategies for ambitious businesses worldwide.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-wrap items-center gap-4"
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-wrap items-center gap-3 mb-12"
           >
-            <a href={PHONE_HREF} className="inline-flex items-center gap-2 bg-stone-900 text-white px-7 py-4 rounded-full text-base font-medium hover:bg-primary transition-colors group">
+            <a href={PHONE_HREF} className="inline-flex items-center gap-2 bg-white text-stone-900 px-7 py-4 rounded-full text-base font-semibold hover:bg-blue-400 hover:text-white transition-colors group">
               <Phone className="w-5 h-5" />
               Book a free strategy call
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </a>
-            <Link to="/portfolio" className="inline-flex items-center gap-2 border-2 border-stone-900 text-stone-900 px-7 py-4 rounded-full text-base font-medium hover:bg-stone-900 hover:text-white transition-colors">
+            <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-white px-7 py-4 rounded-full text-base font-semibold hover:bg-[#1ebe5d] transition-colors">
+              <WhatsAppIcon className="w-5 h-5" />
+              WhatsApp
+            </a>
+            <Link to="/portfolio" className="inline-flex items-center gap-2 text-white border border-white/30 hover:border-white px-7 py-4 rounded-full text-base font-semibold backdrop-blur-sm hover:bg-white/10 transition-colors">
               View our work
             </Link>
           </motion.div>
+
+          {/* Trust strip */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.45 }}
+            className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-8 border-t border-white/15"
+          >
+            <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-0.5 text-amber-400">
+                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
+              </div>
+              <span className="text-white text-sm">
+                <span className="font-bold">4.9/5</span>
+                <span className="text-stone-300 ml-1">from 87 reviews</span>
+              </span>
+            </div>
+            <div className="hidden md:block w-px h-5 bg-white/20" />
+            <div className="flex items-center gap-2 text-white text-sm">
+              <Users className="w-4 h-4 text-blue-400" />
+              <span><span className="font-bold">120+</span> <span className="text-stone-300">businesses served</span></span>
+            </div>
+            <div className="hidden md:block w-px h-5 bg-white/20" />
+            <div className="flex items-center gap-2 text-white text-sm">
+              <Award className="w-4 h-4 text-blue-400" />
+              <span><span className="font-bold">9+ years</span> <span className="text-stone-300">in business</span></span>
+            </div>
+            <div className="hidden md:block w-px h-5 bg-white/20" />
+            <div className="flex items-center gap-2 text-white text-sm">
+              <ShieldCheck className="w-4 h-4 text-blue-400" />
+              <span className="text-stone-300">100% client satisfaction guarantee</span>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Slide indicators */}
+        <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 z-10 flex items-center gap-2">
+          {heroSlides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setActiveSlide(i)}
+              className={`h-1 rounded-full transition-all ${i === activeSlide ? "w-10 bg-white" : "w-5 bg-white/40 hover:bg-white/70"}`}
+              aria-label={`Slide ${i + 1}`}
+            />
+          ))}
         </div>
       </section>
 
