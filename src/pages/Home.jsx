@@ -228,18 +228,12 @@ export default function Home() {
             <Button asChild size="lg" className="gap-2">
               <a href={PHONE_HREF}>
                 <Phone className="w-5 h-5" />
-                Call Us Now
+                Book a Free Strategy Call
               </a>
             </Button>
-            <a
-              href={WHATSAPP_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 h-11 px-8 rounded-md bg-[#25D366] text-white text-base font-medium hover:bg-[#1ebe5d] transition-colors"
-            >
-              <WhatsAppIcon className="w-5 h-5" />
-              WhatsApp
-            </a>
+            <Button asChild variant="outline" size="lg">
+              <Link to="/portfolio">View Our Work</Link>
+            </Button>
           </motion.div>
 
           {/* Scroll indicator */}

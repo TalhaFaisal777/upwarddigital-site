@@ -43,8 +43,31 @@ export default function Navbar() {
 
   return (
     <>
+      {/* Announcement Bar */}
+      <div className="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-primary via-blue-600 to-cyan-500 text-white text-xs sm:text-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-center gap-2 sm:gap-4 flex-wrap">
+          <span className="font-medium">Free 30-min strategy call — limited slots this month</span>
+          <span className="hidden sm:inline opacity-60">|</span>
+          <a
+            href={PHONE_HREF}
+            className="inline-flex items-center gap-1.5 font-semibold hover:underline"
+          >
+            <Phone className="w-3.5 h-3.5" />
+            +1 (201) 304-0657
+          </a>
+          <a
+            href={WHATSAPP_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden sm:inline-flex items-center gap-1.5 font-semibold hover:underline"
+          >
+            <WhatsAppIcon className="w-3.5 h-3.5" />
+            WhatsApp
+          </a>
+        </div>
+      </div>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-9 sm:top-9 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
             ? "bg-dark/90 backdrop-blur-lg border-b border-dark-border shadow-lg"
             : "bg-transparent"
