@@ -38,6 +38,11 @@ const serviceBlocks = [
       "Responsive & Mobile-First Design",
     ],
     techs: ["React", "Next.js", "Vue.js", "WordPress", "Shopify", "Node.js"],
+    outcomes: [
+      { value: "95+", label: "Avg. PageSpeed score" },
+      { value: "<2s", label: "Time to interactive" },
+      { value: "100%", label: "Mobile-first responsive" },
+    ],
   },
   {
     icon: Search,
@@ -54,6 +59,11 @@ const serviceBlocks = [
       "Content SEO Strategy",
     ],
     techs: ["Ahrefs", "SEMrush", "Google Search Console", "GA4", "Screaming Frog"],
+    outcomes: [
+      { value: "3-4×", label: "Avg. organic traffic growth" },
+      { value: "Page 1", label: "Target keyword rankings" },
+      { value: "60d", label: "Avg. time to first results" },
+    ],
   },
   {
     icon: BarChart3,
@@ -70,6 +80,11 @@ const serviceBlocks = [
       "Retargeting & Funnel Strategy",
     ],
     techs: ["Google Ads", "Meta Business", "Klaviyo", "Mailchimp", "HubSpot"],
+    outcomes: [
+      { value: "3-5×", label: "Avg. return on ad spend" },
+      { value: "30%+", label: "Avg. CAC reduction" },
+      { value: "5+", label: "Channels orchestrated" },
+    ],
   },
   {
     icon: Palette,
@@ -86,6 +101,11 @@ const serviceBlocks = [
       "Print & Packaging",
     ],
     techs: ["Figma", "Adobe Creative Suite", "Webflow"],
+    outcomes: [
+      { value: "50+", label: "Brand assets per project" },
+      { value: "Full", label: "Brand system & guidelines" },
+      { value: "2-4w", label: "Avg. delivery timeline" },
+    ],
   },
 ]
 
@@ -151,26 +171,45 @@ export default function Services() {
                 transition={{ duration: 0.6, delay: 0.15 }}
                 className="lg:sticky lg:top-32"
               >
-                <div className={`rounded-3xl p-12 md:p-16 flex flex-col justify-end aspect-[4/5] relative overflow-hidden ${
-                  isWhite ? "bg-cream" : "bg-stone-900"
+                <div className={`rounded-3xl p-8 md:p-10 relative overflow-hidden ${
+                  isWhite ? "bg-stone-900 text-white" : "bg-white border border-stone-200"
                 }`}>
-                  <div
-                    className="absolute inset-0 opacity-30"
-                    style={{
-                      backgroundImage: `radial-gradient(circle, ${isWhite ? 'rgba(28,25,23,0.15)' : 'rgba(59,130,246,0.4)'} 1px, transparent 1px)`,
-                      backgroundSize: '32px 32px',
-                    }}
-                  />
-                  <div className={`absolute top-12 left-12 w-32 h-32 rounded-full border ${isWhite ? "border-stone-900/15" : "border-blue-400/30"}`} />
-                  <div className={`absolute bottom-32 right-12 w-48 h-48 rounded-full border ${isWhite ? "border-stone-900/10" : "border-blue-400/20"}`} />
-                  <div className="relative">
-                    <Icon className={`w-16 h-16 mb-6 ${isWhite ? "text-stone-900" : "text-blue-400"}`} />
-                    <div className={`text-5xl md:text-6xl font-bold tracking-tight mb-2 ${isWhite ? "text-stone-900" : "text-white"}`}>
-                      0{idx + 1}
+                  {/* Header with number + icon */}
+                  <div className={`flex items-start justify-between mb-8 pb-8 border-b ${isWhite ? "border-white/15" : "border-stone-200"}`}>
+                    <div>
+                      <div className={`text-xs uppercase tracking-[0.2em] font-medium mb-2 ${isWhite ? "text-blue-300" : "text-primary"}`}>
+                        Service 0{idx + 1}
+                      </div>
+                      <div className={`text-2xl font-bold tracking-tight ${isWhite ? "text-white" : "text-stone-900"}`}>
+                        {service.badge}
+                      </div>
                     </div>
-                    <div className={`text-lg ${isWhite ? "text-stone-600" : "text-blue-300"}`}>
-                      {service.badge}
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 ${isWhite ? "bg-white/10 text-blue-300" : "bg-primary/10 text-primary"}`}>
+                      <Icon className="w-7 h-7" />
                     </div>
+                  </div>
+
+                  {/* Outcomes */}
+                  <div className={`text-xs uppercase tracking-[0.2em] font-medium mb-5 ${isWhite ? "text-stone-400" : "text-stone-500"}`}>
+                    What you can expect
+                  </div>
+                  <div className="space-y-5">
+                    {service.outcomes.map((o) => (
+                      <div key={o.label} className="flex items-baseline justify-between gap-4">
+                        <span className={`text-sm ${isWhite ? "text-stone-300" : "text-stone-600"}`}>
+                          {o.label}
+                        </span>
+                        <span className={`text-2xl md:text-3xl font-bold tracking-tight ${isWhite ? "text-blue-400" : "text-primary"}`}>
+                          {o.value}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Footer line */}
+                  <div className={`mt-8 pt-6 border-t flex items-center gap-2 text-xs ${isWhite ? "border-white/15 text-stone-400" : "border-stone-200 text-stone-500"}`}>
+                    <CheckCircle2 className={`w-3.5 h-3.5 ${isWhite ? "text-blue-400" : "text-primary"}`} />
+                    Custom-tailored to your goals
                   </div>
                 </div>
               </motion.div>

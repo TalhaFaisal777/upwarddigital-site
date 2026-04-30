@@ -21,10 +21,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import SectionHeading from "@/components/common/SectionHeading"
 import ServiceCard from "@/components/common/ServiceCard"
-import WhatsAppIcon from "@/components/common/WhatsAppIcon"
-
 const PHONE_HREF = "tel:+12013040657"
-const WHATSAPP_HREF = "https://wa.me/18302241590"
 
 const heroSlides = [
   {
@@ -182,10 +179,6 @@ export default function Home() {
               <Phone className="w-5 h-5" />
               Book a free strategy call
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-            </a>
-            <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-white px-7 py-4 rounded-full text-base font-semibold hover:bg-[#1ebe5d] transition-colors">
-              <WhatsAppIcon className="w-5 h-5" />
-              WhatsApp
             </a>
             <Link to="/portfolio" className="inline-flex items-center gap-2 text-white border border-white/30 hover:border-white px-7 py-4 rounded-full text-base font-semibold backdrop-blur-sm hover:bg-white/10 transition-colors">
               View our work

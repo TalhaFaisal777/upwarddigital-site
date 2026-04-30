@@ -75,7 +75,7 @@ export default function Navbar() {
               <img
                 src="/logo.png"
                 alt="UpwardDigital"
-                className={`h-12 w-auto object-contain transition-all ${useDarkOverlay ? "" : "drop-shadow-2xl"}`}
+                className={`h-14 md:h-16 w-auto object-contain transition-all ${useDarkOverlay ? "" : "brightness-0 invert drop-shadow-md"}`}
               />
             </Link>
 
