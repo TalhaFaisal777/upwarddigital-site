@@ -23,19 +23,19 @@ const PHONE_HREF = "tel:+12013040657"
 const heroSlides = [
   {
     image: "/hero/team.jpg",
-    eyebrow: "Web · SEO · Marketing",
+    eyebrow: "Real Work · Real Numbers",
   },
   {
     image: "/hero/analytics.jpg",
-    eyebrow: "Performance-First Agency",
+    eyebrow: "Trusted Since 2015",
   },
   {
     image: "/hero/laptop.jpg",
-    eyebrow: "Built For Measurable Results",
+    eyebrow: "Service Business Specialists",
   },
   {
     image: "/hero/meeting.jpg",
-    eyebrow: "Your Growth Partner",
+    eyebrow: "Built To Get You Found",
   },
 ]
 
@@ -152,8 +152,8 @@ export default function Home() {
             transition={{ duration: 0.7 }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white max-w-5xl mb-6"
           >
-            Websites that work.
-            <span className="block text-blue-400 mt-2">SEO that ranks. Marketing that pays.</span>
+            We help service businesses
+            <span className="block text-blue-400 mt-2">get their phone ringing.</span>
           </motion.h1>
 
           <motion.p
@@ -162,9 +162,9 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="text-lg md:text-xl text-stone-200 max-w-2xl mb-10 leading-relaxed"
           >
-            We're the full-service digital partner for ambitious businesses that want
-            measurable growth — not vanity metrics. Web, SEO, paid ads, and brand
-            strategy under one accountable roof.
+            Since 2015 we've built websites and SEO funnels for 120+ service businesses —
+            from airport shuttles in California to glaziers in Toronto.
+            <span className="block mt-3 text-white font-medium">Less jargon. More booked appointments.</span>
           </motion.p>
 
           <motion.div
