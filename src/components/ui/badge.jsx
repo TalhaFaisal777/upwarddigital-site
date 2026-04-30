@@ -3,9 +3,9 @@ import { cn } from "@/lib/utils"
 
 function Badge({ className, variant = "default", ...props }) {
   const variants = {
-    default: "bg-primary/20 text-primary border-primary/30",
-    secondary: "bg-white/10 text-gray-300 border-white/10",
-    outline: "border-primary/50 text-primary",
+    default: "bg-primary/10 text-primary border-primary/20",
+    secondary: "bg-stone-100 text-stone-700 border-stone-200",
+    outline: "border-primary/40 text-primary bg-transparent",
   }
 
   return (

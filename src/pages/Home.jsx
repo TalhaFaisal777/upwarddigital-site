@@ -12,616 +12,355 @@ import {
   ChevronLeft,
   ChevronRight,
   Phone,
+  ArrowUpRight,
+  Sparkles,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import SectionHeading from "@/components/common/SectionHeading"
 import AnimatedCounter from "@/components/common/AnimatedCounter"
 import ServiceCard from "@/components/common/ServiceCard"
-import FloatingShapes from "@/components/common/FloatingShapes"
 import WhatsAppIcon from "@/components/common/WhatsAppIcon"
 
 const PHONE_HREF = "tel:+12013040657"
 const WHATSAPP_HREF = "https://wa.me/18302241590"
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-50px" },
-}
-
-const staggerContainer = {
-  initial: {},
-  whileInView: {
-    transition: { staggerChildren: 0.1 },
-  },
-  viewport: { once: true, margin: "-50px" },
-}
-
-const staggerItem = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-}
-
 const services = [
-  {
-    icon: Globe,
-    title: "Web Development",
-    description:
-      "Custom websites, web applications, and e-commerce solutions built with cutting-edge technology.",
-    link: "/services",
-  },
-  {
-    icon: Search,
-    title: "SEO Optimization",
-    description:
-      "Data-driven SEO strategies that boost your visibility and drive organic traffic growth.",
-    link: "/services",
-  },
-  {
-    icon: BarChart3,
-    title: "Digital Marketing",
-    description:
-      "Comprehensive digital campaigns across social, PPC, email, and content marketing.",
-    link: "/services",
-  },
-  {
-    icon: Palette,
-    title: "Brand Strategy",
-    description:
-      "Compelling brand identities and strategies that resonate with your target audience.",
-    link: "/services",
-  },
+  { icon: Globe, title: "Web Development", description: "Custom websites, web apps, and e-commerce platforms built for performance and scale.", link: "/services" },
+  { icon: Search, title: "SEO Optimization", description: "Data-driven SEO strategies that boost visibility and drive sustained organic growth.", link: "/services" },
+  { icon: BarChart3, title: "Digital Marketing", description: "Multi-channel campaigns across social, paid, email, and content marketing.", link: "/services" },
+  { icon: Palette, title: "Brand Strategy", description: "Compelling brand identities and strategies that resonate with your audience.", link: "/services" },
 ]
 
 const stats = [
-  { end: 500, suffix: "+", label: "Projects Delivered" },
-  { end: 150, suffix: "+", label: "Happy Clients" },
-  { end: 98, suffix: "%", label: "Client Retention" },
-  { end: 10, suffix: "+", label: "Years Experience" },
+  { end: 9, suffix: "+", label: "Years building brands" },
+  { end: 120, suffix: "+", label: "Projects delivered" },
+  { end: 98, suffix: "%", label: "Client retention" },
+  { end: 4, suffix: "×", label: "Avg. organic growth" },
 ]
 
 const whyUsPoints = [
-  {
-    title: "Industry-Leading Expertise",
-    description:
-      "Our team of seasoned professionals brings deep knowledge across every digital discipline, ensuring best-in-class solutions.",
-  },
-  {
-    title: "Data-Driven Approach",
-    description:
-      "Every decision we make is backed by analytics and insights, maximizing ROI and minimizing guesswork.",
-  },
-  {
-    title: "Transparent Communication",
-    description:
-      "We keep you informed at every step with regular updates, detailed reports, and open dialogue throughout the process.",
-  },
-  {
-    title: "Proven Track Record",
-    description:
-      "With hundreds of successful projects and long-term client partnerships, our results speak for themselves.",
-  },
+  { title: "Industry-Leading Expertise", description: "Our team of seasoned professionals brings deep knowledge across every digital discipline, ensuring best-in-class solutions." },
+  { title: "Data-Driven Approach", description: "Every decision we make is backed by analytics and insights, maximizing ROI and minimizing guesswork." },
+  { title: "Transparent Communication", description: "We keep you informed at every step with regular updates, detailed reports, and open dialogue." },
+  { title: "Proven Track Record", description: "With hundreds of successful projects and long-term client partnerships, our results speak for themselves." },
+]
+
+const processSteps = [
+  { num: "01", title: "Discover", description: "We start with deep listening — your goals, audience, market, and what's worked or hasn't." },
+  { num: "02", title: "Strategize", description: "A tailored roadmap with measurable KPIs, timelines, and the channels that will move your numbers." },
+  { num: "03", title: "Execute", description: "Our specialists build, write, design, and ship — with weekly check-ins and zero surprise costs." },
+  { num: "04", title: "Optimize", description: "We measure, refine, and double down on what works. Growth compounds when you keep iterating." },
 ]
 
 const testimonials = [
   {
-    quote:
-      "UpwardDigital completely transformed our online presence. Our new website not only looks stunning but has increased our conversion rate by 340%. Their development team is world-class.",
-    name: "Sarah Johnson",
-    role: "CEO",
-    company: "TechVentures",
-    initials: "SJ",
-    color: "bg-blue-500",
+    quote: "UpwardDigital completely transformed our online presence. Our new website not only looks stunning but has increased our conversion rate by 340%. Their development team is world-class.",
+    name: "Sarah Johnson", role: "CEO", company: "TechVentures", initials: "SJ",
   },
   {
-    quote:
-      "The SEO results have been nothing short of remarkable. We went from page 5 to the top 3 positions for our target keywords within six months. Organic traffic is up 280% year-over-year.",
-    name: "Michael Chen",
-    role: "Marketing Director",
-    company: "GrowthLabs",
-    initials: "MC",
-    color: "bg-emerald-500",
+    quote: "The SEO results have been nothing short of remarkable. We went from page 5 to the top 3 positions for our target keywords within six months. Organic traffic is up 280% year-over-year.",
+    name: "Michael Chen", role: "Marketing Director", company: "GrowthLabs", initials: "MC",
   },
   {
-    quote:
-      "Their brand strategy work gave us a completely new identity that truly resonates with our audience. Customer engagement has skyrocketed and our brand recognition has never been stronger.",
-    name: "Emily Rodriguez",
-    role: "Founder",
-    company: "StyleHouse",
-    initials: "ER",
-    color: "bg-purple-500",
+    quote: "Their brand strategy work gave us a completely new identity that truly resonates with our audience. Customer engagement has skyrocketed and our brand recognition has never been stronger.",
+    name: "Emily Rodriguez", role: "Founder", company: "StyleHouse", initials: "ER",
   },
   {
-    quote:
-      "Working with UpwardDigital has been a game-changer for our business. Their comprehensive approach to digital marketing and development has streamlined our entire digital ecosystem.",
-    name: "David Park",
-    role: "CTO",
-    company: "DataFlow",
-    initials: "DP",
-    color: "bg-cyan-500",
+    quote: "Working with UpwardDigital has been a game-changer for our business. Their comprehensive approach to digital marketing and development has streamlined our entire digital ecosystem.",
+    name: "David Park", role: "CTO", company: "DataFlow", initials: "DP",
   },
 ]
 
 const trustedBrands = [
-  "Velocity",
-  "NovaTech",
-  "Apex Studios",
-  "Horizon AI",
-  "Quantum Labs",
-  "Pinnacle",
-  "Stratos",
-  "Luminary",
+  "Snowflake Limousine",
+  "Dublin City Cab",
+  "Tri-Valley Shuttle",
+  "Direct Shopfront",
+  "Formosa Bathrooms",
+  "CR Glass",
+  "GA Konnect",
 ]
 
 export default function Home() {
   const [activeTestimonial, setActiveTestimonial] = useState(0)
 
   const nextTestimonial = useCallback(() => {
-    setActiveTestimonial((prev) => (prev + 1) % testimonials.length)
+    setActiveTestimonial((p) => (p + 1) % testimonials.length)
   }, [])
-
   const prevTestimonial = useCallback(() => {
-    setActiveTestimonial(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length
-    )
+    setActiveTestimonial((p) => (p - 1 + testimonials.length) % testimonials.length)
   }, [])
 
   useEffect(() => {
-    const interval = setInterval(nextTestimonial, 5000)
-    return () => clearInterval(interval)
+    const id = setInterval(nextTestimonial, 6000)
+    return () => clearInterval(id)
   }, [nextTestimonial])
 
   return (
-    <main className="overflow-hidden">
-      {/* ===== HERO SECTION ===== */}
-      <section className="relative min-h-screen flex items-center justify-center mesh-gradient">
-        <FloatingShapes />
-
-        {/* Subtle grid overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-          }}
+    <main className="overflow-hidden bg-cream">
+      {/* ==================== HERO ==================== */}
+      <section className="relative pt-40 pb-24 overflow-hidden">
+        {/* Background dots */}
+        <div className="absolute inset-0 opacity-[0.05] pointer-events-none"
+          style={{ backgroundImage: 'radial-gradient(circle, #1c1917 1px, transparent 1px)', backgroundSize: '28px 28px' }}
         />
+        {/* Floating accent blurs */}
+        <div className="absolute top-20 -left-16 w-72 h-72 bg-blue-200/40 rounded-full blur-3xl" />
+        <div className="absolute -bottom-10 -right-16 w-80 h-80 bg-amber-200/30 rounded-full blur-3xl" />
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-8 text-center pt-36 pb-24">
+        <div className="relative max-w-7xl mx-auto px-6 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 bg-stone-900/5 px-4 py-1.5 rounded-full text-xs font-medium tracking-wide uppercase mb-10"
           >
-            <Badge className="mb-6">Digital Marketing Agency</Badge>
+            <Sparkles className="w-3.5 h-3.5 text-primary" />
+            Digital agency · Est. 2015
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-[clamp(2.75rem,8vw,7.5rem)] leading-[0.95] tracking-tight font-bold mb-8 max-w-5xl text-stone-900"
           >
-            We Build Digital Experiences{" "}
-            <span className="gradient-text">That Drive Growth</span>
+            Brands that <em className="font-serif italic font-medium text-primary">grow</em>,
+            <br />
+            sites that <em className="font-serif italic font-medium text-primary">convert</em>.
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed"
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="text-xl text-stone-600 max-w-2xl mb-12 leading-relaxed"
           >
-            We partner with ambitious brands to craft high-performance websites,
-            data-driven marketing strategies, and compelling brand identities
-            that deliver measurable results.
+            We're a full-service digital studio building high-performance websites,
+            data-driven SEO, and marketing strategies for ambitious businesses.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.45 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="flex flex-wrap items-center gap-4"
           >
-            <Button asChild size="lg" className="gap-2">
-              <a href={PHONE_HREF}>
-                <Phone className="w-5 h-5" />
-                Book a Free Strategy Call
-              </a>
-            </Button>
-            <Button asChild variant="outline" size="lg">
-              <Link to="/portfolio">View Our Work</Link>
-            </Button>
-          </motion.div>
-
-          {/* Scroll indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2"
-          >
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              className="w-6 h-10 rounded-full border-2 border-gray-600 flex items-start justify-center p-1.5"
-            >
-              <motion.div className="w-1.5 h-1.5 rounded-full bg-primary" />
-            </motion.div>
+            <a href={PHONE_HREF} className="inline-flex items-center gap-2 bg-stone-900 text-white px-7 py-4 rounded-full text-base font-medium hover:bg-primary transition-colors group">
+              <Phone className="w-5 h-5" />
+              Book a free strategy call
+              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+            </a>
+            <Link to="/portfolio" className="inline-flex items-center gap-2 border-2 border-stone-900 text-stone-900 px-7 py-4 rounded-full text-base font-medium hover:bg-stone-900 hover:text-white transition-colors">
+              View our work
+            </Link>
           </motion.div>
         </div>
       </section>
 
-      {/* ===== STATS COUNTER SECTION ===== */}
-      <section className="py-20 md:py-28 bg-dark-lighter relative border-t border-dark-border">
-        <div className="max-w-6xl mx-auto px-6 md:px-8">
-          <motion.div
-            {...staggerContainer}
-            className="grid grid-cols-2 lg:grid-cols-4 gap-6"
-          >
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <Card className="relative overflow-hidden border-dark-border bg-dark-card">
-                  {/* Blue accent left border */}
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-primary to-cyan-accent" />
-                  <CardContent className="p-6 pt-6 text-center">
-                    <AnimatedCounter
-                      end={stat.end}
-                      suffix={stat.suffix}
-                      duration={2.5}
-                    />
-                    <p className="text-gray-400 mt-2 text-sm font-medium">
-                      {stat.label}
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ===== SERVICES OVERVIEW SECTION ===== */}
-      <section className="py-24 md:py-32 relative">
-        <div className="max-w-6xl mx-auto px-6 md:px-8">
-          <SectionHeading
-            subtitle="What We Do"
-            title="Services That Drive Results"
-            description="From concept to execution, we offer end-to-end digital solutions that help your business stand out and scale."
-          />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {services.map((service, index) => (
-              <ServiceCard
-                key={service.title}
-                icon={service.icon}
-                title={service.title}
-                description={service.description}
-                link={service.link}
-                index={index}
-              />
+      {/* ==================== TRUST STRIP ==================== */}
+      <section className="border-y border-stone-900/10 bg-white/40 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 py-10">
+          <p className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-6">
+            Trusted by ambitious businesses across 4 continents
+          </p>
+          <div className="flex flex-wrap gap-x-12 gap-y-4 items-center text-stone-700">
+            {trustedBrands.map((c) => (
+              <span key={c} className="text-lg md:text-xl font-medium tracking-tight opacity-70 hover:opacity-100 transition-opacity">
+                {c}
+              </span>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ===== WHY CHOOSE US SECTION ===== */}
-      <section className="py-24 md:py-32 bg-dark-lighter relative">
-        <div className="max-w-6xl mx-auto px-6 md:px-8">
-          <SectionHeading
-            subtitle="Why Choose Us"
-            title="What Sets Us Apart"
-          />
-
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Left column - text + bullet points */}
+      {/* ==================== STATS ==================== */}
+      <section className="px-6 md:px-8 py-24">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-8">
+          {stats.map((stat, i) => (
             <motion.div
-              {...fadeInUp}
-              transition={{ duration: 0.6 }}
-            >
-              <p className="text-gray-400 text-lg leading-relaxed mb-10">
-                We don't just build digital products -- we build lasting
-                partnerships. Our commitment to excellence, innovation, and
-                transparency has made us a trusted partner for businesses of
-                every size.
-              </p>
-
-              <div className="space-y-6">
-                {whyUsPoints.map((point, index) => (
-                  <motion.div
-                    key={point.title}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="flex gap-4"
-                  >
-                    <div className="flex-shrink-0 mt-1">
-                      <CheckCircle2 className="w-6 h-6 text-primary" />
-                    </div>
-                    <div>
-                      <h4 className="text-white font-semibold text-lg mb-1">
-                        {point.title}
-                      </h4>
-                      <p className="text-gray-400 leading-relaxed">
-                        {point.description}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Right column - decorative mockup */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              key={stat.label}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="relative"
+              transition={{ duration: 0.5, delay: i * 0.1 }}
             >
-              <div className="relative rounded-2xl p-[1px] bg-gradient-to-br from-primary/50 via-dark-border to-cyan-accent/50">
-                <div className="rounded-2xl bg-dark-card p-8 space-y-6">
-                  {/* Simulated dashboard header */}
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                    <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                    <div className="flex-1 h-6 rounded bg-dark-lighter ml-2" />
-                  </div>
+              <div className="text-5xl md:text-6xl font-bold tracking-tight text-primary mb-2">
+                <AnimatedCounter end={stat.end} suffix={stat.suffix} />
+              </div>
+              <div className="text-sm text-stone-600">{stat.label}</div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
 
-                  {/* Stats row */}
-                  <div className="grid grid-cols-3 gap-3">
-                    {[
-                      { label: "Traffic", value: "+127%", color: "from-primary to-blue-400" },
-                      { label: "Conversions", value: "+84%", color: "from-emerald-500 to-green-400" },
-                      { label: "Revenue", value: "+215%", color: "from-purple-500 to-violet-400" },
-                    ].map((item) => (
-                      <motion.div
-                        key={item.label}
-                        animate={{ y: [0, -3, 0] }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: Math.random() * 2,
-                        }}
-                        className="rounded-xl bg-dark-lighter p-4 border border-dark-border"
-                      >
-                        <p className="text-xs text-gray-500 mb-1">{item.label}</p>
-                        <p
-                          className={`text-lg font-bold bg-gradient-to-r ${item.color} bg-clip-text text-transparent`}
-                        >
-                          {item.value}
-                        </p>
-                      </motion.div>
-                    ))}
-                  </div>
+      {/* ==================== SERVICES ==================== */}
+      <section className="bg-white py-24 border-y border-stone-900/10">
+        <div className="max-w-7xl mx-auto px-6 md:px-8">
+          <SectionHeading
+            subtitle="What we do"
+            title={
+              <>
+                Everything your brand needs to <em className="font-serif italic font-medium text-primary">show up</em> and grow.
+              </>
+            }
+            description="Full-service digital — design, development, SEO, and marketing — under one roof."
+          />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map((s, i) => (
+              <ServiceCard key={s.title} {...s} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
 
-                  {/* Simulated chart area */}
-                  <div className="rounded-xl bg-dark-lighter border border-dark-border p-4 h-40 flex items-end gap-2">
-                    {[35, 55, 40, 70, 50, 80, 65, 90, 75, 95, 85, 100].map(
-                      (height, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{ height: 0 }}
-                          whileInView={{ height: `${height}%` }}
-                          viewport={{ once: true }}
-                          transition={{
-                            duration: 0.8,
-                            delay: 0.5 + i * 0.05,
-                            ease: "easeOut",
-                          }}
-                          className="flex-1 rounded-t bg-gradient-to-t from-primary/60 to-cyan-accent/40"
-                        />
-                      )
-                    )}
-                  </div>
+      {/* ==================== PROCESS / HOW WE WORK ==================== */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6 md:px-8">
+          <SectionHeading
+            subtitle="How we work"
+            title={
+              <>
+                A clear, <em className="font-serif italic font-medium text-primary">honest</em> process — no surprises.
+              </>
+            }
+            description="From first call to launch and beyond, every project follows the same proven path."
+          />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-stone-200 border border-stone-200 rounded-3xl overflow-hidden">
+            {processSteps.map((step, i) => (
+              <motion.div
+                key={step.num}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="bg-white p-8 md:p-10 hover:bg-stone-50 transition-colors"
+              >
+                <div className="text-4xl font-bold text-primary mb-6 tracking-tight">{step.num}</div>
+                <h3 className="text-xl font-bold mb-3 text-stone-900 tracking-tight">{step.title}</h3>
+                <p className="text-stone-600 leading-relaxed text-sm">{step.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                  {/* Bottom row */}
-                  <div className="flex gap-3">
-                    <div className="flex-1 rounded-xl bg-dark-lighter border border-dark-border p-4">
-                      <div className="w-16 h-2 rounded bg-primary/30 mb-3" />
-                      <div className="w-full h-2 rounded bg-dark-border mb-2" />
-                      <div className="w-3/4 h-2 rounded bg-dark-border" />
-                    </div>
-                    <div className="flex-1 rounded-xl bg-dark-lighter border border-dark-border p-4">
-                      <div className="w-16 h-2 rounded bg-cyan-accent/30 mb-3" />
-                      <div className="w-full h-2 rounded bg-dark-border mb-2" />
-                      <div className="w-2/3 h-2 rounded bg-dark-border" />
-                    </div>
+      {/* ==================== WHY US ==================== */}
+      <section className="bg-stone-900 text-white py-24">
+        <div className="max-w-7xl mx-auto px-6 md:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5 }}
+            className="mb-14"
+          >
+            <span className="inline-block text-blue-400 font-semibold text-xs tracking-[0.2em] uppercase mb-4">
+              — Why work with us —
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight max-w-3xl">
+              We deliver <em className="font-serif italic font-medium text-blue-400">results</em>, not deliverables.
+            </h2>
+          </motion.div>
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+            {whyUsPoints.map((p, i) => (
+              <motion.div
+                key={p.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="flex items-start gap-5"
+              >
+                <CheckCircle2 className="w-6 h-6 text-blue-400 mt-1 shrink-0" />
+                <div>
+                  <h3 className="text-xl font-bold mb-2 tracking-tight">{p.title}</h3>
+                  <p className="text-stone-400 leading-relaxed">{p.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== TESTIMONIALS ==================== */}
+      <section className="py-24">
+        <div className="max-w-4xl mx-auto px-6 md:px-8">
+          <SectionHeading
+            subtitle="What clients say"
+            title="Words from those we've grown."
+          />
+          <div className="relative bg-white border border-stone-200 rounded-3xl p-10 md:p-14">
+            <Quote className="absolute -top-5 left-10 w-10 h-10 text-primary bg-cream p-1.5" />
+            <motion.div
+              key={activeTestimonial}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
+              <div className="flex items-center gap-1 text-amber-500 mb-6">
+                {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-current" />)}
+              </div>
+              <blockquote className="text-xl md:text-2xl leading-relaxed text-stone-800 mb-8 font-medium">
+                "{testimonials[activeTestimonial].quote}"
+              </blockquote>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold">
+                  {testimonials[activeTestimonial].initials}
+                </div>
+                <div>
+                  <div className="font-bold text-stone-900">{testimonials[activeTestimonial].name}</div>
+                  <div className="text-sm text-stone-600">
+                    {testimonials[activeTestimonial].role} · {testimonials[activeTestimonial].company}
                   </div>
                 </div>
               </div>
-
-              {/* Glow effect behind card */}
-              <div className="absolute -inset-4 bg-primary/5 blur-3xl rounded-3xl -z-10" />
             </motion.div>
-          </div>
-        </div>
-      </section>
 
-      {/* ===== TESTIMONIALS CAROUSEL SECTION ===== */}
-      <section className="py-24 md:py-32 relative">
-        <div className="max-w-6xl mx-auto px-6 md:px-8">
-          <SectionHeading
-            subtitle="Testimonials"
-            title="What Our Clients Say"
-            description="Don't just take our word for it. Here's what our clients have to say about working with us."
-          />
-
-          <div className="relative max-w-5xl mx-auto">
-            {/* Testimonial cards */}
-            <div className="relative overflow-hidden">
-              <motion.div
-                key={activeTestimonial}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.4 }}
-              >
-                <Card className="border-dark-border bg-dark-card p-8 md:p-12">
-                  <div className="flex flex-col items-center text-center">
-                    <Quote className="w-10 h-10 text-primary mb-6 opacity-50" />
-
-                    <p className="text-gray-300 text-lg md:text-xl leading-relaxed mb-8 max-w-2xl">
-                      "{testimonials[activeTestimonial].quote}"
-                    </p>
-
-                    {/* Star rating */}
-                    <div className="flex gap-1 mb-6">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className="w-5 h-5 fill-yellow-400 text-yellow-400"
-                        />
-                      ))}
-                    </div>
-
-                    {/* Avatar and info */}
-                    <div className="flex items-center gap-4">
-                      <div
-                        className={`w-12 h-12 rounded-full ${testimonials[activeTestimonial].color} flex items-center justify-center text-white font-semibold text-sm`}
-                      >
-                        {testimonials[activeTestimonial].initials}
-                      </div>
-                      <div className="text-left">
-                        <p className="text-white font-semibold">
-                          {testimonials[activeTestimonial].name}
-                        </p>
-                        <p className="text-gray-400 text-sm">
-                          {testimonials[activeTestimonial].role},{" "}
-                          {testimonials[activeTestimonial].company}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            </div>
-
-            {/* Navigation arrows */}
-            <div className="flex items-center justify-center gap-4 mt-8">
-              <button
-                onClick={prevTestimonial}
-                className="w-10 h-10 rounded-full border border-dark-border bg-dark-card hover:border-primary/50 hover:bg-primary/10 flex items-center justify-center transition-all duration-300 cursor-pointer"
-                aria-label="Previous testimonial"
-              >
-                <ChevronLeft className="w-5 h-5 text-gray-400" />
-              </button>
-
-              {/* Dots indicator */}
+            {/* Controls */}
+            <div className="flex items-center justify-between mt-10 pt-8 border-t border-stone-200">
               <div className="flex gap-2">
-                {testimonials.map((_, index) => (
+                {testimonials.map((_, i) => (
                   <button
-                    key={index}
-                    onClick={() => setActiveTestimonial(index)}
-                    className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                      index === activeTestimonial
-                        ? "w-8 bg-primary"
-                        : "w-2 bg-gray-600 hover:bg-gray-500"
-                    }`}
-                    aria-label={`Go to testimonial ${index + 1}`}
+                    key={i}
+                    onClick={() => setActiveTestimonial(i)}
+                    className={`h-1.5 rounded-full transition-all ${i === activeTestimonial ? "w-8 bg-stone-900" : "w-1.5 bg-stone-300"}`}
+                    aria-label={`Testimonial ${i + 1}`}
                   />
                 ))}
               </div>
-
-              <button
-                onClick={nextTestimonial}
-                className="w-10 h-10 rounded-full border border-dark-border bg-dark-card hover:border-primary/50 hover:bg-primary/10 flex items-center justify-center transition-all duration-300 cursor-pointer"
-                aria-label="Next testimonial"
-              >
-                <ChevronRight className="w-5 h-5 text-gray-400" />
-              </button>
+              <div className="flex gap-2">
+                <button onClick={prevTestimonial} className="w-10 h-10 rounded-full border border-stone-300 hover:bg-stone-900 hover:text-white hover:border-stone-900 flex items-center justify-center transition-colors">
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button onClick={nextTestimonial} className="w-10 h-10 rounded-full border border-stone-300 hover:bg-stone-900 hover:text-white hover:border-stone-900 flex items-center justify-center transition-colors">
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ===== STILL NOT SURE SECTION ===== */}
-      <section className="py-24 relative overflow-hidden">
-        {/* Background glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              Still Not Sure Which Plan Is Right?
-            </h2>
-            <p className="text-gray-400 text-lg mb-10 max-w-2xl mx-auto">
-              Schedule a free consultation and we'll recommend the perfect plan for your
-              business goals.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button asChild size="lg" className="gap-2">
-                <a href={PHONE_HREF}>
-                  <Phone className="w-5 h-5" />
-                  Call Us Now
-                </a>
-              </Button>
-              <a
-                href={WHATSAPP_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 h-11 px-8 rounded-md bg-[#25D366] text-white text-base font-medium hover:bg-[#1ebe5d] transition-colors"
-              >
-                <WhatsAppIcon className="w-5 h-5" />
-                WhatsApp
-              </a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ===== TRUSTED BY / LOGOS SECTION ===== */}
-      <section className="py-16 md:py-20 border-t border-dark-border">
-        <div className="max-w-6xl mx-auto px-6 md:px-8">
-          <motion.p
-            {...fadeInUp}
-            transition={{ duration: 0.5 }}
-            className="text-center text-gray-500 text-sm font-medium tracking-wider uppercase mb-12"
-          >
-            Trusted by Leading Brands
-          </motion.p>
-
-          <div className="relative overflow-hidden">
-            {/* Fade edges */}
-            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-dark to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-dark to-transparent z-10 pointer-events-none" />
-
-            <div className="animate-marquee flex items-center gap-16 whitespace-nowrap w-max">
-              {/* First set */}
-              {trustedBrands.map((brand) => (
-                <span
-                  key={`a-${brand}`}
-                  className="text-2xl md:text-3xl font-bold text-gray-700 hover:text-primary transition-colors duration-300 cursor-default select-none"
-                >
-                  {brand}
-                </span>
-              ))}
-              {/* Duplicate set for seamless loop */}
-              {trustedBrands.map((brand) => (
-                <span
-                  key={`b-${brand}`}
-                  className="text-2xl md:text-3xl font-bold text-gray-700 hover:text-primary transition-colors duration-300 cursor-default select-none"
-                >
-                  {brand}
-                </span>
-              ))}
-            </div>
+      {/* ==================== STILL NOT SURE ==================== */}
+      <section className="py-24 px-6 md:px-8">
+        <div className="max-w-4xl mx-auto bg-white border border-stone-200 rounded-3xl p-12 md:p-16 text-center">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 tracking-tight text-stone-900 leading-[1.1]">
+            Still not sure which plan is <em className="font-serif italic font-medium text-primary">right</em>?
+          </h2>
+          <p className="text-stone-600 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
+            Schedule a free 30-minute consultation. We'll review your goals and recommend the perfect path forward — no pressure, no commitment.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href={PHONE_HREF} className="inline-flex items-center gap-2 bg-stone-900 text-white px-7 py-4 rounded-full text-base font-medium hover:bg-primary transition-colors">
+              <Phone className="w-5 h-5" />
+              Call us now
+            </a>
+            <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-white px-7 py-4 rounded-full text-base font-medium hover:bg-[#1ebe5d] transition-colors">
+              <WhatsAppIcon className="w-5 h-5" />
+              WhatsApp
+            </a>
           </div>
         </div>
       </section>

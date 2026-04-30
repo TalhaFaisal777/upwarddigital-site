@@ -98,13 +98,13 @@ export default function Portfolio() {
     <>
       {/* ── Section 1: Page Hero ── */}
       <PageHero
-        title="Our Work Speaks for Itself"
+        title={<>Our work speaks for <em className="font-serif italic font-medium text-primary">itself</em>.</>}
         subtitle="Portfolio"
         description="Explore our portfolio of successful projects across web development, SEO, digital marketing, and brand strategy."
       />
 
       {/* ── Section 2: Filter Tabs + Project Grid ── */}
-      <section className="py-24 bg-dark">
+      <section className="py-24 bg-cream">
         <div className="max-w-6xl mx-auto px-6 md:px-8">
           {/* Filter Tabs */}
           <motion.div
@@ -121,7 +121,7 @@ export default function Portfolio() {
                 className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer ${
                   activeFilter === cat
                     ? "bg-primary text-white shadow-lg shadow-primary/25"
-                    : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-dark-border"
+                    : "bg-stone-900/5 text-stone-600 hover:bg-stone-900/10 hover:text-stone-900 border border-stone-200"
                 }`}
               >
                 {cat}
@@ -150,9 +150,9 @@ export default function Portfolio() {
                     rel="noopener noreferrer"
                     className="block h-full"
                   >
-                    <Card className="overflow-hidden group hover:border-primary/30 transition-all duration-500 h-full">
+                    <Card className="overflow-hidden group hover:border-primary transition-all duration-500 h-full">
                       {/* Screenshot Area */}
-                      <div className="relative h-56 overflow-hidden bg-dark-lighter">
+                      <div className="relative h-56 overflow-hidden bg-white">
                         <img
                           src={project.image}
                           alt={`${project.name} website screenshot`}
@@ -161,7 +161,7 @@ export default function Portfolio() {
                         />
 
                         {/* Dark hover overlay with button */}
-                        <div className="absolute inset-0 bg-dark/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                        <div className="absolute inset-0 bg-stone-900/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                           <Button variant="outline" size="default" className="gap-2 pointer-events-none">
                             <ExternalLink className="w-4 h-4" />
                             Visit Website
@@ -172,10 +172,10 @@ export default function Portfolio() {
                       {/* Card Body */}
                       <CardContent className="pt-5 pb-6 space-y-3">
                         <Badge>{project.category}</Badge>
-                        <h3 className="text-lg font-semibold text-white">
+                        <h3 className="text-lg font-semibold text-stone-900">
                           {project.name}
                         </h3>
-                        <p className="text-gray-400 text-sm leading-relaxed">
+                        <p className="text-stone-600 text-sm leading-relaxed">
                           {project.description}
                         </p>
                       </CardContent>
@@ -189,7 +189,7 @@ export default function Portfolio() {
       </section>
 
       {/* ── Section 3: Case Study ── */}
-      <section className="py-24 bg-dark-lighter/30">
+      <section className="py-24 bg-white border-y border-stone-200">
         <div className="max-w-6xl mx-auto px-6 md:px-8">
           <SectionHeading
             subtitle="Case Study"
@@ -210,11 +210,11 @@ export default function Portfolio() {
                     <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center">
                       <Target className="w-5 h-5 text-red-500" />
                     </div>
-                    <h3 className="text-xl font-semibold text-white">
+                    <h3 className="text-xl font-semibold text-stone-900">
                       Challenge
                     </h3>
                   </div>
-                  <p className="text-gray-400 leading-relaxed">
+                  <p className="text-stone-600 leading-relaxed">
                     Snowflake Limousine needed a modern booking experience that
                     reflected their premium service and made it effortless for
                     travelers to reserve airport transfers across Colorado.
@@ -236,11 +236,11 @@ export default function Portfolio() {
                     <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
                       <Lightbulb className="w-5 h-5 text-blue-500" />
                     </div>
-                    <h3 className="text-xl font-semibold text-white">
+                    <h3 className="text-xl font-semibold text-stone-900">
                       Solution
                     </h3>
                   </div>
-                  <p className="text-gray-400 leading-relaxed">
+                  <p className="text-stone-600 leading-relaxed">
                     We built a polished, mobile-first website with a streamlined
                     quote and booking flow, clear fleet presentation, and local
                     SEO foundations to capture high-intent travelers.
@@ -262,7 +262,7 @@ export default function Portfolio() {
                     <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
                       <TrendingUp className="w-5 h-5 text-green-500" />
                     </div>
-                    <h3 className="text-xl font-semibold text-white">
+                    <h3 className="text-xl font-semibold text-stone-900">
                       Results
                     </h3>
                   </div>
@@ -270,7 +270,7 @@ export default function Portfolio() {
                     {caseStudyResults.map((result, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-2 text-gray-400"
+                        className="flex items-start gap-2 text-stone-600"
                       >
                         <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500 mt-2 shrink-0" />
                         <span>{result}</span>
@@ -285,7 +285,7 @@ export default function Portfolio() {
       </section>
 
       {/* ── Section 4: CTA ── */}
-      <section className="py-24 bg-dark">
+      <section className="py-24 bg-cream">
         <div className="max-w-3xl mx-auto px-6 md:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -294,10 +294,10 @@ export default function Portfolio() {
             transition={{ duration: 0.6 }}
             className="space-y-6"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
-              Have a Project in Mind?
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
+              Have a project <em className="font-serif italic font-medium text-primary">in mind</em>?
             </h2>
-            <p className="text-gray-400 text-lg max-w-xl mx-auto">
+            <p className="text-stone-600 text-lg max-w-xl mx-auto">
               Let's bring your vision to life with our expertise.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
@@ -311,7 +311,7 @@ export default function Portfolio() {
                 href={WHATSAPP_HREF}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 h-11 px-8 rounded-md bg-[#25D366] text-white text-base font-medium hover:bg-[#1ebe5d] transition-colors"
+                className="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-full bg-[#25D366] text-white text-base font-medium hover:bg-[#1ebe5d] transition-colors"
               >
                 <WhatsAppIcon className="w-5 h-5" />
                 WhatsApp

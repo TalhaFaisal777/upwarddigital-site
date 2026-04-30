@@ -158,7 +158,7 @@ function ContactForm() {
   }
 
   const selectClasses =
-    "flex h-11 w-full rounded-lg border border-dark-border bg-dark-card px-4 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-200 appearance-none cursor-pointer"
+    "flex h-11 w-full rounded-full border border-stone-300 bg-white px-5 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200 appearance-none cursor-pointer"
 
   return (
     <motion.div
@@ -171,7 +171,7 @@ function ContactForm() {
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="grid sm:grid-cols-2 gap-5">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-stone-700 mb-2">
                 Name <span className="text-primary">*</span>
               </label>
               <Input
@@ -184,7 +184,7 @@ function ContactForm() {
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-stone-700 mb-2">
                 Email <span className="text-primary">*</span>
               </label>
               <Input
@@ -201,7 +201,7 @@ function ContactForm() {
 
           <div className="grid sm:grid-cols-2 gap-5">
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="phone" className="block text-sm font-medium text-stone-700 mb-2">
                 Phone
               </label>
               <Input
@@ -214,7 +214,7 @@ function ContactForm() {
               />
             </div>
             <div>
-              <label htmlFor="company" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="company" className="block text-sm font-medium text-stone-700 mb-2">
                 Company
               </label>
               <Input
@@ -229,7 +229,7 @@ function ContactForm() {
 
           <div className="grid sm:grid-cols-2 gap-5">
             <div>
-              <label htmlFor="service" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="service" className="block text-sm font-medium text-stone-700 mb-2">
                 Service Interested In
               </label>
               <select
@@ -239,18 +239,18 @@ function ContactForm() {
                 onChange={handleChange}
                 className={selectClasses}
               >
-                <option value="" disabled className="bg-dark-card text-gray-500">
+                <option value="" disabled className="bg-white text-stone-500">
                   Select a service
                 </option>
                 {serviceOptions.map((option) => (
-                  <option key={option} value={option} className="bg-dark-card text-white">
+                  <option key={option} value={option} className="bg-white text-stone-900">
                     {option}
                   </option>
                 ))}
               </select>
             </div>
             <div>
-              <label htmlFor="budget" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="budget" className="block text-sm font-medium text-stone-700 mb-2">
                 Budget Range
               </label>
               <select
@@ -260,11 +260,11 @@ function ContactForm() {
                 onChange={handleChange}
                 className={selectClasses}
               >
-                <option value="" disabled className="bg-dark-card text-gray-500">
+                <option value="" disabled className="bg-white text-stone-500">
                   Select budget range
                 </option>
                 {budgetOptions.map((option) => (
-                  <option key={option} value={option} className="bg-dark-card text-white">
+                  <option key={option} value={option} className="bg-white text-stone-900">
                     {option}
                   </option>
                 ))}
@@ -273,7 +273,7 @@ function ContactForm() {
           </div>
 
           <div>
-            <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+            <label htmlFor="message" className="block text-sm font-medium text-stone-700 mb-2">
               Message
             </label>
             <Textarea
@@ -320,15 +320,15 @@ function ContactInfoCards() {
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.4, delay: i * 0.1 }}
           >
-            <Card className="p-6 hover:border-primary/50 transition-all duration-500">
+            <Card className="p-6 hover:border-primary transition-all duration-500">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
                   <Icon className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-white mb-1">{info.title}</h4>
-                  <p className="text-gray-300 text-sm">{info.value}</p>
-                  <p className="text-gray-500 text-xs mt-1">{info.note}</p>
+                  <h4 className="font-semibold text-stone-900 mb-1">{info.title}</h4>
+                  <p className="text-stone-700 text-sm">{info.value}</p>
+                  <p className="text-stone-500 text-xs mt-1">{info.note}</p>
                 </div>
               </div>
             </Card>
@@ -343,25 +343,25 @@ function ContactInfoCards() {
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.4, delay: 0.3 }}
       >
-        <Card className="p-6 hover:border-primary/50 transition-all duration-500">
+        <Card className="p-6 hover:border-primary transition-all duration-500">
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
               <Clock className="w-6 h-6 text-primary" />
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-2">Office Hours</h4>
+              <h4 className="font-semibold text-stone-900 mb-2">Office Hours</h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between gap-6">
-                  <span className="text-gray-400">Monday - Friday</span>
-                  <span className="text-gray-300">9:00 AM - 6:00 PM</span>
+                  <span className="text-stone-600">Monday - Friday</span>
+                  <span className="text-stone-700">9:00 AM - 6:00 PM</span>
                 </div>
                 <div className="flex justify-between gap-6">
-                  <span className="text-gray-400">Saturday</span>
-                  <span className="text-gray-300">10:00 AM - 2:00 PM</span>
+                  <span className="text-stone-600">Saturday</span>
+                  <span className="text-stone-700">10:00 AM - 2:00 PM</span>
                 </div>
                 <div className="flex justify-between gap-6">
-                  <span className="text-gray-400">Sunday</span>
-                  <span className="text-gray-300">Closed</span>
+                  <span className="text-stone-600">Sunday</span>
+                  <span className="text-stone-700">Closed</span>
                 </div>
               </div>
             </div>
@@ -376,10 +376,10 @@ function ContactInfoCards() {
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.4, delay: 0.4 }}
       >
-        <Card className="overflow-hidden hover:border-primary/50 transition-all duration-500">
+        <Card className="overflow-hidden hover:border-primary transition-all duration-500">
           <div className="relative h-48">
             {/* Dark gradient base */}
-            <div className="absolute inset-0 bg-gradient-to-br from-dark-card via-dark-lighter to-dark-card" />
+            <div className="absolute inset-0 bg-gradient-to-br from-stone-100 via-stone-50 to-stone-100" />
 
             {/* Grid pattern */}
             <div
@@ -413,7 +413,7 @@ function ContactInfoCards() {
               <div className="w-8 h-8 rounded-full bg-primary/30 flex items-center justify-center animate-pulse">
                 <MapPin className="w-4 h-4 text-primary" />
               </div>
-              <span className="text-xs text-gray-500 mt-2">Kalispell, MT</span>
+              <span className="text-xs text-stone-500 mt-2">Kalispell, MT</span>
             </div>
 
             {/* Glow spots */}
@@ -444,7 +444,7 @@ function ContactSection() {
 
 function FAQSection() {
   return (
-    <section className="py-24 bg-dark-lighter/30 relative">
+    <section className="py-24 bg-white border-y border-stone-200 relative">
       {/* Subtle background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -464,7 +464,7 @@ function FAQSection() {
                 <AccordionTrigger className="text-left text-base">
                   {item.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-gray-400 leading-relaxed">
+                <AccordionContent className="text-stone-600 leading-relaxed">
                   {item.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -511,7 +511,7 @@ function SocialLinksSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: 0.15 + i * 0.05 }}
                 whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                className="w-12 h-12 rounded-full border border-dark-border bg-dark-card flex items-center justify-center text-gray-400 hover:text-white hover:border-primary hover:bg-primary/10 hover:shadow-[0_0_16px_rgba(59,130,246,0.3)] transition-all duration-300"
+                className="w-12 h-12 rounded-full border border-stone-200 bg-white flex items-center justify-center text-stone-600 hover:text-stone-900 hover:border-primary hover:bg-primary/10 hover:shadow-[0_0_16px_rgba(59,130,246,0.3)] transition-all duration-300"
               >
                 <Icon className="w-5 h-5" />
               </motion.a>
@@ -528,10 +528,10 @@ function SocialLinksSection() {
 export default function Contact() {
   useNoIndex()
   return (
-    <main>
+    <main className="bg-cream">
       {/* 1. Hero */}
       <PageHero
-        title="Let's Start Something Great Together"
+        title={<>Let's start something <em className="font-serif italic font-medium text-primary">great</em> together.</>}
         subtitle="Contact Us"
         description="Ready to elevate your digital presence? Get in touch and let's discuss how we can help your business grow."
       />

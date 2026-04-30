@@ -1,24 +1,24 @@
 import { motion } from "framer-motion"
 
-export default function SectionHeading({ subtitle, title, description, center = true, light = false }) {
+export default function SectionHeading({ subtitle, title, description, center = true }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5 }}
-      className={`mb-16 ${center ? "text-center" : ""}`}
+      className={`mb-14 ${center ? "text-center" : ""}`}
     >
       {subtitle && (
-        <span className="inline-block text-primary font-semibold text-sm tracking-wider uppercase mb-3">
-          {subtitle}
+        <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-4">
+          — {subtitle} —
         </span>
       )}
-      <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${light ? "text-white" : "text-white"}`}>
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight mb-4 text-stone-900">
         {title}
       </h2>
       {description && (
-        <p className={`text-gray-400 max-w-2xl text-lg ${center ? "mx-auto" : ""}`}>
+        <p className={`text-stone-600 max-w-2xl text-lg leading-relaxed ${center ? "mx-auto" : ""}`}>
           {description}
         </p>
       )}

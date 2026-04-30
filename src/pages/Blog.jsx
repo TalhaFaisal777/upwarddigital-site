@@ -111,10 +111,10 @@ export default function Blog() {
   })
 
   return (
-    <main className="min-h-screen bg-dark text-white">
+    <main className="min-h-screen bg-cream text-stone-900">
       {/* Section 1: Page Hero */}
       <PageHero
-        title="Insights & Resources"
+        title={<>Insights & <em className="font-serif italic font-medium text-primary">resources</em>.</>}
         subtitle="Our Blog"
         description="Stay ahead with the latest trends, strategies, and insights in digital marketing, web development, and SEO."
       />
@@ -135,7 +135,7 @@ export default function Blog() {
                 className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer ${
                   activeCategory === category
                     ? "bg-primary text-white shadow-lg shadow-primary/25"
-                    : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white border border-dark-border"
+                    : "bg-stone-900/5 text-stone-600 hover:bg-stone-900/10 hover:text-stone-900 border border-stone-200"
                 }`}
               >
                 {category}
@@ -143,7 +143,7 @@ export default function Blog() {
             ))}
           </div>
           <div className="relative w-full md:w-80">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
             <Input
               placeholder="Search articles..."
               value={searchQuery}
@@ -168,10 +168,10 @@ export default function Blog() {
               <div
                 className={`bg-gradient-to-br ${featuredPost.gradient} min-h-[300px] md:min-h-[400px] relative`}
               >
-                <div className="absolute inset-0 bg-black/20" />
+                <div className="absolute inset-0 bg-stone-900/20" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center">
-                    <ArrowRight className="w-8 h-8 text-white" />
+                  <div className="w-20 h-20 rounded-full bg-stone-900/10 backdrop-blur-sm flex items-center justify-center">
+                    <ArrowRight className="w-8 h-8 text-stone-900" />
                   </div>
                 </div>
               </div>
@@ -185,7 +185,7 @@ export default function Blog() {
                 <h2 className="text-2xl md:text-3xl font-bold mb-4 leading-tight">
                   {featuredPost.title}
                 </h2>
-                <p className="text-gray-400 mb-6 leading-relaxed">
+                <p className="text-stone-600 mb-6 leading-relaxed">
                   {featuredPost.excerpt}
                 </p>
                 <div className="flex items-center gap-4 mb-6">
@@ -196,16 +196,16 @@ export default function Blog() {
                         .map((n) => n[0])
                         .join("")}
                     </div>
-                    <span className="text-sm text-gray-300">
+                    <span className="text-sm text-stone-700">
                       {featuredPost.author}
                     </span>
                   </div>
-                  <span className="text-gray-600">|</span>
-                  <span className="text-sm text-gray-400">
+                  <span className="text-stone-500">|</span>
+                  <span className="text-sm text-stone-600">
                     {featuredPost.date}
                   </span>
-                  <span className="text-gray-600">|</span>
-                  <div className="flex items-center gap-1 text-sm text-gray-400">
+                  <span className="text-stone-500">|</span>
+                  <div className="flex items-center gap-1 text-sm text-stone-600">
                     <Clock className="w-3.5 h-3.5" />
                     <span>{featuredPost.readTime} read</span>
                   </div>
@@ -254,8 +254,8 @@ export default function Blog() {
                   >
                     <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-all duration-300" />
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                        <ArrowRight className="w-5 h-5 text-white" />
+                      <div className="w-12 h-12 rounded-full bg-stone-200 backdrop-blur-sm flex items-center justify-center">
+                        <ArrowRight className="w-5 h-5 text-stone-900" />
                       </div>
                     </div>
                   </div>
@@ -268,26 +268,26 @@ export default function Blog() {
                     <h3 className="text-lg font-bold mb-2 group-hover:text-primary transition-colors duration-300 cursor-pointer">
                       {post.title}
                     </h3>
-                    <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3 flex-1">
+                    <p className="text-stone-600 text-sm leading-relaxed mb-4 line-clamp-3 flex-1">
                       {post.excerpt}
                     </p>
 
                     {/* Bottom row */}
-                    <div className="flex items-center justify-between pt-4 border-t border-dark-border">
+                    <div className="flex items-center justify-between pt-4 border-t border-stone-200">
                       <div className="flex items-center gap-3">
                         <div
-                          className={`w-6 h-6 rounded-full ${post.avatarColor} flex items-center justify-center text-[10px] font-bold text-white`}
+                          className={`w-6 h-6 rounded-full ${post.avatarColor} flex items-center justify-center text-[10px] font-bold text-stone-900`}
                         >
                           {post.author
                             .split(" ")
                             .map((n) => n[0])
                             .join("")}
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-gray-400">
+                        <div className="flex items-center gap-2 text-xs text-stone-600">
                           <span>{post.author}</span>
-                          <span className="text-gray-600">&middot;</span>
+                          <span className="text-stone-500">&middot;</span>
                           <span>{post.date}</span>
-                          <span className="text-gray-600">&middot;</span>
+                          <span className="text-stone-500">&middot;</span>
                           <span>{post.readTime}</span>
                         </div>
                       </div>
@@ -314,7 +314,7 @@ export default function Blog() {
             animate={{ opacity: 1 }}
             className="text-center py-20"
           >
-            <p className="text-gray-400 text-lg">
+            <p className="text-stone-600 text-lg">
               No articles found matching your criteria.
             </p>
             <Button

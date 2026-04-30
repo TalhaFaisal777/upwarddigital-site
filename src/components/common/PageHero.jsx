@@ -1,26 +1,36 @@
 import { motion } from "framer-motion"
-import FloatingShapes from "./FloatingShapes"
 
 export default function PageHero({ title, subtitle, description, children }) {
   return (
-    <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden mesh-gradient">
-      <FloatingShapes />
-      <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-8 text-center pt-36 pb-24">
+    <section className="relative pt-36 pb-20 overflow-hidden bg-cream">
+      {/* Subtle dotted background */}
+      <div
+        className="absolute inset-0 opacity-[0.06] pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(circle, #1c1917 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+        }}
+      />
+      {/* Floating accent dots */}
+      <div className="absolute top-32 left-[5%] w-32 h-32 bg-blue-200/40 rounded-full blur-2xl" />
+      <div className="absolute bottom-10 right-[8%] w-40 h-40 bg-amber-200/40 rounded-full blur-2xl" />
+
+      <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-8 text-center">
         {subtitle && (
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-block text-primary font-semibold text-sm tracking-wider uppercase mb-4"
+            className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-4"
           >
-            {subtitle}
+            — {subtitle} —
           </motion.span>
         )}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
+          className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-[1.05] tracking-tight text-stone-900"
         >
           {title}
         </motion.h1>
@@ -29,15 +39,13 @@ export default function PageHero({ title, subtitle, description, children }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed"
+            className="text-lg md:text-xl text-stone-600 max-w-2xl mx-auto leading-relaxed"
           >
             {description}
           </motion.p>
         )}
         {children}
       </div>
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-dark to-transparent" />
     </section>
   )
 }

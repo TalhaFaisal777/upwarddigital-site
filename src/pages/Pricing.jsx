@@ -140,7 +140,7 @@ function PricingToggle({ isAnnual, setIsAnnual }) {
     >
       <span
         className={`text-sm font-medium transition-colors duration-300 ${
-          !isAnnual ? "text-white" : "text-gray-500"
+          !isAnnual ? "text-stone-900" : "text-stone-500"
         }`}
       >
         Monthly
@@ -148,7 +148,7 @@ function PricingToggle({ isAnnual, setIsAnnual }) {
       <Switch checked={isAnnual} onCheckedChange={setIsAnnual} />
       <span
         className={`text-sm font-medium transition-colors duration-300 ${
-          isAnnual ? "text-white" : "text-gray-500"
+          isAnnual ? "text-stone-900" : "text-stone-500"
         }`}
       >
         Annual
@@ -180,14 +180,14 @@ function PricingCard({ tier, isAnnual, index }) {
     >
       {isPopular && (
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20">
-          <Badge className="bg-primary/20 text-primary border-primary/30">Most Popular</Badge>
+          <Badge className="bg-stone-900 text-white border-stone-900 shadow-md">Most Popular</Badge>
         </div>
       )}
       <Card
-        className={`relative h-full flex flex-col overflow-hidden transition-all duration-500 ${
+        className={`relative h-full flex flex-col overflow-hidden transition-all duration-300 ${
           isPopular
-            ? "border-primary/60 blue-glow lg:scale-105"
-            : "hover:border-primary/30"
+            ? "border-stone-900 border-2 lg:scale-105"
+            : "hover:border-stone-900"
         }`}
       >
         {/* Subtle glow behind popular card */}
@@ -197,7 +197,7 @@ function PricingCard({ tier, isAnnual, index }) {
 
         <CardHeader className="relative z-10 pb-2">
           <CardTitle className="text-2xl">{tier.name}</CardTitle>
-          <p className="text-gray-400 text-sm mt-1">{tier.description}</p>
+          <p className="text-stone-600 text-sm mt-1">{tier.description}</p>
         </CardHeader>
 
         <CardContent className="relative z-10 flex flex-col flex-1">
@@ -205,17 +205,17 @@ function PricingCard({ tier, isAnnual, index }) {
           <div className="mb-8">
             {price !== null ? (
               <div className="flex items-baseline gap-1">
-                <span className="text-4xl md:text-5xl font-bold text-white">${price}</span>
-                <span className="text-gray-400 text-lg">/mo</span>
+                <span className="text-4xl md:text-5xl font-bold text-stone-900">${price}</span>
+                <span className="text-stone-600 text-lg">/mo</span>
               </div>
             ) : (
               <div className="flex items-baseline gap-1">
-                <span className="text-4xl md:text-5xl font-bold text-white">Custom</span>
-                <span className="text-gray-400 text-lg">/mo</span>
+                <span className="text-4xl md:text-5xl font-bold text-stone-900">Custom</span>
+                <span className="text-stone-600 text-lg">/mo</span>
               </div>
             )}
             {price !== null && isAnnual && (
-              <p className="text-sm text-gray-500 mt-1">Billed annually</p>
+              <p className="text-sm text-stone-500 mt-1">Billed annually</p>
             )}
           </div>
 
@@ -224,7 +224,7 @@ function PricingCard({ tier, isAnnual, index }) {
             {tier.features.map((feature) => (
               <li key={feature} className="flex items-start gap-3">
                 <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <span className="text-gray-300 text-sm">{feature}</span>
+                <span className="text-stone-700 text-sm">{feature}</span>
               </li>
             ))}
           </ul>
@@ -264,9 +264,9 @@ function ComparisonCell({ value }) {
     return <Check className="w-5 h-5 text-primary mx-auto" />
   }
   if (value === false) {
-    return <X className="w-5 h-5 text-gray-600 mx-auto" />
+    return <X className="w-5 h-5 text-stone-500 mx-auto" />
   }
-  return <span className="text-gray-300 text-sm">{value}</span>
+  return <span className="text-stone-700 text-sm">{value}</span>
 }
 
 function FeatureComparisonSection() {
@@ -280,21 +280,21 @@ function FeatureComparisonSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
-          className="overflow-x-auto rounded-2xl border border-dark-border"
+          className="overflow-x-auto rounded-2xl border border-stone-200"
         >
           <table className="w-full min-w-[640px]">
             <thead>
-              <tr className="bg-dark-card border-b border-dark-border">
-                <th className="text-left py-5 px-6 text-sm font-semibold text-gray-300 w-1/4">
+              <tr className="bg-white border-b border-stone-200">
+                <th className="text-left py-5 px-6 text-sm font-semibold text-stone-700 w-1/4">
                   Feature
                 </th>
-                <th className="text-center py-5 px-6 text-sm font-semibold text-gray-300 w-1/4">
+                <th className="text-center py-5 px-6 text-sm font-semibold text-stone-700 w-1/4">
                   Starter
                 </th>
                 <th className="text-center py-5 px-6 text-sm font-semibold text-primary w-1/4">
                   Growth
                 </th>
-                <th className="text-center py-5 px-6 text-sm font-semibold text-gray-300 w-1/4">
+                <th className="text-center py-5 px-6 text-sm font-semibold text-stone-700 w-1/4">
                   Enterprise
                 </th>
               </tr>
@@ -303,11 +303,11 @@ function FeatureComparisonSection() {
               {comparisonFeatures.map((row, i) => (
                 <tr
                   key={row.feature}
-                  className={`border-b border-dark-border transition-colors ${
-                    i % 2 === 0 ? "bg-dark-card/50" : "bg-dark/50"
+                  className={`border-b border-stone-200 transition-colors ${
+                    i % 2 === 0 ? "bg-white/50" : "bg-cream/50"
                   }`}
                 >
-                  <td className="py-4 px-6 text-sm font-medium text-white">
+                  <td className="py-4 px-6 text-sm font-medium text-stone-900">
                     {row.feature}
                   </td>
                   <td className="py-4 px-6 text-center">
@@ -366,10 +366,10 @@ export default function Pricing() {
   const [isAnnual, setIsAnnual] = useState(false)
 
   return (
-    <main>
+    <main className="bg-cream">
       {/* 1. Hero */}
       <PageHero
-        title="Transparent Pricing for Every Business"
+        title={<>Pricing built for <em className="font-serif italic font-medium text-primary">every</em> business.</>}
         subtitle="Pricing"
         description="Simple, transparent pricing that scales with your business. No hidden fees, no surprises."
       />

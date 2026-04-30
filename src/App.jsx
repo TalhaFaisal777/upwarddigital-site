@@ -50,18 +50,24 @@ function AnimatedRoutes() {
   )
 }
 
+function MainLayout() {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-1">
+        <AnimatedRoutes />
+      </main>
+      <Footer />
+    </div>
+  )
+}
+
 function App() {
   return (
     <Router>
       <ScrollToTop />
       <LoadingScreen />
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-1">
-          <AnimatedRoutes />
-        </main>
-        <Footer />
-      </div>
+      <MainLayout />
     </Router>
   )
 }

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Phone } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import WhatsAppIcon from "@/components/common/WhatsAppIcon"
 
 const PHONE_HREF = "tel:+12013040657"
@@ -34,56 +33,42 @@ export default function Navbar() {
   }, [location.pathname])
 
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = "hidden"
-    } else {
-      document.body.style.overflow = ""
-    }
+    if (mobileOpen) document.body.style.overflow = "hidden"
+    else document.body.style.overflow = ""
   }, [mobileOpen])
 
   return (
     <>
       {/* Announcement Bar */}
-      <div className="fixed top-0 left-0 right-0 z-[60] bg-gradient-to-r from-primary via-blue-600 to-cyan-500 text-white text-xs sm:text-sm">
+      <div className="fixed top-0 left-0 right-0 z-[60] bg-stone-900 text-white text-xs sm:text-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-center gap-2 sm:gap-4 flex-wrap">
           <span className="font-medium">Free 30-min strategy call — limited slots this month</span>
-          <span className="hidden sm:inline opacity-60">|</span>
-          <a
-            href={PHONE_HREF}
-            className="inline-flex items-center gap-1.5 font-semibold hover:underline"
-          >
+          <span className="hidden sm:inline opacity-50">·</span>
+          <a href={PHONE_HREF} className="inline-flex items-center gap-1.5 font-semibold text-blue-300 hover:text-white">
             <Phone className="w-3.5 h-3.5" />
             +1 (201) 304-0657
           </a>
-          <a
-            href={WHATSAPP_HREF}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 font-semibold hover:underline"
-          >
+          <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center gap-1.5 font-semibold text-green-300 hover:text-white">
             <WhatsAppIcon className="w-3.5 h-3.5" />
             WhatsApp
           </a>
         </div>
       </div>
+
       <nav
-        className={`fixed top-9 sm:top-9 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-9 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-dark/90 backdrop-blur-lg border-b border-dark-border shadow-lg"
+            ? "bg-cream/90 backdrop-blur-lg border-b border-stone-900/10 shadow-sm"
             : "bg-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 text-2xl font-bold">
-              <img
-                src="/logo-icon.png"
-                alt="UpwardDigital logo"
-                className="h-9 w-9 object-contain"
-              />
+            <Link to="/" className="flex items-center gap-2 text-2xl font-bold tracking-tight">
+              <img src="/logo-icon.png" alt="UpwardDigital logo" className="h-9 w-9 object-contain" />
               <span className="flex items-baseline">
-                <span className="text-white">Upward</span>
+                <span className="text-stone-900">Upward</span>
                 <span className="text-primary">Digital</span>
               </span>
             </Link>
@@ -94,10 +79,10 @@ export default function Navbar() {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
                     location.pathname === link.path
                       ? "text-primary bg-primary/10"
-                      : "text-gray-300 hover:text-white hover:bg-white/5"
+                      : "text-stone-700 hover:text-stone-900 hover:bg-stone-900/5"
                   }`}
                 >
                   {link.name}
@@ -105,26 +90,19 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* CTA + Mobile Toggle */}
+            {/* CTA */}
             <div className="flex items-center gap-2">
-              <Button asChild size="sm" className="hidden lg:inline-flex gap-2">
-                <a href={PHONE_HREF}>
-                  <Phone className="w-4 h-4" />
-                  Call Us Now
-                </a>
-              </Button>
-              <a
-                href={WHATSAPP_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden lg:inline-flex items-center justify-center gap-2 h-9 px-4 rounded-md bg-[#25D366] text-white text-sm font-medium hover:bg-[#1ebe5d] transition-colors"
-              >
+              <a href={PHONE_HREF} className="hidden lg:inline-flex items-center gap-2 h-9 px-4 rounded-full bg-stone-900 text-white text-sm font-medium hover:bg-primary transition-colors">
+                <Phone className="w-4 h-4" />
+                Call Us Now
+              </a>
+              <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="hidden lg:inline-flex items-center gap-2 h-9 px-4 rounded-full bg-[#25D366] text-white text-sm font-medium hover:bg-[#1ebe5d] transition-colors">
                 <WhatsAppIcon className="w-4 h-4" />
                 WhatsApp
               </a>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden p-2 text-gray-300 hover:text-white transition-colors"
+                className="lg:hidden p-2 text-stone-700 hover:text-stone-900 transition-colors"
                 aria-label="Toggle menu"
               >
                 {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -142,7 +120,7 @@ export default function Navbar() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/60 z-40 lg:hidden"
+              className="fixed inset-0 bg-stone-900/60 z-40 lg:hidden"
               onClick={() => setMobileOpen(false)}
             />
             <motion.div
@@ -150,24 +128,20 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "tween", duration: 0.3 }}
-              className="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-dark-card border-l border-dark-border z-50 lg:hidden"
+              className="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-cream border-l border-stone-900/10 z-50 lg:hidden"
             >
               <div className="flex flex-col h-full">
-                <div className="flex items-center justify-between p-6 border-b border-dark-border">
+                <div className="flex items-center justify-between p-6 border-b border-stone-900/10">
                   <span className="flex items-center gap-2 text-xl font-bold">
-                    <img
-                      src="/logo-icon.png"
-                      alt="UpwardDigital logo"
-                      className="h-7 w-7 object-contain"
-                    />
-                    <span className="flex items-baseline">
-                      <span className="text-white">Upward</span>
+                    <img src="/logo-icon.png" alt="UpwardDigital logo" className="h-7 w-7 object-contain" />
+                    <span>
+                      <span className="text-stone-900">Upward</span>
                       <span className="text-primary">Digital</span>
                     </span>
                   </span>
                   <button
                     onClick={() => setMobileOpen(false)}
-                    className="p-2 text-gray-400 hover:text-white"
+                    className="p-2 text-stone-600 hover:text-stone-900"
                     aria-label="Close menu"
                   >
                     <X className="w-5 h-5" />
@@ -186,7 +160,7 @@ export default function Navbar() {
                         className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${
                           location.pathname === link.path
                             ? "text-primary bg-primary/10"
-                            : "text-gray-300 hover:text-white hover:bg-white/5"
+                            : "text-stone-700 hover:text-stone-900 hover:bg-stone-900/5"
                         }`}
                       >
                         {link.name}
@@ -194,19 +168,12 @@ export default function Navbar() {
                     </motion.div>
                   ))}
                 </div>
-                <div className="p-6 border-t border-dark-border space-y-3">
-                  <Button asChild className="w-full gap-2">
-                    <a href={PHONE_HREF}>
-                      <Phone className="w-4 h-4" />
-                      Call Us Now
-                    </a>
-                  </Button>
-                  <a
-                    href={WHATSAPP_HREF}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full h-10 rounded-md bg-[#25D366] text-white text-sm font-medium hover:bg-[#1ebe5d] transition-colors"
-                  >
+                <div className="p-6 border-t border-stone-900/10 space-y-3">
+                  <a href={PHONE_HREF} className="flex items-center justify-center gap-2 w-full h-11 rounded-full bg-stone-900 text-white text-sm font-medium hover:bg-primary transition-colors">
+                    <Phone className="w-4 h-4" />
+                    Call Us Now
+                  </a>
+                  <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 w-full h-11 rounded-full bg-[#25D366] text-white text-sm font-medium hover:bg-[#1ebe5d] transition-colors">
                     <WhatsAppIcon className="w-5 h-5" />
                     WhatsApp
                   </a>

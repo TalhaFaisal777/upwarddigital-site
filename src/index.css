@@ -1,16 +1,30 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #3b82f6;
-  --color-primary-dark: #2563eb;
-  --color-primary-light: #60a5fa;
-  --color-cyan-accent: #22d3ee;
-  --color-dark: #0a0a0a;
-  --color-dark-card: #111111;
-  --color-dark-border: #1e1e1e;
-  --color-dark-lighter: #171717;
-  --color-dark-footer: #050505;
+  /* Light editorial theme */
+  --color-cream: #F7F4EE;
+  --color-paper: #ffffff;
+  --color-ink: #1c1917;
+  --color-ink-muted: #57534e;
+  --color-ink-subtle: #78716c;
+  --color-line: rgba(28, 25, 23, 0.1);
+  --color-line-strong: rgba(28, 25, 23, 0.2);
+
+  /* Brand */
+  --color-primary: #1d4ed8;
+  --color-primary-dark: #1e3a8a;
+  --color-primary-light: #3b82f6;
+  --color-cyan-accent: #0891b2;
+
+  /* Legacy aliases (kept for components that still reference them — point to new tokens) */
+  --color-dark: #F7F4EE;
+  --color-dark-card: #ffffff;
+  --color-dark-border: rgba(28, 25, 23, 0.1);
+  --color-dark-lighter: #F1EDE5;
+  --color-dark-footer: #1c1917;
+
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", "Cormorant Garamond", Georgia, serif;
 }
 
 @layer base {
@@ -20,8 +34,8 @@
 
   body {
     font-family: var(--font-sans);
-    background-color: var(--color-dark);
-    color: #ffffff;
+    background-color: var(--color-cream);
+    color: var(--color-ink);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -29,66 +43,34 @@
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-dark);
+  background: var(--color-cream);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 4px;
+  background: rgba(28, 25, 23, 0.2);
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary);
+  background: var(--color-ink);
 }
 
-/* Gradient text utility */
-.gradient-text {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-cyan-accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Editorial italic accent — wrap a word in <em> or .accent-italic */
+.accent-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--color-primary);
+  font-weight: 500;
 }
 
-/* Blue glow effect */
-.blue-glow {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3), 0 0 60px rgba(59, 130, 246, 0.1);
-}
-
-.blue-glow-sm {
-  box-shadow: 0 0 10px rgba(59, 130, 246, 0.2), 0 0 30px rgba(59, 130, 246, 0.05);
-}
-
-/* Glassmorphism */
-.glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Animated gradient background */
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.animated-gradient {
-  background: linear-gradient(-45deg, #0a0a0a, #1a1a2e, #0f172a, #0a0a0a);
-  background-size: 400% 400%;
-  animation: gradient-shift 15s ease infinite;
-}
-
-/* Mesh gradient background */
-.mesh-gradient {
-  background:
-    radial-gradient(at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-    radial-gradient(at 80% 20%, rgba(34, 211, 238, 0.1) 0%, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-    var(--color-dark);
+/* Subtle dotted background pattern */
+.dot-pattern {
+  background-image: radial-gradient(circle, rgba(28, 25, 23, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 /* Marquee animation */
