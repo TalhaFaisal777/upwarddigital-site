@@ -58,41 +58,55 @@ export default function Navbar() {
       <nav
         className={`fixed top-9 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-cream/90 backdrop-blur-lg border-b border-stone-900/10 shadow-sm"
+            ? "bg-cream/95 backdrop-blur-lg border-b border-stone-900/10 shadow-sm"
             : "bg-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 text-2xl font-bold tracking-tight">
-              <img src="/logo-icon.png" alt="UpwardDigital logo" className="h-9 w-9 object-contain" />
-              <span className="flex items-baseline">
-                <span className="text-stone-900">Upward</span>
-                <span className="text-primary">Digital</span>
-              </span>
+            <Link to="/" aria-label="UpwardDigital home" className="flex items-center">
+              <img
+                src="/logo.png"
+                alt="UpwardDigital"
+                className={`h-12 w-auto object-contain transition-all ${isScrolled ? "" : "drop-shadow-2xl"}`}
+              />
             </Link>
 
             {/* Desktop Nav */}
             <div className="hidden lg:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
-                    location.pathname === link.path
-                      ? "text-primary bg-primary/10"
-                      : "text-stone-700 hover:text-stone-900 hover:bg-stone-900/5"
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.path
+                return (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+                      isScrolled
+                        ? isActive
+                          ? "text-primary bg-primary/10"
+                          : "text-stone-700 hover:text-stone-900 hover:bg-stone-900/5"
+                        : isActive
+                          ? "text-white bg-white/15"
+                          : "text-white/85 hover:text-white hover:bg-white/10"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                )
+              })}
             </div>
 
             {/* CTA */}
             <div className="flex items-center gap-2">
-              <a href={PHONE_HREF} className="hidden lg:inline-flex items-center gap-2 h-9 px-4 rounded-full bg-stone-900 text-white text-sm font-medium hover:bg-primary transition-colors">
+              <a
+                href={PHONE_HREF}
+                className={`hidden lg:inline-flex items-center gap-2 h-9 px-4 rounded-full text-sm font-medium transition-colors ${
+                  isScrolled
+                    ? "bg-stone-900 text-white hover:bg-primary"
+                    : "bg-white text-stone-900 hover:bg-primary hover:text-white"
+                }`}
+              >
                 <Phone className="w-4 h-4" />
                 Call Us Now
               </a>
@@ -102,7 +116,7 @@ export default function Navbar() {
               </a>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden p-2 text-stone-700 hover:text-stone-900 transition-colors"
+                className={`lg:hidden p-2 transition-colors ${isScrolled ? "text-stone-700 hover:text-stone-900" : "text-white hover:text-white/80"}`}
                 aria-label="Toggle menu"
               >
                 {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -132,13 +146,7 @@ export default function Navbar() {
             >
               <div className="flex flex-col h-full">
                 <div className="flex items-center justify-between p-6 border-b border-stone-900/10">
-                  <span className="flex items-center gap-2 text-xl font-bold">
-                    <img src="/logo-icon.png" alt="UpwardDigital logo" className="h-7 w-7 object-contain" />
-                    <span>
-                      <span className="text-stone-900">Upward</span>
-                      <span className="text-primary">Digital</span>
-                    </span>
-                  </span>
+                  <img src="/logo.png" alt="UpwardDigital" className="h-10 w-auto object-contain" />
                   <button
                     onClick={() => setMobileOpen(false)}
                     className="p-2 text-stone-600 hover:text-stone-900"
