@@ -13,9 +13,6 @@ import {
   ChevronRight,
   Phone,
   ArrowUpRight,
-  ShieldCheck,
-  Award,
-  Users,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -185,38 +182,6 @@ export default function Home() {
             </Link>
           </motion.div>
 
-          {/* Trust strip */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.45 }}
-            className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-8 border-t border-white/15"
-          >
-            <div className="flex items-center gap-2.5">
-              <div className="flex items-center gap-0.5 text-amber-400">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
-              </div>
-              <span className="text-white text-sm">
-                <span className="font-bold">4.9/5</span>
-                <span className="text-stone-300 ml-1">from 87 reviews</span>
-              </span>
-            </div>
-            <div className="hidden md:block w-px h-5 bg-white/20" />
-            <div className="flex items-center gap-2 text-white text-sm">
-              <Users className="w-4 h-4 text-blue-400" />
-              <span><span className="font-bold">120+</span> <span className="text-stone-300">businesses served</span></span>
-            </div>
-            <div className="hidden md:block w-px h-5 bg-white/20" />
-            <div className="flex items-center gap-2 text-white text-sm">
-              <Award className="w-4 h-4 text-blue-400" />
-              <span><span className="font-bold">9+ years</span> <span className="text-stone-300">in business</span></span>
-            </div>
-            <div className="hidden md:block w-px h-5 bg-white/20" />
-            <div className="flex items-center gap-2 text-white text-sm">
-              <ShieldCheck className="w-4 h-4 text-blue-400" />
-              <span className="text-stone-300">100% client satisfaction guarantee</span>
-            </div>
-          </motion.div>
         </div>
 
         {/* Slide indicators */}
