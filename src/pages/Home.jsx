@@ -23,19 +23,19 @@ const PHONE_HREF = "tel:+12013040657"
 const heroSlides = [
   {
     image: "/hero/team.jpg",
-    eyebrow: "Strategy & Execution",
+    eyebrow: "Web · SEO · Marketing",
   },
   {
     image: "/hero/analytics.jpg",
-    eyebrow: "Data-Driven Marketing",
+    eyebrow: "Performance-First Agency",
   },
   {
     image: "/hero/laptop.jpg",
-    eyebrow: "Performance That Scales",
+    eyebrow: "Built For Measurable Results",
   },
   {
     image: "/hero/meeting.jpg",
-    eyebrow: "Built On Partnership",
+    eyebrow: "Your Growth Partner",
   },
 ]
 
@@ -150,10 +150,10 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white max-w-4xl mb-6"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white max-w-5xl mb-6"
           >
-            Building digital experiences that drive
-            <span className="block text-blue-400 mt-2">measurable growth.</span>
+            Websites that work.
+            <span className="block text-blue-400 mt-2">SEO that ranks. Marketing that pays.</span>
           </motion.h1>
 
           <motion.p
@@ -162,8 +162,9 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="text-lg md:text-xl text-stone-200 max-w-2xl mb-10 leading-relaxed"
           >
-            UpwardDigital is a full-service agency delivering high-performance websites,
-            data-driven SEO, and digital marketing strategies for ambitious businesses worldwide.
+            We're the full-service digital partner for ambitious businesses that want
+            measurable growth — not vanity metrics. Web, SEO, paid ads, and brand
+            strategy under one accountable roof.
           </motion.p>
 
           <motion.div
