@@ -20,7 +20,6 @@ import {
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import SectionHeading from "@/components/common/SectionHeading"
-import AnimatedCounter from "@/components/common/AnimatedCounter"
 import ServiceCard from "@/components/common/ServiceCard"
 import WhatsAppIcon from "@/components/common/WhatsAppIcon"
 
@@ -51,13 +50,6 @@ const services = [
   { icon: Search, title: "SEO Optimization", description: "Data-driven SEO strategies that boost visibility and drive sustained organic growth.", link: "/services" },
   { icon: BarChart3, title: "Digital Marketing", description: "Multi-channel campaigns across social, paid, email, and content marketing.", link: "/services" },
   { icon: Palette, title: "Brand Strategy", description: "Compelling brand identities and strategies that resonate with your audience.", link: "/services" },
-]
-
-const stats = [
-  { end: 9, suffix: "+", label: "Years building brands" },
-  { end: 120, suffix: "+", label: "Projects delivered" },
-  { end: 98, suffix: "%", label: "Client retention" },
-  { end: 4, suffix: "×", label: "Avg. organic growth" },
 ]
 
 const whyUsPoints = [
@@ -263,26 +255,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ==================== STATS ==================== */}
-      <section className="px-6 md:px-8 py-24">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-y-12 gap-x-8">
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-            >
-              <div className="text-5xl md:text-6xl font-bold tracking-tight text-primary mb-2">
-                <AnimatedCounter end={stat.end} suffix={stat.suffix} />
-              </div>
-              <div className="text-sm text-stone-600">{stat.label}</div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
       {/* ==================== SERVICES ==================== */}
       <section className="bg-white py-24 border-y border-stone-900/10">
         <div className="max-w-7xl mx-auto px-6 md:px-8">
@@ -431,27 +403,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ==================== STILL NOT SURE ==================== */}
-      <section className="py-24 px-6 md:px-8">
-        <div className="max-w-4xl mx-auto bg-white border border-stone-200 rounded-3xl p-12 md:p-16 text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 tracking-tight text-stone-900 leading-[1.1]">
-            Still not sure which plan is <em className="font-serif italic font-medium text-primary">right</em>?
-          </h2>
-          <p className="text-stone-600 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-            Schedule a free 30-minute consultation. We'll review your goals and recommend the perfect path forward — no pressure, no commitment.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href={PHONE_HREF} className="inline-flex items-center gap-2 bg-stone-900 text-white px-7 py-4 rounded-full text-base font-medium hover:bg-primary transition-colors">
-              <Phone className="w-5 h-5" />
-              Call us now
-            </a>
-            <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-white px-7 py-4 rounded-full text-base font-medium hover:bg-[#1ebe5d] transition-colors">
-              <WhatsAppIcon className="w-5 h-5" />
-              WhatsApp
-            </a>
-          </div>
-        </div>
-      </section>
     </main>
   )
 }

@@ -22,6 +22,12 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
 
+  // Only the home page has a dark hero behind the navbar.
+  // On every other page the navbar sits over the cream-colored PageHero,
+  // so it should always use the light (dark-text) styling.
+  const isHomePage = location.pathname === "/"
+  const useDarkOverlay = !isHomePage || isScrolled
+
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
     window.addEventListener("scroll", handleScroll)
@@ -57,7 +63,7 @@ export default function Navbar() {
 
       <nav
         className={`fixed top-9 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
+          useDarkOverlay
             ? "bg-cream/95 backdrop-blur-lg border-b border-stone-900/10 shadow-sm"
             : "bg-transparent"
         }`}
@@ -69,7 +75,7 @@ export default function Navbar() {
               <img
                 src="/logo.png"
                 alt="UpwardDigital"
-                className={`h-12 w-auto object-contain transition-all ${isScrolled ? "" : "drop-shadow-2xl"}`}
+                className={`h-12 w-auto object-contain transition-all ${useDarkOverlay ? "" : "drop-shadow-2xl"}`}
               />
             </Link>
 
@@ -82,7 +88,7 @@ export default function Navbar() {
                     key={link.path}
                     to={link.path}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
-                      isScrolled
+                      useDarkOverlay
                         ? isActive
                           ? "text-primary bg-primary/10"
                           : "text-stone-700 hover:text-stone-900 hover:bg-stone-900/5"
@@ -102,7 +108,7 @@ export default function Navbar() {
               <a
                 href={PHONE_HREF}
                 className={`hidden lg:inline-flex items-center gap-2 h-9 px-4 rounded-full text-sm font-medium transition-colors ${
-                  isScrolled
+                  useDarkOverlay
                     ? "bg-stone-900 text-white hover:bg-primary"
                     : "bg-white text-stone-900 hover:bg-primary hover:text-white"
                 }`}
@@ -116,7 +122,7 @@ export default function Navbar() {
               </a>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className={`lg:hidden p-2 transition-colors ${isScrolled ? "text-stone-700 hover:text-stone-900" : "text-white hover:text-white/80"}`}
+                className={`lg:hidden p-2 transition-colors ${useDarkOverlay ? "text-stone-700 hover:text-stone-900" : "text-white hover:text-white/80"}`}
                 aria-label="Toggle menu"
               >
                 {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
