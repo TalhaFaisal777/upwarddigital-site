@@ -54,12 +54,13 @@ export default function Footer() {
         {/* Main */}
         <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <div>
-            <Link to="/" className="inline-flex items-center gap-2 mb-5">
-              <img src="/logo-icon.png" alt="" className="h-9 w-9 object-contain" />
-              <span className="text-xl font-bold tracking-tight">
-                <span className="text-white">Upward</span>
-                <span className="text-blue-400">Digital</span>
-              </span>
+            <Link to="/" className="inline-block mb-5">
+              <img
+                src="/logo.png"
+                alt="UpwardDigital"
+                className="h-16 w-auto object-contain"
+                style={{ filter: "drop-shadow(0 0 18px rgba(96,165,250,0.35)) brightness(1.15)" }}
+              />
             </Link>
             <p className="text-stone-400 text-sm leading-relaxed mb-6">
               A full-service digital studio building high-performance websites,
