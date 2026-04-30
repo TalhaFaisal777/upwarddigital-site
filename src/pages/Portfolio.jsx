@@ -104,7 +104,7 @@ export default function Portfolio() {
       />
 
       {/* ── Section 2: Filter Tabs + Project Grid ── */}
-      <section className="py-24 bg-cream">
+      <section className="py-16 md:py-24 bg-cream">
         <div className="max-w-6xl mx-auto px-6 md:px-8">
           {/* Filter Tabs */}
           <motion.div
@@ -189,7 +189,7 @@ export default function Portfolio() {
       </section>
 
       {/* ── Section 3: Case Study ── */}
-      <section className="py-24 bg-white border-y border-stone-200">
+      <section className="py-16 md:py-24 bg-white border-y border-stone-200">
         <div className="max-w-6xl mx-auto px-6 md:px-8">
           <SectionHeading
             subtitle="Case Study"
@@ -285,7 +285,7 @@ export default function Portfolio() {
       </section>
 
       {/* ── Section 4: CTA ── */}
-      <section className="py-24 bg-cream">
+      <section className="py-16 md:py-24 bg-cream">
         <div className="max-w-3xl mx-auto px-6 md:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

@@ -428,7 +428,7 @@ function ContactInfoCards() {
 
 function ContactSection() {
   return (
-    <section className="py-24 relative">
+    <section className="py-16 md:py-24 relative">
       <div className="max-w-6xl mx-auto px-6 md:px-8">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Left - Contact Form */}
@@ -444,7 +444,7 @@ function ContactSection() {
 
 function FAQSection() {
   return (
-    <section className="py-24 bg-white border-y border-stone-200 relative">
+    <section className="py-16 md:py-24 bg-white border-y border-stone-200 relative">
       {/* Subtle background glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -478,7 +478,7 @@ function FAQSection() {
 
 function SocialLinksSection() {
   return (
-    <section className="py-24 relative">
+    <section className="py-16 md:py-24 relative">
       <div className="max-w-6xl mx-auto px-6 md:px-8 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}

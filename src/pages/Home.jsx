@@ -113,7 +113,7 @@ export default function Home() {
   return (
     <main className="overflow-hidden bg-cream">
       {/* ==================== HERO BANNER (sliding background) ==================== */}
-      <section className="relative min-h-[90vh] md:min-h-screen flex items-end overflow-hidden">
+      <section className="relative min-h-[600px] md:min-h-screen flex items-end overflow-hidden">
         {/* Sliding image carousel */}
         <div className="absolute inset-0">
           <AnimatePresence>
@@ -133,14 +133,14 @@ export default function Home() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 max-w-7xl w-full mx-auto px-6 md:px-8 pt-40 pb-16 md:pb-24">
+        <div className="relative z-10 max-w-7xl w-full mx-auto px-5 sm:px-6 md:px-8 pt-32 md:pt-40 pb-12 md:pb-24">
           {/* Eyebrow */}
           <motion.div
             key={`eb-${activeSlide}`}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-1.5 rounded-full text-xs font-medium tracking-[0.2em] uppercase text-white mb-8"
+            className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-medium tracking-[0.18em] sm:tracking-[0.2em] uppercase text-white mb-5 sm:mb-8"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
             {heroSlides[activeSlide].eyebrow}
@@ -150,17 +150,17 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white max-w-5xl mb-6"
+            className="text-[2.25rem] sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white max-w-5xl mb-5 sm:mb-6"
           >
             We help service businesses
-            <span className="block text-blue-400 mt-2">get their phone ringing.</span>
+            <span className="block text-blue-400 mt-1 sm:mt-2">get their phone ringing.</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
-            className="text-lg md:text-xl text-stone-200 max-w-2xl mb-10 leading-relaxed"
+            className="text-base sm:text-lg md:text-xl text-stone-200 max-w-2xl mb-8 sm:mb-10 leading-relaxed"
           >
             Since 2015 we've built websites and SEO funnels for 120+ service businesses —
             from airport shuttles in California to glaziers in Toronto.
@@ -171,14 +171,14 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-wrap items-center gap-3 mb-12"
+            className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3"
           >
-            <a href={PHONE_HREF} className="inline-flex items-center gap-2 bg-white text-stone-900 px-7 py-4 rounded-full text-base font-semibold hover:bg-blue-400 hover:text-white transition-colors group">
+            <a href={PHONE_HREF} className="inline-flex items-center justify-center gap-2 bg-white text-stone-900 px-6 sm:px-7 py-3.5 sm:py-4 rounded-full text-base font-semibold hover:bg-blue-400 hover:text-white transition-colors group">
               <Phone className="w-5 h-5" />
               Book a free strategy call
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </a>
-            <Link to="/portfolio" className="inline-flex items-center gap-2 text-white border border-white/30 hover:border-white px-7 py-4 rounded-full text-base font-semibold backdrop-blur-sm hover:bg-white/10 transition-colors">
+            <Link to="/portfolio" className="inline-flex items-center justify-center gap-2 text-white border border-white/30 hover:border-white px-6 sm:px-7 py-3.5 sm:py-4 rounded-full text-base font-semibold backdrop-blur-sm hover:bg-white/10 transition-colors">
               View our work
             </Link>
           </motion.div>
@@ -215,7 +215,7 @@ export default function Home() {
       </section>
 
       {/* ==================== SERVICES ==================== */}
-      <section className="bg-white py-24 border-y border-stone-900/10">
+      <section className="bg-white py-16 md:py-24 border-y border-stone-900/10">
         <div className="max-w-7xl mx-auto px-6 md:px-8">
           <SectionHeading
             subtitle="What we do"
@@ -235,7 +235,7 @@ export default function Home() {
       </section>
 
       {/* ==================== PROCESS / HOW WE WORK ==================== */}
-      <section className="py-24">
+      <section className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6 md:px-8">
           <SectionHeading
             subtitle="How we work"
@@ -304,7 +304,7 @@ export default function Home() {
       </section>
 
       {/* ==================== TESTIMONIALS ==================== */}
-      <section className="py-24">
+      <section className="py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-6 md:px-8">
           <SectionHeading
             subtitle="What clients say"

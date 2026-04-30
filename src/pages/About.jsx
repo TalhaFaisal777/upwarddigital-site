@@ -40,7 +40,7 @@ export default function About() {
       />
 
       {/* Our Story */}
-      <section className="py-24">
+      <section className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6 md:px-8 grid lg:grid-cols-2 gap-12 lg:gap-16">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -99,7 +99,7 @@ export default function About() {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-24 bg-white border-y border-stone-900/10">
+      <section className="py-16 md:py-24 bg-white border-y border-stone-900/10">
         <div className="max-w-7xl mx-auto px-6 md:px-8 grid md:grid-cols-2 gap-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -137,7 +137,7 @@ export default function About() {
       </section>
 
       {/* Team */}
-      <section className="py-24">
+      <section className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6 md:px-8">
           <SectionHeading
             subtitle="The team"
@@ -166,7 +166,7 @@ export default function About() {
       </section>
 
       {/* Journey / Milestones */}
-      <section className="py-24 bg-stone-900 text-white">
+      <section className="py-16 md:py-24 bg-stone-900 text-white">
         <div className="max-w-7xl mx-auto px-6 md:px-8">
           <div className="text-center mb-14">
             <span className="inline-block text-blue-400 font-semibold text-xs tracking-[0.2em] uppercase mb-4">
@@ -197,7 +197,7 @@ export default function About() {
       </section>
 
       {/* Core Values */}
-      <section className="py-24">
+      <section className="py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6 md:px-8">
           <SectionHeading
             subtitle="What we stand for"

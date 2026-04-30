@@ -247,7 +247,7 @@ function PricingCard({ tier, isAnnual, index }) {
 
 function PricingCardsSection({ isAnnual }) {
   return (
-    <section className="py-24 relative">
+    <section className="py-16 md:py-24 relative">
       <div className="max-w-6xl mx-auto px-6 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
           {pricingTiers.map((tier, i) => (
@@ -271,7 +271,7 @@ function ComparisonCell({ value }) {
 
 function FeatureComparisonSection() {
   return (
-    <section className="py-24 relative">
+    <section className="py-16 md:py-24 relative">
       <div className="max-w-6xl mx-auto px-6 md:px-8">
         <SectionHeading subtitle="Compare Plans" title="Feature Comparison" />
 
@@ -331,7 +331,7 @@ function FeatureComparisonSection() {
 
 function FaqSection() {
   return (
-    <section className="py-24 relative">
+    <section className="py-16 md:py-24 relative">
       <div className="max-w-3xl mx-auto px-6">
         <SectionHeading subtitle="FAQ" title="Pricing Questions" />
 

@@ -47,12 +47,13 @@ export default function Navbar() {
     <>
       {/* Announcement Bar */}
       <div className="fixed top-0 left-0 right-0 z-[60] bg-stone-900 text-white text-xs sm:text-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-center gap-2 sm:gap-4 flex-wrap">
-          <span className="font-medium">Free 30-min strategy call — limited slots this month</span>
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2 flex items-center justify-center gap-2 sm:gap-4 flex-wrap">
+          <span className="hidden sm:inline font-medium">Free 30-min strategy call — limited slots this month</span>
+          <span className="sm:hidden font-medium">Free strategy call</span>
           <span className="hidden sm:inline opacity-50">·</span>
           <a href={PHONE_HREF} className="inline-flex items-center gap-1.5 font-semibold text-blue-300 hover:text-white">
             <Phone className="w-3.5 h-3.5" />
-            +1 (201) 304-0657
+            <span className="hidden xs:inline sm:inline">+1 </span>(201) 304-0657
           </a>
           <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center gap-1.5 font-semibold text-green-300 hover:text-white">
             <WhatsAppIcon className="w-3.5 h-3.5" />
@@ -69,13 +70,13 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-24">
+          <div className="flex items-center justify-between h-20 md:h-24">
             {/* Logo */}
             <Link to="/" aria-label="UpwardDigital home" className="flex items-center">
               <img
                 src="/logo.png"
                 alt="UpwardDigital"
-                className="h-16 md:h-20 w-auto object-contain transition-all"
+                className="h-12 sm:h-14 md:h-20 w-auto object-contain transition-all"
                 style={!useDarkOverlay ? { filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.6)) drop-shadow(0 0 20px rgba(0,0,0,0.4))" } : undefined}
               />
             </Link>

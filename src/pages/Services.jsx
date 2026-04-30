@@ -133,9 +133,9 @@ export default function Services() {
         return (
           <section
             key={service.badge}
-            className={`py-24 ${isWhite ? "bg-white border-y border-stone-900/10" : ""}`}
+            className={`py-16 md:py-24 ${isWhite ? "bg-white border-y border-stone-900/10" : ""}`}
           >
-            <div className="max-w-7xl mx-auto px-6 md:px-8 grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8 grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -171,7 +171,7 @@ export default function Services() {
                 transition={{ duration: 0.6, delay: 0.15 }}
                 className="lg:sticky lg:top-32"
               >
-                <div className={`rounded-3xl p-8 md:p-10 relative overflow-hidden ${
+                <div className={`rounded-3xl p-6 sm:p-8 md:p-10 relative overflow-hidden ${
                   isWhite ? "bg-stone-900 text-white" : "bg-white border border-stone-200"
                 }`}>
                   {/* Header with number + icon */}
@@ -219,7 +219,7 @@ export default function Services() {
       })}
 
       {/* Micro-services grid */}
-      <section className="py-24 border-t border-stone-900/10">
+      <section className="py-16 md:py-24 border-t border-stone-900/10">
         <div className="max-w-7xl mx-auto px-6 md:px-8">
           <SectionHeading
             subtitle="And more"
@@ -248,7 +248,7 @@ export default function Services() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 bg-stone-900 text-white">
+      <section className="py-16 md:py-24 bg-stone-900 text-white">
         <div className="max-w-4xl mx-auto px-6 md:px-8 text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight mb-6">
             Ready to transform your <em className="font-serif italic font-medium text-blue-400">digital presence</em>?
