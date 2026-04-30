@@ -11,6 +11,7 @@ import Portfolio from "@/pages/Portfolio"
 import Blog from "@/pages/Blog"
 import Contact from "@/pages/Contact"
 import Pricing from "@/pages/Pricing"
+import AdMeta from "@/pages/ads/AdMeta"
 
 const pageTransition = {
   initial: { opacity: 0, y: 20 },
@@ -66,8 +67,10 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <LoadingScreen />
-      <MainLayout />
+      <Routes>
+        <Route path="/ads/preview" element={<AdMeta />} />
+        <Route path="*" element={<><LoadingScreen /><MainLayout /></>} />
+      </Routes>
     </Router>
   )
 }
