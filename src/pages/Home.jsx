@@ -113,7 +113,7 @@ export default function Home() {
   return (
     <main className="overflow-hidden bg-cream">
       {/* ==================== HERO BANNER (sliding background) ==================== */}
-      <section className="relative min-h-[600px] md:min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[600px] md:min-h-screen flex items-center overflow-hidden">
         {/* Sliding image carousel */}
         <div className="absolute inset-0">
           <AnimatePresence>
@@ -128,12 +128,12 @@ export default function Home() {
             />
           </AnimatePresence>
           {/* Gradient overlays for text legibility */}
-          <div className="absolute inset-0 bg-stone-900/65" />
-          <div className="absolute inset-0 bg-gradient-to-t from-stone-900/70 via-transparent to-stone-900/30" />
+          <div className="absolute inset-0 bg-gradient-to-r from-stone-900/85 via-stone-900/55 to-stone-900/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-transparent to-stone-900/20" />
         </div>
 
         {/* Content */}
-        <div className="relative z-10 max-w-5xl w-full mx-auto px-5 sm:px-6 md:px-8 pt-32 md:pt-32 pb-12 md:pb-24 text-center flex flex-col items-center">
+        <div className="relative z-10 max-w-7xl w-full mx-auto px-5 sm:px-6 md:px-8 pt-32 md:pt-32 pb-12 md:pb-24">
           {/* Eyebrow */}
           <motion.div
             key={`eb-${activeSlide}`}
@@ -150,17 +150,25 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white mb-5 sm:mb-6"
+            className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white max-w-5xl mb-3 sm:mb-4"
           >
-            UpwardDigital LLC
-            <span className="block text-blue-400 mt-1 sm:mt-2">Your growth partner.</span>
+            Upward Digital LLC
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="text-base sm:text-lg md:text-xl text-stone-200 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="font-serif italic text-blue-400 text-xl sm:text-2xl md:text-3xl mb-6 sm:mb-8"
+          >
+            Your growth partner.
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-base sm:text-lg md:text-xl text-stone-200 max-w-2xl mb-8 sm:mb-10 leading-relaxed"
           >
             High-quality websites and data-driven SEO and marketing strategies
             that turn traffic into real business results.
@@ -170,7 +178,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-center gap-3"
+            className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3"
           >
             <a href={PHONE_HREF} className="inline-flex items-center justify-center gap-2 bg-white text-stone-900 px-6 sm:px-7 py-3.5 sm:py-4 rounded-full text-base font-semibold hover:bg-blue-400 hover:text-white transition-colors group">
               <Phone className="w-5 h-5" />
