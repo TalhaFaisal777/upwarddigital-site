@@ -377,7 +377,7 @@ function AboutAndContactSection() {
   }
 
   return (
-    <section className="py-16 md:py-24 bg-cream relative overflow-hidden">
+    <section className="py-20 md:py-28 bg-cream relative overflow-hidden">
       {/* Subtle background dots */}
       <div
         className="absolute inset-0 opacity-[0.04] pointer-events-none"
@@ -397,12 +397,12 @@ function AboutAndContactSection() {
           transition={{ duration: 0.6 }}
           className="flex flex-col justify-center"
         >
-          <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-4">
+          <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-3">
             — About Us —
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-8 text-stone-900">
-            <span className="text-primary">Upward Digital LLC</span> — Leading
-            USA's <em className="font-serif italic font-medium text-primary">Web Development</em> & SEO Agency
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-[1.2] tracking-tight mb-6 text-stone-900">
+            <span className="text-primary">Upward Digital LLC</span> — USA's
+            Leading <em className="font-serif italic font-medium text-primary">Web Development</em> & SEO Agency
           </h2>
 
           <div className="space-y-5 text-stone-600 text-base md:text-lg leading-relaxed">
