@@ -398,7 +398,7 @@ function AboutAndContactSection() {
           className="flex flex-col justify-center"
         >
           <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-3">
-            — About Us —
+            About Us
           </span>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-[1.2] tracking-tight mb-6 text-stone-900">
             <span className="text-primary">Upward Digital LLC</span> — USA's
@@ -523,6 +523,11 @@ function AboutAndContactSection() {
                     <option value="">Select</option>
                     <option>Website Development</option>
                     <option>SEO Services</option>
+                    <option>Local SEO / Google Maps</option>
+                    <option>Google Ads (PPC)</option>
+                    <option>Social Media Marketing</option>
+                    <option>Branding &amp; Design</option>
+                    <option>Other</option>
                   </select>
                 </div>
 
