@@ -152,8 +152,8 @@ export default function Home() {
             transition={{ duration: 0.7 }}
             className="text-[2.25rem] sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white max-w-5xl mb-5 sm:mb-6"
           >
-            We help service businesses
-            <span className="block text-blue-400 mt-1 sm:mt-2">get their phone ringing.</span>
+            UpwardDigital LLC
+            <span className="block text-blue-400 mt-1 sm:mt-2">Your growth partner.</span>
           </motion.h1>
 
           <motion.p
@@ -162,9 +162,9 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="text-base sm:text-lg md:text-xl text-stone-200 max-w-2xl mb-8 sm:mb-10 leading-relaxed"
           >
-            Since 2015 we've built websites and SEO funnels for 120+ service businesses —
-            from airport shuttles in California to glaziers in Toronto.
-            <span className="block mt-3 text-white font-medium">Less jargon. More booked appointments.</span>
+            A full-service website development and digital marketing agency.
+            Custom-built websites, SEO that ranks, and marketing that turns clicks into customers.
+            <span className="block mt-3 text-white font-medium">Since 2015 · 120+ projects shipped.</span>
           </motion.p>
 
           <motion.div
