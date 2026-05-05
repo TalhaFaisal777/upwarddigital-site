@@ -86,7 +86,6 @@ const trustedBrands = [
   "Direct Shopfront",
   "Formosa Bathrooms",
   "CR Glass",
-  "GA Konnect",
 ]
 
 export default function Home() {
@@ -206,17 +205,22 @@ export default function Home() {
       </section>
 
       {/* ==================== TRUST STRIP ==================== */}
-      <section className="border-y border-stone-900/10 bg-white/40 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 md:px-8 py-10">
-          <p className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-6">
-            Trusted by ambitious businesses across 4 continents
-          </p>
-          <div className="flex flex-wrap gap-x-12 gap-y-4 items-center text-stone-700">
-            {trustedBrands.map((c) => (
-              <span key={c} className="text-lg md:text-xl font-medium tracking-tight opacity-70 hover:opacity-100 transition-opacity">
-                {c}
-              </span>
-            ))}
+      <section className="border-y border-stone-900/10 bg-white">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8 py-8 md:py-10">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-10">
+            <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-stone-500 shrink-0">
+              Trusted by brands worldwide
+            </p>
+            <div className="flex flex-wrap md:flex-nowrap items-center justify-start md:justify-end gap-x-6 lg:gap-x-8 gap-y-3 text-stone-700 overflow-x-auto md:overflow-visible">
+              {trustedBrands.map((c) => (
+                <span
+                  key={c}
+                  className="text-sm md:text-[15px] font-semibold tracking-tight text-stone-500 hover:text-stone-900 transition-colors whitespace-nowrap"
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
