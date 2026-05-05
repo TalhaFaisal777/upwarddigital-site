@@ -299,7 +299,7 @@ export default function Portfolio() {
             transition={{ duration: 0.6 }}
             className="space-y-6"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight">
               Have a project <em className="font-serif italic font-medium text-primary">in mind</em>?
             </h2>
             <p className="text-stone-600 text-lg max-w-xl mx-auto">

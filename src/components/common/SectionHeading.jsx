@@ -14,7 +14,7 @@ export default function SectionHeading({ subtitle, title, description, center = 
           — {subtitle} —
         </span>
       )}
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight mb-4 text-stone-900">
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-4 text-stone-900">
         {title}
       </h2>
       {description && (

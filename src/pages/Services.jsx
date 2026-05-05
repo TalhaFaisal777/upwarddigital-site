@@ -144,7 +144,7 @@ export default function Services() {
                 transition={{ duration: 0.6 }}
               >
                 <Badge className="mb-6">{service.badge}</Badge>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight mb-6 text-stone-900">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-6 text-stone-900">
                   {service.title}
                 </h2>
                 <p className="text-stone-600 text-lg leading-relaxed mb-8">
@@ -251,7 +251,7 @@ export default function Services() {
       {/* CTA */}
       <section className="py-16 md:py-24 bg-stone-900 text-white">
         <div className="max-w-4xl mx-auto px-6 md:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-6">
             Ready to transform your <em className="font-serif italic font-medium text-blue-400">digital presence</em>?
           </h2>
           <p className="text-stone-400 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">

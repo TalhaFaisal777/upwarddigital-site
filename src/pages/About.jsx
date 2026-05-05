@@ -51,7 +51,7 @@ export default function About() {
             <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-4">
               — Who we are —
             </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight mb-8 text-stone-900">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-8 text-stone-900">
               We've been growing brands since <em className="font-serif italic font-medium text-primary">2015</em>.
             </h2>
             <div className="space-y-5 text-stone-600 text-lg leading-relaxed">
@@ -172,7 +172,7 @@ export default function About() {
             <span className="inline-block text-blue-400 font-semibold text-xs tracking-[0.2em] uppercase mb-4">
               — Our Journey —
             </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight">
               From <em className="font-serif italic font-medium text-blue-400">3 people</em> to industry leader.
             </h2>
           </div>

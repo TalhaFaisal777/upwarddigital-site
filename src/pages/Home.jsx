@@ -458,7 +458,7 @@ function AboutAndContactSection() {
           <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-3">
             — About Us —
           </span>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-[1.2] tracking-tight mb-6 text-stone-900">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-6 text-stone-900">
             <span className="text-primary">Upward Digital LLC</span>, USA's
             Leading <em className="font-serif italic font-medium text-primary">Web Development</em> & SEO Agency
           </h2>
