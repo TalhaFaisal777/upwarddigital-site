@@ -278,10 +278,10 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5 }}
-            className="mb-12 max-w-4xl"
+            className="mb-14 max-w-4xl mx-auto text-center"
           >
             <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-3">
-              What We Offer
+              — What We Offer —
             </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-5 text-stone-900">
               High-Performance <em className="font-serif italic font-medium text-primary">Web Development</em> & Digital Marketing Solutions
@@ -456,7 +456,7 @@ function AboutAndContactSection() {
           className="flex flex-col justify-center"
         >
           <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-3">
-            About Us
+            — About Us —
           </span>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-[1.2] tracking-tight mb-6 text-stone-900">
             <span className="text-primary">Upward Digital LLC</span>, USA's
