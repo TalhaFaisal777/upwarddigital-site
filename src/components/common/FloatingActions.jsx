@@ -6,7 +6,7 @@ const WHATSAPP_HREF = "https://wa.me/18302241590"
 
 export default function FloatingActions() {
   return (
-    <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[55] flex flex-col gap-3 print:hidden">
+    <div className="lg:hidden fixed bottom-5 right-5 z-[55] flex flex-col gap-3 print:hidden">
       {/* Call button */}
       <a
         href={PHONE_HREF}
