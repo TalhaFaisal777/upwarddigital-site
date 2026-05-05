@@ -16,7 +16,8 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { trackContact, trackSchedule, trackServiceInterest } from "@/lib/pixel"
+import { Input } from "@/components/ui/input"
+import { trackContact, trackSchedule, trackServiceInterest, trackLead } from "@/lib/pixel"
 import SectionHeading from "@/components/common/SectionHeading"
 import ServiceCard from "@/components/common/ServiceCard"
 const PHONE_HREF = "tel:+12013040657"
@@ -52,13 +53,6 @@ const whyUsPoints = [
   { title: "Data-Driven Approach", description: "Every decision we make is backed by analytics and insights, maximizing ROI and minimizing guesswork." },
   { title: "Transparent Communication", description: "We keep you informed at every step with regular updates, detailed reports, and open dialogue." },
   { title: "Proven Track Record", description: "With hundreds of successful projects and long-term client partnerships, our results speak for themselves." },
-]
-
-const processSteps = [
-  { num: "01", title: "Discover", description: "We start with deep listening — your goals, audience, market, and what's worked or hasn't." },
-  { num: "02", title: "Strategize", description: "A tailored roadmap with measurable KPIs, timelines, and the channels that will move your numbers." },
-  { num: "03", title: "Execute", description: "Our specialists build, write, design, and ship — with weekly check-ins and zero surprise costs." },
-  { num: "04", title: "Optimize", description: "We measure, refine, and double down on what works. Growth compounds when you keep iterating." },
 ]
 
 const testimonials = [
@@ -247,36 +241,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ==================== PROCESS / HOW WE WORK ==================== */}
-      <section className="py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-6 md:px-8">
-          <SectionHeading
-            subtitle="How we work"
-            title={
-              <>
-                A clear, <em className="font-serif italic font-medium text-primary">honest</em> process — no surprises.
-              </>
-            }
-            description="From first call to launch and beyond, every project follows the same proven path."
-          />
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-stone-200 border border-stone-200 rounded-3xl overflow-hidden">
-            {processSteps.map((step, i) => (
-              <motion.div
-                key={step.num}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="bg-white p-8 md:p-10 hover:bg-stone-50 transition-colors"
-              >
-                <div className="text-4xl font-bold text-primary mb-6 tracking-tight">{step.num}</div>
-                <h3 className="text-xl font-bold mb-3 text-stone-900 tracking-tight">{step.title}</h3>
-                <p className="text-stone-600 leading-relaxed text-sm">{step.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ==================== ABOUT + CONTACT FORM ==================== */}
+      <AboutAndContactSection />
 
       {/* ==================== WHY US ==================== */}
       <section className="bg-stone-900 text-white py-24">
@@ -376,5 +342,209 @@ export default function Home() {
       </section>
 
     </main>
+  )
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// About + Contact Form Section
+// ────────────────────────────────────────────────────────────────────────────
+function AboutAndContactSection() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    service: "",
+    website: "",
+  })
+  const [submitted, setSubmitted] = useState(false)
+
+  const handleChange = (e) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    trackLead({
+      content_name: "Home Free Consultation",
+      content_category: "lead_form",
+      service: form.service || "unspecified",
+    })
+    setSubmitted(true)
+    setTimeout(() => {
+      setForm({ name: "", email: "", phone: "", service: "", website: "" })
+      setSubmitted(false)
+    }, 4000)
+  }
+
+  return (
+    <section className="py-16 md:py-24 bg-cream relative overflow-hidden">
+      {/* Subtle background dots */}
+      <div
+        className="absolute inset-0 opacity-[0.04] pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(circle, #1c1917 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
+        }}
+      />
+      <div className="absolute -top-32 right-0 w-[500px] h-[500px] bg-blue-200/30 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-8 grid lg:grid-cols-5 gap-10 lg:gap-14 items-start">
+        {/* LEFT — About content */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6 }}
+          className="lg:col-span-3"
+        >
+          <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-4">
+            — About Us —
+          </span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-8 text-stone-900">
+            <span className="text-primary">Upward Digital LLC</span> — Leading
+            USA's <em className="font-serif italic font-medium text-primary">Web Development</em> & SEO Agency
+          </h2>
+
+          <div className="space-y-5 text-stone-600 text-base md:text-lg leading-relaxed">
+            <p>
+              Upward Digital is a leading website development and SEO agency in
+              the USA, founded in 2015 with a vision to help businesses grow
+              through powerful, results-driven digital solutions. Our mission
+              is to transform how brands establish their online presence by
+              delivering high-performance websites, advanced SEO strategies,
+              and data-driven digital marketing services across the USA and
+              globally.
+            </p>
+            <p>
+              What started as a small team of passionate experts has grown into
+              a full-service digital agency specializing in{" "}
+              <strong className="text-stone-900">
+                web development, local SEO, technical SEO, and performance
+                marketing
+              </strong>
+              . Our team combines creativity with technical expertise to build
+              scalable, secure, and user-friendly websites that not only look
+              great but also convert visitors into loyal customers.
+            </p>
+            <p>
+              As a trusted web development and SEO company in the USA, we focus
+              on delivering measurable results. Our search engine optimization
+              (SEO) services are designed to improve Google rankings, increase
+              organic traffic, and generate high-quality leads. We implement
+              proven strategies including on-page SEO, off-page SEO, keyword
+              research, content optimization, and local SEO to help businesses
+              dominate search results.
+            </p>
+            <p>
+              In addition to SEO, we offer comprehensive digital marketing
+              services, including Google Ads management (PPC), Google Maps
+              optimization, social media marketing, and conversion rate
+              optimization (CRO). Our goal is to help businesses reach their
+              ideal audience, increase visibility, and drive consistent growth
+              both locally and nationwide across the USA.
+            </p>
+            <p className="text-stone-900 font-semibold pt-2">
+              At Upward Digital, we don't just build websites or run campaigns
+              — we create{" "}
+              <em className="font-serif italic text-primary">
+                growth-focused digital systems
+              </em>{" "}
+              that deliver long-term success.
+            </p>
+          </div>
+        </motion.div>
+
+        {/* RIGHT — Contact form */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="lg:col-span-2 lg:sticky lg:top-32"
+        >
+          <div className="bg-white border border-stone-200 rounded-3xl p-7 sm:p-9 shadow-sm">
+            <div className="text-center mb-7">
+              <h3 className="text-2xl md:text-3xl font-bold text-primary mb-3 tracking-tight">
+                Free Consultation
+              </h3>
+              <p className="text-stone-600 text-sm leading-relaxed">
+                Book a free consultation and let the best{" "}
+                <strong className="text-stone-900">
+                  website development &amp; SEO agency
+                </strong>{" "}
+                in the USA manage your project.
+              </p>
+            </div>
+
+            {submitted ? (
+              <div className="text-center py-10">
+                <div className="w-14 h-14 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle2 className="w-7 h-7 text-emerald-600" />
+                </div>
+                <p className="text-stone-900 font-semibold mb-1">Thank you!</p>
+                <p className="text-stone-600 text-sm">
+                  We'll get back to you within 24 hours.
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-3">
+                <Input
+                  type="text"
+                  name="name"
+                  placeholder="Full Name"
+                  required
+                  value={form.name}
+                  onChange={handleChange}
+                />
+                <Input
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
+                  required
+                  value={form.email}
+                  onChange={handleChange}
+                />
+                <Input
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone / WhatsApp"
+                  value={form.phone}
+                  onChange={handleChange}
+                />
+                <select
+                  name="service"
+                  required
+                  value={form.service}
+                  onChange={handleChange}
+                  className="flex h-11 w-full rounded-full border border-stone-300 bg-white px-5 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200 appearance-none cursor-pointer"
+                >
+                  <option value="">What service do you need?</option>
+                  <option>Web Development</option>
+                  <option>SEO Services</option>
+                  <option>Local SEO / Google Maps</option>
+                  <option>Google Ads (PPC)</option>
+                  <option>Social Media Marketing</option>
+                  <option>Branding &amp; Design</option>
+                  <option>Other</option>
+                </select>
+                <Input
+                  type="text"
+                  name="website"
+                  placeholder="Your Website (optional)"
+                  value={form.website}
+                  onChange={handleChange}
+                />
+                <Button type="submit" size="lg" className="w-full mt-2">
+                  Submit
+                </Button>
+                <p className="text-stone-500 text-xs text-center pt-1">
+                  We respond within 24 hours · No spam, ever.
+                </p>
+              </form>
+            )}
+          </div>
+        </motion.div>
+      </div>
+    </section>
   )
 }
