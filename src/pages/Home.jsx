@@ -401,7 +401,7 @@ function AboutAndContactSection() {
             About Us
           </span>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-[1.2] tracking-tight mb-6 text-stone-900">
-            <span className="text-primary">Upward Digital LLC</span> — USA's
+            <span className="text-primary">Upward Digital LLC</span>, USA's
             Leading <em className="font-serif italic font-medium text-primary">Web Development</em> & SEO Agency
           </h2>
 
@@ -416,8 +416,8 @@ function AboutAndContactSection() {
               <strong className="text-stone-900">
                 web development, local SEO, technical SEO, and performance
                 marketing
-              </strong>{" "}
-              — building scalable, secure, user-friendly websites that turn
+              </strong>
+              . We build scalable, secure, user-friendly websites that turn
               visitors into loyal customers.
             </p>
             <p>
@@ -427,7 +427,7 @@ function AboutAndContactSection() {
               dominate search results.
             </p>
             <p className="text-stone-900 font-semibold pt-2">
-              We don't just build websites — we create{" "}
+              We don't just build websites. We create{" "}
               <em className="font-serif italic text-primary">
                 growth-focused digital systems
               </em>{" "}
