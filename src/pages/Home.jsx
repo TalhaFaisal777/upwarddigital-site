@@ -205,17 +205,14 @@ export default function Home() {
       </section>
 
       {/* ==================== TRUST STRIP ==================== */}
-      <section className="border-y border-stone-900/10 bg-white">
-        <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8 py-10 md:py-12 text-center">
-          <p className="text-[11px] sm:text-xs uppercase tracking-[0.25em] text-stone-500 mb-6">
-            — Trusted by brands worldwide —
+      <section className="border-y border-stone-900/10 bg-white/40 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 py-10 text-center">
+          <p className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-6">
+            Trusted by brands worldwide
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-8 lg:gap-x-12 gap-y-3 text-stone-700">
+          <div className="flex flex-wrap gap-x-12 gap-y-4 items-center justify-center text-stone-700">
             {trustedBrands.map((c) => (
-              <span
-                key={c}
-                className="text-sm md:text-base font-semibold tracking-tight text-stone-500 hover:text-stone-900 transition-colors whitespace-nowrap"
-              >
+              <span key={c} className="text-lg md:text-xl font-medium tracking-tight opacity-70 hover:opacity-100 transition-opacity">
                 {c}
               </span>
             ))}
