@@ -48,11 +48,37 @@ const services = [
   { icon: Palette, title: "Brand Strategy", description: "Compelling brand identities and strategies that resonate with your audience.", link: "/services" },
 ]
 
-const whyUsPoints = [
-  { title: "Industry-Leading Expertise", description: "Our team of seasoned professionals brings deep knowledge across every digital discipline, ensuring best-in-class solutions." },
-  { title: "Data-Driven Approach", description: "Every decision we make is backed by analytics and insights, maximizing ROI and minimizing guesswork." },
-  { title: "Transparent Communication", description: "We keep you informed at every step with regular updates, detailed reports, and open dialogue." },
-  { title: "Proven Track Record", description: "With hundreds of successful projects and long-term client partnerships, our results speak for themselves." },
+const offerings = [
+  {
+    title: "Google SEO",
+    image: "/services/seo.jpg",
+    description: "Improve your online visibility and search rankings with proven on-page, off-page, and technical SEO strategies built for sustained organic growth.",
+  },
+  {
+    title: "Google Ads",
+    image: "/services/google-ads.jpg",
+    description: "Targeted Google Ads campaigns (Search, Display, YouTube) that maximize ROI and bring qualified traffic to your business.",
+  },
+  {
+    title: "Google Maps",
+    image: "/services/google-maps.jpg",
+    description: "Local SEO and Google Maps optimization to dominate your area, increase store visits, and capture high-intent local searches.",
+  },
+  {
+    title: "Social Media",
+    image: "/services/social-media.jpg",
+    description: "Social media management and paid social campaigns across Meta, Instagram, TikTok, and LinkedIn that grow your audience and engagement.",
+  },
+  {
+    title: "Website Development",
+    image: "/services/web-dev.jpg",
+    description: "Custom-built websites that load fast, look beautiful, and turn visitors into customers — built with React, Next.js, WordPress, or Shopify.",
+  },
+  {
+    title: "E-Commerce",
+    image: "/services/ecommerce.jpg",
+    description: "Scalable e-commerce stores on Shopify, WooCommerce, or custom platforms — optimized for conversions, speed, and seamless checkout.",
+  },
 ]
 
 const testimonials = [
@@ -244,39 +270,71 @@ export default function Home() {
       {/* ==================== ABOUT + CONTACT FORM ==================== */}
       <AboutAndContactSection />
 
-      {/* ==================== WHY US ==================== */}
-      <section className="bg-stone-900 text-white py-24">
-        <div className="max-w-7xl mx-auto px-6 md:px-8">
+      {/* ==================== WHAT WE OFFER ==================== */}
+      <section className="py-16 md:py-24 bg-white border-y border-stone-900/10">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5 }}
-            className="mb-14"
+            className="mb-12 max-w-4xl"
           >
-            <span className="inline-block text-blue-400 font-semibold text-xs tracking-[0.2em] uppercase mb-4">
-              — Why work with us —
+            <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-3">
+              What We Offer
             </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.1] tracking-tight max-w-3xl">
-              We deliver <em className="font-serif italic font-medium text-blue-400">results</em>, not deliverables.
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-5 text-stone-900">
+              High-Performance <em className="font-serif italic font-medium text-primary">Web Development</em> & Digital Marketing Solutions
             </h2>
+            <p className="text-stone-600 text-base md:text-lg leading-relaxed">
+              We are a trusted website development and SEO agency in the USA,
+              delivering comprehensive digital services including search engine
+              optimization (SEO), Google Ads (PPC), Google Maps optimization,
+              social media marketing, and custom website development. Our
+              strategies are designed to increase online visibility, website
+              traffic, and long-term business growth.
+            </p>
           </motion.div>
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-            {whyUsPoints.map((p, i) => (
-              <motion.div
-                key={p.title}
-                initial={{ opacity: 0, y: 20 }}
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
+            {offerings.map((o, i) => (
+              <motion.article
+                key={o.title}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="flex items-start gap-5"
+                transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
+                className="group flex flex-col bg-white border border-stone-200 rounded-3xl overflow-hidden hover:border-stone-900 hover:shadow-lg transition-all duration-300"
               >
-                <CheckCircle2 className="w-6 h-6 text-blue-400 mt-1 shrink-0" />
-                <div>
-                  <h3 className="text-xl font-bold mb-2 tracking-tight">{p.title}</h3>
-                  <p className="text-stone-400 leading-relaxed">{p.description}</p>
+                {/* Image */}
+                <div className="relative h-48 overflow-hidden bg-stone-100">
+                  <img
+                    src={o.image}
+                    alt={o.title}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-900/40 via-transparent to-transparent" />
                 </div>
-              </motion.div>
+
+                {/* Body */}
+                <div className="p-7 flex flex-col flex-1">
+                  <h3 className="text-xl font-bold mb-3 text-stone-900 tracking-tight group-hover:text-primary transition-colors">
+                    {o.title}
+                  </h3>
+                  <p className="text-stone-600 text-sm leading-relaxed mb-5 flex-1">
+                    {o.description}
+                  </p>
+                  <Link
+                    to="/services"
+                    onClick={() => trackServiceInterest(o.title)}
+                    className="inline-flex items-center gap-1.5 text-stone-900 text-sm font-semibold hover:text-primary transition-colors group/link"
+                  >
+                    Read more
+                    <ArrowUpRight className="w-4 h-4 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+                  </Link>
+                </div>
+              </motion.article>
             ))}
           </div>
         </div>
