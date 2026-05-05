@@ -530,13 +530,8 @@ function AboutAndContactSection() {
                     }}
                   >
                     <option value="">Select</option>
-                    <option>Web Development</option>
+                    <option>Website Development</option>
                     <option>SEO Services</option>
-                    <option>Local SEO / Google Maps</option>
-                    <option>Google Ads (PPC)</option>
-                    <option>Social Media Marketing</option>
-                    <option>Branding &amp; Design</option>
-                    <option>Other</option>
                   </select>
                 </div>
 
