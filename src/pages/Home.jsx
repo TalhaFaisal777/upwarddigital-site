@@ -397,83 +397,12 @@ export default function Home() {
       </section>
 
       {/* ==================== TESTIMONIALS ==================== */}
-      <section className="py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
-          <SectionHeading
-            subtitle="What clients say"
-            title="Words from those we've grown."
-          />
-
-          {/* Sliding track — shows 1 card on mobile, 2 on tablet+ */}
-          <div className="relative overflow-hidden">
-            <motion.div
-              animate={{ x: `calc(-${activeTestimonial} * (100% / ${testimonials.length}))` }}
-              transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
-              className="flex"
-              style={{ width: `${(testimonials.length * 100) / 2}%` }}
-            >
-              {testimonials.map((t, i) => (
-                <div
-                  key={i}
-                  className="px-3 shrink-0"
-                  style={{ width: `${100 / testimonials.length}%` }}
-                >
-                  <div className="relative bg-white border border-stone-200 rounded-3xl p-8 md:p-10 h-full flex flex-col">
-                    <Quote className="w-9 h-9 text-primary/20 mb-5" strokeWidth={2.5} />
-                    <div className="flex items-center gap-1 mb-5">
-                      {[...Array(5)].map((_, j) => (
-                        <Star
-                          key={j}
-                          className={`w-4 h-4 ${j < t.rating ? "text-amber-500 fill-current" : "text-stone-300 fill-current"}`}
-                        />
-                      ))}
-                    </div>
-                    <blockquote className="text-base md:text-lg leading-relaxed text-stone-700 mb-6 flex-1">
-                      "{t.quote}"
-                    </blockquote>
-                    <div className="flex items-center gap-4 pt-5 border-t border-stone-200">
-                      <div className="w-11 h-11 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shrink-0">
-                        {t.initials}
-                      </div>
-                      <div className="min-w-0">
-                        <div className="font-bold text-stone-900 text-sm">{t.name}</div>
-                        <div className="text-xs text-stone-600 truncate">
-                          {t.role} · {t.company}
-                        </div>
-                        <div className="text-[11px] text-primary font-semibold mt-0.5 uppercase tracking-wider truncate">
-                          {t.service}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* Controls */}
-          <div className="flex items-center justify-between mt-10">
-            <div className="flex gap-2">
-              {testimonials.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveTestimonial(i)}
-                  className={`h-1.5 rounded-full transition-all ${i === activeTestimonial ? "w-8 bg-stone-900" : "w-1.5 bg-stone-300 hover:bg-stone-500"}`}
-                  aria-label={`Testimonial ${i + 1}`}
-                />
-              ))}
-            </div>
-            <div className="flex gap-2">
-              <button onClick={prevTestimonial} aria-label="Previous testimonial" className="w-11 h-11 rounded-full border border-stone-300 hover:bg-stone-900 hover:text-white hover:border-stone-900 flex items-center justify-center transition-colors">
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button onClick={nextTestimonial} aria-label="Next testimonial" className="w-11 h-11 rounded-full border border-stone-300 hover:bg-stone-900 hover:text-white hover:border-stone-900 flex items-center justify-center transition-colors">
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <TestimonialsSection
+        active={activeTestimonial}
+        setActive={setActiveTestimonial}
+        next={nextTestimonial}
+        prev={prevTestimonial}
+      />
 
     </main>
   )
@@ -679,5 +608,142 @@ function AboutAndContactSection() {
         </motion.div>
       </div>
     </section>
+  )
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// Testimonials section — 3 cards on desktop with highlighted center, 1 on mobile
+// ────────────────────────────────────────────────────────────────────────────
+function TestimonialsSection({ active, setActive, next, prev }) {
+  const total = testimonials.length
+  const cardPct = 100 / total
+
+  return (
+    <section className="py-16 md:py-24 bg-cream">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
+        <SectionHeading
+          subtitle="What clients say"
+          title="Words from those we've grown."
+        />
+
+        {/* Desktop: 3 cards visible, middle highlighted */}
+        <div className="hidden md:block overflow-hidden py-8">
+          <motion.div
+            animate={{ x: `-${(active - 1) * cardPct}%` }}
+            transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+            className="flex"
+            style={{ width: `${(total * 100) / 3}%` }}
+          >
+            {testimonials.map((t, i) => (
+              <div
+                key={i}
+                className="px-3 shrink-0 flex items-center"
+                style={{ width: `${cardPct}%` }}
+              >
+                <TestimonialCard t={t} highlighted={i === active} />
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Mobile: 1 card at a time */}
+        <div className="md:hidden overflow-hidden">
+          <motion.div
+            animate={{ x: `-${active * cardPct}%` }}
+            transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+            className="flex"
+            style={{ width: `${total * 100}%` }}
+          >
+            {testimonials.map((t, i) => (
+              <div
+                key={i}
+                className="px-2 shrink-0"
+                style={{ width: `${cardPct}%` }}
+              >
+                <TestimonialCard t={t} highlighted={true} />
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Controls */}
+        <div className="flex items-center justify-between mt-10">
+          <div className="flex gap-2 flex-wrap">
+            {testimonials.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActive(i)}
+                className={`h-1.5 rounded-full transition-all ${i === active ? "w-8 bg-stone-900" : "w-1.5 bg-stone-300 hover:bg-stone-500"}`}
+                aria-label={`Testimonial ${i + 1}`}
+              />
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <button onClick={prev} aria-label="Previous testimonial" className="w-11 h-11 rounded-full border border-stone-300 bg-white hover:bg-stone-900 hover:text-white hover:border-stone-900 flex items-center justify-center transition-colors">
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button onClick={next} aria-label="Next testimonial" className="w-11 h-11 rounded-full border border-stone-300 bg-white hover:bg-stone-900 hover:text-white hover:border-stone-900 flex items-center justify-center transition-colors">
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function TestimonialCard({ t, highlighted }) {
+  return (
+    <div
+      className={`relative w-full rounded-3xl border transition-all duration-700 ${
+        highlighted
+          ? "bg-white border-stone-900 shadow-2xl scale-100 p-9 md:p-10"
+          : "bg-white/70 border-stone-200 shadow-sm scale-90 opacity-60 p-7 md:p-8"
+      }`}
+    >
+      <Quote
+        className={`w-9 h-9 mb-5 transition-colors ${
+          highlighted ? "text-primary" : "text-primary/30"
+        }`}
+        strokeWidth={2.5}
+      />
+      <div className="flex items-center gap-1 mb-5">
+        {[...Array(5)].map((_, j) => (
+          <Star
+            key={j}
+            className={`w-4 h-4 ${
+              j < t.rating ? "text-amber-500 fill-current" : "text-stone-300 fill-current"
+            }`}
+          />
+        ))}
+      </div>
+      <blockquote
+        className={`leading-relaxed text-stone-700 mb-6 ${
+          highlighted
+            ? "text-base md:text-lg font-medium"
+            : "text-sm line-clamp-4"
+        }`}
+      >
+        "{t.quote}"
+      </blockquote>
+      <div className="flex items-center gap-4 pt-5 border-t border-stone-200">
+        <div
+          className={`rounded-full bg-primary text-white flex items-center justify-center font-bold shrink-0 ${
+            highlighted ? "w-12 h-12 text-sm" : "w-10 h-10 text-xs"
+          }`}
+        >
+          {t.initials}
+        </div>
+        <div className="min-w-0">
+          <div className="font-bold text-stone-900 text-sm truncate">{t.name}</div>
+          <div className="text-xs text-stone-600 truncate">
+            {t.role} · {t.company}
+          </div>
+          <div className="text-[11px] text-primary font-semibold mt-0.5 uppercase tracking-wider truncate">
+            {t.service}
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
