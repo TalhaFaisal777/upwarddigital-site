@@ -143,16 +143,28 @@ function ContactForm() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log("Form submitted:", formData)
-    // Fire Meta Pixel Lead event with form metadata for ad optimization
     trackLead({
       content_name: "Contact Form",
       content_category: "lead_form",
       service: formData.service || "unspecified",
       budget: formData.budget || "unspecified",
     })
+
+    try {
+      await fetch("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          source: "contact_page",
+          ...formData,
+        }),
+      })
+    } catch (err) {
+      console.error("Submission failed:", err)
+    }
+
     alert("Thank you! We'll get back to you within 24 hours.")
     setFormData({
       name: "",

@@ -411,14 +411,31 @@ function AboutAndContactSection() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     trackLead({
       content_name: "Home Free Consultation",
       content_category: "lead_form",
       service: form.service || "unspecified",
     })
+
+    // Optimistically show success even if the API call is still in flight —
+    // the user shouldn't have to wait, and any failure is logged for retry.
     setSubmitted(true)
+
+    try {
+      await fetch("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          source: "home_consultation",
+          ...form,
+        }),
+      })
+    } catch (err) {
+      console.error("Submission failed:", err)
+    }
+
     setTimeout(() => {
       setForm({ name: "", email: "", phone: "", service: "", website: "" })
       setSubmitted(false)

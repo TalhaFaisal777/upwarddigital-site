@@ -1,0 +1,75 @@
+// Cloudflare Pages Function — returns all stored submissions, password-gated.
+// Auth: pass `Authorization: Bearer <ADMIN_PASSWORD>` header.
+// Requires QUERIES KV namespace + ADMIN_PASSWORD env var in CF Pages dashboard.
+
+export async function onRequestGet({ request, env }) {
+  const auth = request.headers.get("authorization") || ""
+  const expected = `Bearer ${env.ADMIN_PASSWORD || ""}`
+
+  if (!env.ADMIN_PASSWORD) {
+    return jsonResponse(
+      { ok: false, error: "ADMIN_PASSWORD env var not set in Cloudflare Pages settings." },
+      500
+    )
+  }
+
+  if (auth !== expected) {
+    return jsonResponse({ ok: false, error: "Unauthorized" }, 401)
+  }
+
+  if (!env.QUERIES) {
+    return jsonResponse(
+      { ok: false, error: "QUERIES KV namespace not bound. See README." },
+      500
+    )
+  }
+
+  // Paginate through KV keys (max 1000 per call).
+  const allKeys = []
+  let cursor
+  do {
+    const list = await env.QUERIES.list({ cursor, limit: 1000 })
+    allKeys.push(...list.keys)
+    cursor = list.list_complete ? null : list.cursor
+  } while (cursor)
+
+  // Newest first — keys start with `query:{epoch_ms}:...`
+  allKeys.sort((a, b) => (a.name < b.name ? 1 : a.name > b.name ? -1 : 0))
+
+  // Fetch all (parallel)
+  const submissions = (
+    await Promise.all(
+      allKeys.map(async (k) => {
+        const raw = await env.QUERIES.get(k.name)
+        if (!raw) return null
+        try {
+          return JSON.parse(raw)
+        } catch {
+          return null
+        }
+      })
+    )
+  ).filter(Boolean)
+
+  return jsonResponse({ ok: true, count: submissions.length, submissions })
+}
+
+function jsonResponse(body, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+  })
+}
+
+export async function onRequestOptions() {
+  return new Response(null, {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Authorization, Content-Type",
+    },
+  })
+}
