@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 import ScrollToTop from "@/components/common/ScrollToTop"
 import LoadingScreen from "@/components/common/LoadingScreen"
+import FloatingActions from "@/components/common/FloatingActions"
 import Home from "@/pages/Home"
 import About from "@/pages/About"
 import Services from "@/pages/Services"
@@ -59,6 +60,7 @@ function MainLayout() {
         <AnimatedRoutes />
       </main>
       <Footer />
+      <FloatingActions />
     </div>
   )
 }
