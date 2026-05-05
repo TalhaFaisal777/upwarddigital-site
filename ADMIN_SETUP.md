@@ -24,7 +24,29 @@ will save and the admin page will work.
 5. KV namespace: select the `QUERIES` namespace you just created
 6. Click **Save**
 
-## 3. Set the admin password
+## 3. (Optional but recommended) Email notifications via Resend
+
+Get an instant email every time someone submits a form.
+
+1. Sign up free at **https://resend.com** (no credit card)
+2. **API Keys** → Create API Key → copy the key (starts with `re_...`)
+3. In Cloudflare Pages → Settings → Variables and Secrets, add **two** variables:
+   - **`RESEND_API_KEY`** (Secret) = your Resend API key
+   - **`NOTIFICATION_EMAIL`** (Plaintext) = `upwarddigitalco@gmail.com`
+4. Save and redeploy.
+
+> **Note on the sender domain:** Submissions arrive from
+> `onboarding@resend.dev` by default — Resend's free shared sender. They
+> work immediately without DNS setup, but go to the email you signed up
+> with at Resend (so make sure you sign up with the email you want
+> notifications at, or set NOTIFICATION_EMAIL to the same email you used
+> at Resend signup).
+>
+> To send from `noreply@upwarddigitalco.com` instead, verify
+> `upwarddigitalco.com` in the Resend dashboard (3 DNS records) and
+> change the `from:` address in `functions/api/submit.js`.
+
+## 4. Set the admin password
 
 Still in **Settings → Bindings** (or **Variables and Secrets**):
 
