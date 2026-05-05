@@ -83,20 +83,76 @@ const offerings = [
 
 const testimonials = [
   {
-    quote: "UpwardDigital completely transformed our online presence. Our new website not only looks stunning but has increased our conversion rate by 340%. Their development team is world-class.",
-    name: "Sarah Johnson", role: "CEO", company: "TechVentures", initials: "SJ",
+    quote: "Upward Digital completely transformed our online presence with their advanced SEO services and local SEO strategies. Our Google rankings improved significantly, and we're now seeing consistent growth in organic traffic and website visibility. Their expertise in technical SEO, keyword optimization, and content strategy is truly outstanding. Highly recommended for businesses looking to scale online.",
+    name: "Michael Turner",
+    role: "Owner",
+    company: "BrightEdge Solutions",
+    service: "SEO Services",
+    initials: "MT",
+    rating: 5,
   },
   {
-    quote: "The SEO results have been nothing short of remarkable. We went from page 5 to the top 3 positions for our target keywords within six months. Organic traffic is up 280% year-over-year.",
-    name: "Michael Chen", role: "Marketing Director", company: "GrowthLabs", initials: "MC",
+    quote: "Upward Digital delivered a high-performance, responsive website that perfectly represents our brand. Their team focused on user experience, fast loading speed, and conversion-focused design. The result is a secure, mobile-friendly website that performs exceptionally well. If you need professional web development services, they are the right choice.",
+    name: "Sophia Martinez",
+    role: "Founder",
+    company: "Elite Interiors",
+    service: "Website Development",
+    initials: "SM",
+    rating: 5,
   },
   {
-    quote: "Their brand strategy work gave us a completely new identity that truly resonates with our audience. Customer engagement has skyrocketed and our brand recognition has never been stronger.",
-    name: "Emily Rodriguez", role: "Founder", company: "StyleHouse", initials: "ER",
+    quote: "Their Google Ads management and PPC campaigns have been a game changer for our business. Upward Digital optimised our campaigns with data-driven strategies, audience targeting, and conversion tracking, which improved our ROI and ad performance. Their approach to paid advertising and campaign optimisation is highly effective.",
+    name: "David Collins",
+    role: "Director",
+    company: "Prime Auto Group",
+    service: "Google Ads (PPC)",
+    initials: "DC",
+    rating: 4,
   },
   {
-    quote: "Working with UpwardDigital has been a game-changer for our business. Their comprehensive approach to digital marketing and development has streamlined our entire digital ecosystem.",
-    name: "David Park", role: "CTO", company: "DataFlow", initials: "DP",
+    quote: "Upward Digital helped us grow our brand with strategic social media marketing and content management. Their team created engaging campaigns that improved our brand visibility, audience engagement, and online presence. Their understanding of digital marketing trends and social media strategy is impressive.",
+    name: "Emma Richardson",
+    role: "Manager",
+    company: "Urban Style Co.",
+    service: "Social Media Marketing",
+    initials: "ER",
+    rating: 5,
+  },
+  {
+    quote: "Thanks to Upward Digital's local SEO and Google Maps optimisation, our business now ranks higher in local search results. We've seen a noticeable increase in website traffic and online visibility. Their expertise in Google Business Profile optimisation and local search strategies has made a real difference.",
+    name: "James Walker",
+    role: "CEO",
+    company: "Metro Services",
+    service: "Local SEO & Google Maps",
+    initials: "JW",
+    rating: 5,
+  },
+  {
+    quote: "Upward Digital delivered a high-performing website along with powerful SEO optimisation that improved our search rankings and online visibility. Their expertise in technical SEO, website speed optimisation, and responsive design made a huge impact. A reliable partner for long-term digital growth.",
+    name: "Daniel Brooks",
+    role: "Owner",
+    company: "NextGen Contractors",
+    service: "Web Development & SEO",
+    initials: "DB",
+    rating: 4,
+  },
+  {
+    quote: "Their digital marketing strategies, including Google Ads and social media marketing, significantly improved our brand visibility and online reach. Upward Digital focuses on data-driven marketing and performance optimisation, which helped us achieve consistent business growth. Highly professional team.",
+    name: "Laura Bennett",
+    role: "Founder",
+    company: "Wellness Hub",
+    service: "Digital Marketing",
+    initials: "LB",
+    rating: 5,
+  },
+  {
+    quote: "Upward Digital's local SEO services and Google Maps optimisation helped us rank higher in local search results. Our Google Business Profile is now fully optimised, and our online presence has improved across the USA market. Great results and excellent communication throughout the project.",
+    name: "Ryan Mitchell",
+    role: "CEO",
+    company: "CityLine Services",
+    service: "Local SEO",
+    initials: "RM",
+    rating: 4,
   },
 ]
 
@@ -342,58 +398,78 @@ export default function Home() {
 
       {/* ==================== TESTIMONIALS ==================== */}
       <section className="py-16 md:py-24">
-        <div className="max-w-4xl mx-auto px-6 md:px-8">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
           <SectionHeading
             subtitle="What clients say"
             title="Words from those we've grown."
           />
-          <div className="relative bg-white border border-stone-200 rounded-3xl p-10 md:p-14">
-            <Quote className="absolute -top-5 left-10 w-10 h-10 text-primary bg-cream p-1.5" />
+
+          {/* Sliding track — shows 1 card on mobile, 2 on tablet+ */}
+          <div className="relative overflow-hidden">
             <motion.div
-              key={activeTestimonial}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
+              animate={{ x: `calc(-${activeTestimonial} * (100% / ${testimonials.length}))` }}
+              transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+              className="flex"
+              style={{ width: `${(testimonials.length * 100) / 2}%` }}
             >
-              <div className="flex items-center gap-1 text-amber-500 mb-6">
-                {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 fill-current" />)}
-              </div>
-              <blockquote className="text-xl md:text-2xl leading-relaxed text-stone-800 mb-8 font-medium">
-                "{testimonials[activeTestimonial].quote}"
-              </blockquote>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold">
-                  {testimonials[activeTestimonial].initials}
-                </div>
-                <div>
-                  <div className="font-bold text-stone-900">{testimonials[activeTestimonial].name}</div>
-                  <div className="text-sm text-stone-600">
-                    {testimonials[activeTestimonial].role} · {testimonials[activeTestimonial].company}
+              {testimonials.map((t, i) => (
+                <div
+                  key={i}
+                  className="px-3 shrink-0"
+                  style={{ width: `${100 / testimonials.length}%` }}
+                >
+                  <div className="relative bg-white border border-stone-200 rounded-3xl p-8 md:p-10 h-full flex flex-col">
+                    <Quote className="w-9 h-9 text-primary/20 mb-5" strokeWidth={2.5} />
+                    <div className="flex items-center gap-1 mb-5">
+                      {[...Array(5)].map((_, j) => (
+                        <Star
+                          key={j}
+                          className={`w-4 h-4 ${j < t.rating ? "text-amber-500 fill-current" : "text-stone-300 fill-current"}`}
+                        />
+                      ))}
+                    </div>
+                    <blockquote className="text-base md:text-lg leading-relaxed text-stone-700 mb-6 flex-1">
+                      "{t.quote}"
+                    </blockquote>
+                    <div className="flex items-center gap-4 pt-5 border-t border-stone-200">
+                      <div className="w-11 h-11 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm shrink-0">
+                        {t.initials}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-bold text-stone-900 text-sm">{t.name}</div>
+                        <div className="text-xs text-stone-600 truncate">
+                          {t.role} · {t.company}
+                        </div>
+                        <div className="text-[11px] text-primary font-semibold mt-0.5 uppercase tracking-wider truncate">
+                          {t.service}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </motion.div>
+          </div>
 
-            {/* Controls */}
-            <div className="flex items-center justify-between mt-10 pt-8 border-t border-stone-200">
-              <div className="flex gap-2">
-                {testimonials.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveTestimonial(i)}
-                    className={`h-1.5 rounded-full transition-all ${i === activeTestimonial ? "w-8 bg-stone-900" : "w-1.5 bg-stone-300"}`}
-                    aria-label={`Testimonial ${i + 1}`}
-                  />
-                ))}
-              </div>
-              <div className="flex gap-2">
-                <button onClick={prevTestimonial} className="w-10 h-10 rounded-full border border-stone-300 hover:bg-stone-900 hover:text-white hover:border-stone-900 flex items-center justify-center transition-colors">
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-                <button onClick={nextTestimonial} className="w-10 h-10 rounded-full border border-stone-300 hover:bg-stone-900 hover:text-white hover:border-stone-900 flex items-center justify-center transition-colors">
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
+          {/* Controls */}
+          <div className="flex items-center justify-between mt-10">
+            <div className="flex gap-2">
+              {testimonials.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveTestimonial(i)}
+                  className={`h-1.5 rounded-full transition-all ${i === activeTestimonial ? "w-8 bg-stone-900" : "w-1.5 bg-stone-300 hover:bg-stone-500"}`}
+                  aria-label={`Testimonial ${i + 1}`}
+                />
+              ))}
+            </div>
+            <div className="flex gap-2">
+              <button onClick={prevTestimonial} aria-label="Previous testimonial" className="w-11 h-11 rounded-full border border-stone-300 hover:bg-stone-900 hover:text-white hover:border-stone-900 flex items-center justify-center transition-colors">
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button onClick={nextTestimonial} aria-label="Next testimonial" className="w-11 h-11 rounded-full border border-stone-300 hover:bg-stone-900 hover:text-white hover:border-stone-900 flex items-center justify-center transition-colors">
+                <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
           </div>
         </div>
