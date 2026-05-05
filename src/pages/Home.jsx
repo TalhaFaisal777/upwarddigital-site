@@ -388,14 +388,14 @@ function AboutAndContactSection() {
       />
       <div className="absolute -top-32 right-0 w-[500px] h-[500px] bg-blue-200/30 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-8 grid lg:grid-cols-5 gap-10 lg:gap-14 items-start">
+      <div className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-8 grid lg:grid-cols-2 gap-10 lg:gap-14 items-stretch">
         {/* LEFT — About content */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
-          className="lg:col-span-3"
+          className="flex flex-col justify-center"
         >
           <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-4">
             — About Us —
@@ -429,19 +429,10 @@ function AboutAndContactSection() {
             <p>
               As a trusted web development and SEO company in the USA, we focus
               on delivering measurable results. Our search engine optimization
-              (SEO) services are designed to improve Google rankings, increase
-              organic traffic, and generate high-quality leads. We implement
-              proven strategies including on-page SEO, off-page SEO, keyword
-              research, content optimization, and local SEO to help businesses
-              dominate search results.
-            </p>
-            <p>
-              In addition to SEO, we offer comprehensive digital marketing
-              services, including Google Ads management (PPC), Google Maps
-              optimization, social media marketing, and conversion rate
-              optimization (CRO). Our goal is to help businesses reach their
-              ideal audience, increase visibility, and drive consistent growth
-              both locally and nationwide across the USA.
+              services are designed to improve Google rankings, increase organic
+              traffic, and generate high-quality leads — through on-page SEO,
+              off-page SEO, keyword research, content optimization, and local
+              SEO that helps businesses dominate search results.
             </p>
             <p className="text-stone-900 font-semibold pt-2">
               At Upward Digital, we don't just build websites or run campaigns
@@ -460,86 +451,120 @@ function AboutAndContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, delay: 0.15 }}
-          className="lg:col-span-2 lg:sticky lg:top-32"
+          className="h-full"
         >
-          <div className="bg-white border border-stone-200 rounded-3xl p-7 sm:p-9 shadow-sm">
+          <div className="bg-blue-50/70 border border-blue-100 rounded-2xl p-7 sm:p-10 h-full flex flex-col">
             <div className="text-center mb-7">
               <h3 className="text-2xl md:text-3xl font-bold text-primary mb-3 tracking-tight">
-                Free Consultation
+                Contact Us — Free Consultation
               </h3>
-              <p className="text-stone-600 text-sm leading-relaxed">
+              <p className="text-stone-700 text-sm leading-relaxed">
                 Book a free consultation and let the best{" "}
                 <strong className="text-stone-900">
-                  website development &amp; SEO agency
+                  website development and SEO agency
                 </strong>{" "}
-                in the USA manage your project.
+                in USA manage your project.
               </p>
             </div>
 
             {submitted ? (
-              <div className="text-center py-10">
-                <div className="w-14 h-14 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mx-auto mb-4">
-                  <CheckCircle2 className="w-7 h-7 text-emerald-600" />
+              <div className="text-center py-16 flex-1 flex flex-col items-center justify-center">
+                <div className="w-16 h-16 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mb-5">
+                  <CheckCircle2 className="w-8 h-8 text-emerald-600" />
                 </div>
-                <p className="text-stone-900 font-semibold mb-1">Thank you!</p>
+                <p className="text-stone-900 font-bold text-lg mb-1">Thank you!</p>
                 <p className="text-stone-600 text-sm">
                   We'll get back to you within 24 hours.
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-3">
-                <Input
+              <form onSubmit={handleSubmit} className="space-y-4 flex-1 flex flex-col">
+                <input
                   type="text"
                   name="name"
                   placeholder="Full Name"
                   required
                   value={form.name}
                   onChange={handleChange}
+                  className="flex h-12 w-full rounded-md border border-stone-300 bg-white px-4 py-2 text-sm text-stone-900 placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200"
                 />
-                <Input
+
+                <input
                   type="email"
                   name="email"
                   placeholder="Email Address"
                   required
                   value={form.email}
                   onChange={handleChange}
+                  className="flex h-12 w-full rounded-md border border-stone-300 bg-white px-4 py-2 text-sm text-stone-900 placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200"
                 />
-                <Input
+
+                <input
                   type="tel"
                   name="phone"
                   placeholder="Phone / WhatsApp"
                   value={form.phone}
                   onChange={handleChange}
+                  className="flex h-12 w-full rounded-md border border-stone-300 bg-white px-4 py-2 text-sm text-stone-900 placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200"
                 />
-                <select
-                  name="service"
-                  required
-                  value={form.service}
-                  onChange={handleChange}
-                  className="flex h-11 w-full rounded-full border border-stone-300 bg-white px-5 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200 appearance-none cursor-pointer"
-                >
-                  <option value="">What service do you need?</option>
-                  <option>Web Development</option>
-                  <option>SEO Services</option>
-                  <option>Local SEO / Google Maps</option>
-                  <option>Google Ads (PPC)</option>
-                  <option>Social Media Marketing</option>
-                  <option>Branding &amp; Design</option>
-                  <option>Other</option>
-                </select>
-                <Input
-                  type="text"
-                  name="website"
-                  placeholder="Your Website (optional)"
-                  value={form.website}
-                  onChange={handleChange}
-                />
-                <Button type="submit" size="lg" className="w-full mt-2">
-                  Submit
-                </Button>
-                <p className="text-stone-500 text-xs text-center pt-1">
-                  We respond within 24 hours · No spam, ever.
-                </p>
+
+                <div>
+                  <label
+                    htmlFor="hf-service"
+                    className="block text-sm font-bold text-stone-900 mb-1.5"
+                  >
+                    What Service You Require?
+                  </label>
+                  <select
+                    id="hf-service"
+                    name="service"
+                    required
+                    value={form.service}
+                    onChange={handleChange}
+                    className="flex h-12 w-full rounded-md border border-stone-300 bg-white px-4 py-2 text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200 appearance-none cursor-pointer"
+                    style={{
+                      backgroundImage:
+                        "url(\"data:image/svg+xml;charset=US-ASCII,%3Csvg width='12' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2378716c' stroke-width='1.5' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E\")",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "right 1rem center",
+                    }}
+                  >
+                    <option value="">Select</option>
+                    <option>Web Development</option>
+                    <option>SEO Services</option>
+                    <option>Local SEO / Google Maps</option>
+                    <option>Google Ads (PPC)</option>
+                    <option>Social Media Marketing</option>
+                    <option>Branding &amp; Design</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="hf-website"
+                    className="block text-sm font-bold text-stone-900 mb-1.5"
+                  >
+                    Enter Your Website
+                  </label>
+                  <input
+                    id="hf-website"
+                    type="text"
+                    name="website"
+                    value={form.website}
+                    onChange={handleChange}
+                    className="flex h-12 w-full rounded-md border border-stone-300 bg-white px-4 py-2 text-sm text-stone-900 placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200"
+                  />
+                </div>
+
+                <div className="mt-auto pt-3">
+                  <button
+                    type="submit"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-md bg-primary text-white text-sm font-semibold hover:bg-blue-700 transition-colors"
+                  >
+                    Click To Submit
+                  </button>
+                </div>
               </form>
             )}
           </div>
