@@ -162,9 +162,8 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="text-base sm:text-lg md:text-xl text-stone-200 max-w-2xl mb-8 sm:mb-10 leading-relaxed"
           >
-            A full-service website development and digital marketing agency.
-            Custom-built websites, SEO that ranks, and marketing that turns clicks into customers.
-            <span className="block mt-3 text-white font-medium">Since 2015 · 120+ projects shipped.</span>
+            High-quality websites and data-driven SEO and marketing strategies
+            that turn traffic into real business results.
           </motion.p>
 
           <motion.div
