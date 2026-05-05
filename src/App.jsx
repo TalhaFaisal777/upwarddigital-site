@@ -13,6 +13,7 @@ import Portfolio from "@/pages/Portfolio"
 import Blog from "@/pages/Blog"
 import Contact from "@/pages/Contact"
 import Pricing from "@/pages/Pricing"
+import BlogPost from "@/pages/BlogPost"
 import AdMeta from "@/pages/ads/AdMeta"
 
 const pageTransition = {
@@ -46,6 +47,7 @@ function AnimatedRoutes() {
         <Route path="/services" element={<PageWrapper><Services /></PageWrapper>} />
         <Route path="/portfolio" element={<PageWrapper><Portfolio /></PageWrapper>} />
         <Route path="/blog" element={<PageWrapper><Blog /></PageWrapper>} />
+        <Route path="/blog/:slug" element={<PageWrapper><BlogPost /></PageWrapper>} />
         <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
         <Route path="/pricing" element={<PageWrapper><Pricing /></PageWrapper>} />
       </Routes>

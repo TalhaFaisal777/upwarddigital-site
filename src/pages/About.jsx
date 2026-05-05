@@ -2,6 +2,7 @@ import { motion } from "framer-motion"
 import { Target, Eye, Lightbulb, Shield, TrendingUp, Heart } from "lucide-react"
 import PageHero from "@/components/common/PageHero"
 import SectionHeading from "@/components/common/SectionHeading"
+import { useNoIndex } from "@/hooks/useNoIndex"
 
 const teamMembers = [
   { name: "Muhammad Talha", title: "CEO & Founder", initials: "MT" },
@@ -31,6 +32,7 @@ const coreValues = [
 ]
 
 export default function About() {
+  useNoIndex()
   return (
     <main className="bg-cream">
       <PageHero

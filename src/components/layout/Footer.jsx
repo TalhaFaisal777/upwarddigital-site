@@ -12,10 +12,10 @@ import { trackContact, trackSchedule, trackFooterCTAClick } from "@/lib/pixel"
 
 const quickLinks = [
   { name: "Home", path: "/" },
-  { name: "About Us", path: "/about" },
   { name: "Services", path: "/services" },
   { name: "Portfolio", path: "/portfolio" },
   { name: "Blog", path: "/blog" },
+  { name: "Pricing", path: "/pricing" },
   { name: "Contact", path: "/contact" },
 ]
 

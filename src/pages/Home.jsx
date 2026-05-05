@@ -17,7 +17,8 @@ import {
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { trackContact, trackSchedule, trackServiceInterest, trackLead } from "@/lib/pixel"
+import { trackContact, trackSchedule, trackServiceInterest, trackLead, trackBlogPostClick } from "@/lib/pixel"
+import { blogPosts } from "@/data/blogPosts"
 import SectionHeading from "@/components/common/SectionHeading"
 import ServiceCard from "@/components/common/ServiceCard"
 const PHONE_HREF = "tel:+12013040657"
@@ -166,20 +167,7 @@ const trustedBrands = [
 ]
 
 export default function Home() {
-  const [activeTestimonial, setActiveTestimonial] = useState(0)
   const [activeSlide, setActiveSlide] = useState(0)
-
-  const nextTestimonial = useCallback(() => {
-    setActiveTestimonial((p) => (p + 1) % testimonials.length)
-  }, [])
-  const prevTestimonial = useCallback(() => {
-    setActiveTestimonial((p) => (p - 1 + testimonials.length) % testimonials.length)
-  }, [])
-
-  useEffect(() => {
-    const id = setInterval(nextTestimonial, 6000)
-    return () => clearInterval(id)
-  }, [nextTestimonial])
 
   useEffect(() => {
     const id = setInterval(() => setActiveSlide((p) => (p + 1) % heroSlides.length), 5500)
@@ -397,12 +385,10 @@ export default function Home() {
       </section>
 
       {/* ==================== TESTIMONIALS ==================== */}
-      <TestimonialsSection
-        active={activeTestimonial}
-        setActive={setActiveTestimonial}
-        next={nextTestimonial}
-        prev={prevTestimonial}
-      />
+      <TestimonialsSection />
+
+      {/* ==================== BLOG TEASER ==================== */}
+      <BlogTeaserSection />
 
     </main>
   )
@@ -614,9 +600,56 @@ function AboutAndContactSection() {
 // ────────────────────────────────────────────────────────────────────────────
 // Testimonials section — 3 cards on desktop with highlighted center, 1 on mobile
 // ────────────────────────────────────────────────────────────────────────────
-function TestimonialsSection({ active, setActive, next, prev }) {
+function TestimonialsSection() {
   const total = testimonials.length
-  const cardPct = 100 / total
+  // Track has [...testimonials, ...testimonials] = 2 copies for seamless looping
+  const trackLength = total * 2
+  const cardPct = 100 / trackLength
+  // Position is a virtual index 0..trackLength-1; we snap from `total` back to 0 invisibly.
+  const [position, setPosition] = useState(0)
+  const [animate, setAnimate] = useState(true)
+
+  const goNext = useCallback(() => setPosition((p) => p + 1), [])
+  const goPrev = useCallback(() => setPosition((p) => p - 1), [])
+
+  // Auto-advance forever — no end, no pause
+  useEffect(() => {
+    const id = setInterval(goNext, 4500)
+    return () => clearInterval(id)
+  }, [goNext])
+
+  // Seamless wrap: when we cross into the second copy, jump back to the first
+  // copy at the equivalent position with no animation. To the eye, nothing changes.
+  useEffect(() => {
+    if (position >= total) {
+      const t = setTimeout(() => {
+        setAnimate(false)
+        setPosition((p) => p - total)
+        // Re-enable animation on the next tick
+        requestAnimationFrame(() => requestAnimationFrame(() => setAnimate(true)))
+      }, 700) // matches the slide duration
+      return () => clearTimeout(t)
+    }
+    if (position < 0) {
+      const t = setTimeout(() => {
+        setAnimate(false)
+        setPosition((p) => p + total)
+        requestAnimationFrame(() => requestAnimationFrame(() => setAnimate(true)))
+      }, 700)
+      return () => clearTimeout(t)
+    }
+  }, [position, total])
+
+  // The "logical" highlighted card uses real-modulo to handle the wrap range.
+  const activeIdx = ((position % total) + total) % total
+
+  // The duplicated track lets us slide forwards through 2 copies before snapping.
+  const trackCards = [...testimonials, ...testimonials]
+
+  // Desktop: 3 visible (translate puts position+1 in middle since we offset by 1)
+  // Mobile: 1 visible (translate by full card width per step)
+  const desktopX = -((position - 1) * cardPct)
+  const mobileX = -(position * cardPct)
 
   return (
     <section className="py-16 md:py-24 bg-cream">
@@ -626,21 +659,28 @@ function TestimonialsSection({ active, setActive, next, prev }) {
           title="Words from those we've grown."
         />
 
-        {/* Desktop: 3 cards visible, middle highlighted */}
+        {/* Desktop: 3 cards visible, center highlighted */}
         <div className="hidden md:block overflow-hidden py-8">
           <motion.div
-            animate={{ x: `-${(active - 1) * cardPct}%` }}
-            transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+            animate={{ x: `${desktopX}%` }}
+            transition={
+              animate
+                ? { duration: 0.7, ease: [0.4, 0, 0.2, 1] }
+                : { duration: 0 }
+            }
             className="flex"
-            style={{ width: `${(total * 100) / 3}%` }}
+            style={{ width: `${(trackLength * 100) / 3}%` }}
           >
-            {testimonials.map((t, i) => (
+            {trackCards.map((t, i) => (
               <div
                 key={i}
                 className="px-3 shrink-0 flex items-center"
                 style={{ width: `${cardPct}%` }}
               >
-                <TestimonialCard t={t} highlighted={i === active} />
+                <TestimonialCard
+                  t={t}
+                  highlighted={i % total === activeIdx}
+                />
               </div>
             ))}
           </motion.div>
@@ -649,12 +689,16 @@ function TestimonialsSection({ active, setActive, next, prev }) {
         {/* Mobile: 1 card at a time */}
         <div className="md:hidden overflow-hidden">
           <motion.div
-            animate={{ x: `-${active * cardPct}%` }}
-            transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+            animate={{ x: `${mobileX}%` }}
+            transition={
+              animate
+                ? { duration: 0.6, ease: [0.4, 0, 0.2, 1] }
+                : { duration: 0 }
+            }
             className="flex"
-            style={{ width: `${total * 100}%` }}
+            style={{ width: `${trackLength * 100}%` }}
           >
-            {testimonials.map((t, i) => (
+            {trackCards.map((t, i) => (
               <div
                 key={i}
                 className="px-2 shrink-0"
@@ -672,17 +716,29 @@ function TestimonialsSection({ active, setActive, next, prev }) {
             {testimonials.map((_, i) => (
               <button
                 key={i}
-                onClick={() => setActive(i)}
-                className={`h-1.5 rounded-full transition-all ${i === active ? "w-8 bg-stone-900" : "w-1.5 bg-stone-300 hover:bg-stone-500"}`}
+                onClick={() => setPosition(i)}
+                className={`h-1.5 rounded-full transition-all ${
+                  i === activeIdx
+                    ? "w-8 bg-stone-900"
+                    : "w-1.5 bg-stone-300 hover:bg-stone-500"
+                }`}
                 aria-label={`Testimonial ${i + 1}`}
               />
             ))}
           </div>
           <div className="flex gap-2">
-            <button onClick={prev} aria-label="Previous testimonial" className="w-11 h-11 rounded-full border border-stone-300 bg-white hover:bg-stone-900 hover:text-white hover:border-stone-900 flex items-center justify-center transition-colors">
+            <button
+              onClick={goPrev}
+              aria-label="Previous testimonial"
+              className="w-11 h-11 rounded-full border border-stone-300 bg-white hover:bg-stone-900 hover:text-white hover:border-stone-900 flex items-center justify-center transition-colors"
+            >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <button onClick={next} aria-label="Next testimonial" className="w-11 h-11 rounded-full border border-stone-300 bg-white hover:bg-stone-900 hover:text-white hover:border-stone-900 flex items-center justify-center transition-colors">
+            <button
+              onClick={goNext}
+              aria-label="Next testimonial"
+              className="w-11 h-11 rounded-full border border-stone-300 bg-white hover:bg-stone-900 hover:text-white hover:border-stone-900 flex items-center justify-center transition-colors"
+            >
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
@@ -745,5 +801,81 @@ function TestimonialCard({ t, highlighted }) {
         </div>
       </div>
     </div>
+  )
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// Blog teaser section — links to /blog/:slug detail pages
+// ────────────────────────────────────────────────────────────────────────────
+function BlogTeaserSection() {
+  const featured = blogPosts.slice(0, 3)
+  return (
+    <section className="py-16 md:py-24 bg-white border-t border-stone-200">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+          <div className="max-w-2xl">
+            <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-3">
+              — From the Blog —
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight text-stone-900">
+              Insights to help your business <em className="font-serif italic font-medium text-primary">grow online</em>.
+            </h2>
+          </div>
+          <Link
+            to="/blog"
+            className="inline-flex items-center gap-2 text-stone-900 font-semibold text-sm hover:text-primary transition-colors group shrink-0"
+          >
+            View all articles
+            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </Link>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+          {featured.map((post, i) => (
+            <motion.article
+              key={post.slug}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+            >
+              <Link
+                to={`/blog/${post.slug}`}
+                onClick={() => trackBlogPostClick(post.title)}
+                className="group flex flex-col h-full bg-white border border-stone-200 rounded-3xl overflow-hidden hover:border-stone-900 hover:shadow-lg transition-all duration-300"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden bg-stone-100">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    loading="lazy"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className="inline-block bg-white/95 backdrop-blur text-stone-900 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">
+                      {post.category}
+                    </span>
+                  </div>
+                </div>
+                <div className="p-6 flex flex-col flex-1">
+                  <h3 className="text-lg font-bold text-stone-900 leading-snug mb-3 group-hover:text-primary transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-stone-600 text-sm leading-relaxed mb-5 flex-1 line-clamp-3">
+                    {post.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between pt-4 border-t border-stone-200 text-xs text-stone-500">
+                    <span>{post.date}</span>
+                    <span className="flex items-center gap-1">
+                      {post.readTime}
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }

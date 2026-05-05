@@ -1,0 +1,93 @@
+// SEO-optimized blog posts targeting our niche keywords:
+// "website development USA", "SEO agency", "local SEO", "Google Ads",
+// "digital marketing for service businesses", etc.
+
+export const blogPosts = [
+  {
+    slug: "local-seo-guide-service-businesses-2026",
+    category: "Local SEO",
+    title: "The Complete Local SEO Guide for Service Businesses in 2026",
+    excerpt:
+      "How to dominate Google's local pack and the Map results in your city — real strategies we use for our clients across the USA.",
+    author: "Muhammad Talha",
+    date: "May 2, 2026",
+    readTime: "11 min",
+    image: "/services/google-maps.jpg",
+    keywords: ["local seo", "google maps optimization", "google business profile", "service business marketing"],
+    body: [
+      "If you run a service business — limousine, taxi, glazier, contractor, kitchen showroom, dental office — your customers aren't searching on Google like they used to. They're searching with intent: \"airport shuttle near me\", \"glass repair Toronto\", \"plumber open now\".",
+      "Local SEO is the difference between being the first business they call and never being seen at all. Here's the exact framework we use at Upward Digital to put service businesses on Page 1 of Google in under 90 days.",
+      "## 1. Optimize Your Google Business Profile (GBP)",
+      "Your GBP is now the most valuable real estate in local search. A fully optimized profile can drive 60–80% of your phone calls and direction requests. Fill out every field, add 30+ photos, post weekly updates, and respond to every review within 24 hours.",
+      "## 2. Build Citations That Match Exactly",
+      "Inconsistent NAP (Name, Address, Phone) data on directory listings tanks your rankings. We audit and fix every citation across Yelp, BBB, Apple Maps, Bing Places, and 50+ other relevant directories.",
+      "## 3. Earn Reviews Strategically",
+      "Star ratings affect both your ranking and click-through rate. Set up an automated SMS follow-up after every job that asks for a Google review. Aim for at least 50 reviews in your first 6 months, with a 4.5+ average.",
+      "## 4. Create Hyper-Local Content",
+      "City pages, neighborhood landing pages, and blog posts about local events or seasonal services boost relevance. Don't just say \"we serve California\" — name every city, suburb, and ZIP code where you operate.",
+      "## 5. Build Local Backlinks",
+      "Sponsorships, chamber of commerce listings, and partnerships with non-competing local businesses build domain authority faster than any generic SEO tactic.",
+      "**Want us to do it for you?** Book a free 30-minute audit and we'll show you exactly what's broken in your current local SEO and how to fix it.",
+    ],
+  },
+  {
+    slug: "website-development-cost-usa-2026",
+    category: "Web Development",
+    title: "How Much Does Website Development Cost in the USA in 2026?",
+    excerpt:
+      "Real numbers from over 120 projects we've delivered. What you should pay for a custom site, e-commerce store, or web app.",
+    author: "James Wilson",
+    date: "Apr 28, 2026",
+    readTime: "9 min",
+    image: "/services/web-dev.jpg",
+    keywords: ["website development cost", "custom website pricing", "web development USA", "ecommerce website cost"],
+    body: [
+      "Website development pricing in the USA is all over the place. Freelancers quote $500. Agencies quote $50,000. Both can build the same brochure site. The difference is in the strategy, the conversion focus, and what happens after launch.",
+      "Here's what actually drives the price, based on 120+ projects Upward Digital has shipped since 2015.",
+      "## Brochure / Service Business Site (5–15 pages): $1,500 – $6,000",
+      "Custom design, mobile-responsive, basic local SEO foundations, contact forms, Google Business Profile integration. This is where most service businesses (limos, taxis, contractors, dental, salons) should start.",
+      "## E-Commerce Store on Shopify: $3,500 – $12,000",
+      "Custom theme or theme customization, up to 100 products imported, payment gateway setup, shipping rules, SEO-optimized collections, and conversion-optimized checkout.",
+      "## Custom Web Application: $15,000 – $80,000+",
+      "Bookings, dashboards, multi-tenant SaaS, real-time data — anything that requires a database and authentication. Pricing scales with feature complexity.",
+      "## What Affects The Price Most",
+      "1. **Custom design vs. template** — 40% of the price difference",
+      "2. **Number of pages and content blocks** — directly proportional",
+      "3. **Integrations** (CRM, payment, booking, MLS, ERP) — each adds $500–$5,000",
+      "4. **Performance optimization** — the difference between a 2-second site and a 6-second site",
+      "5. **Post-launch SEO and maintenance** — most agencies forget to budget this",
+      "**Want a custom quote?** We'll review your needs in a free 30-min call and send a fixed-scope proposal — no boilerplate.",
+    ],
+  },
+  {
+    slug: "google-ads-vs-seo-which-is-better",
+    category: "Digital Marketing",
+    title: "Google Ads vs SEO: Which Should Your Business Invest In First?",
+    excerpt:
+      "The honest answer most agencies won't give you. When to use Google Ads, when to invest in SEO, and how to combine both for maximum ROI.",
+    author: "Maya Patel",
+    date: "Apr 21, 2026",
+    readTime: "8 min",
+    image: "/services/google-ads.jpg",
+    keywords: ["google ads vs seo", "ppc vs seo", "digital marketing strategy", "small business marketing"],
+    body: [
+      "Every service business owner asks us the same question: \"Should I run Google Ads, or invest in SEO?\" The honest answer most agencies won't tell you: it depends on your timeline and your cash flow.",
+      "## When Google Ads Wins",
+      "**Need leads this week?** Google Ads. The moment your campaign goes live, your phone starts ringing. The downside: you stop paying, the leads stop. It's renting traffic, not owning it.",
+      "Best-suited for: new businesses, time-sensitive promotions, geographic expansions, businesses with high lifetime value per customer.",
+      "## When SEO Wins",
+      "**Need sustainable growth?** SEO. Initial investment is higher in time (90–180 days to see real movement), but compounds for years. Once you rank, the leads are essentially free.",
+      "Best-suited for: established businesses, content-heavy industries, service businesses serving a fixed local area, anyone with a 12+ month horizon.",
+      "## Why Smart Businesses Use Both",
+      "Google Ads gives you immediate visibility while SEO builds. Then as organic traffic grows, you can dial down ad spend without losing leads. The combined approach is what we recommend to 90% of our service business clients.",
+      "## The Real Numbers (From Our Client Data)",
+      "- Average Google Ads cost-per-lead: $35–$120 (industry-dependent)",
+      "- Average SEO cost-per-lead at month 12: $8–$25",
+      "- ROI difference at year 2: SEO wins by 4-6×",
+      "**Not sure which fits your business?** Book a free strategy call. We'll look at your industry, geography, and goals — and give you a straight answer.",
+    ],
+  },
+]
+
+export const blogPostBySlug = (slug) =>
+  blogPosts.find((p) => p.slug === slug)
