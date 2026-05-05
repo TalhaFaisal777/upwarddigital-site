@@ -47,9 +47,26 @@ export async function onRequestPost({ request, env }) {
     }
 
     // 2. Email notification — best-effort, never blocks the response
+    console.log(
+      "[email-debug] RESEND_API_KEY present:",
+      !!env.RESEND_API_KEY,
+      "NOTIFICATION_EMAIL:",
+      env.NOTIFICATION_EMAIL || "(not set)"
+    )
     if (env.RESEND_API_KEY && env.NOTIFICATION_EMAIL) {
-      sendNotificationEmail(env.RESEND_API_KEY, env.NOTIFICATION_EMAIL, submission).catch(
-        (err) => console.error("Email notification failed:", err)
+      try {
+        await sendNotificationEmail(
+          env.RESEND_API_KEY,
+          env.NOTIFICATION_EMAIL,
+          submission
+        )
+        console.log("[email-debug] Notification email sent successfully")
+      } catch (err) {
+        console.error("[email-debug] Email notification failed:", err.message || err)
+      }
+    } else {
+      console.warn(
+        "[email-debug] Skipping email — required env vars missing"
       )
     }
 
