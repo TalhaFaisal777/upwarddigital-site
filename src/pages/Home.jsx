@@ -408,35 +408,20 @@ function AboutAndContactSection() {
           <div className="space-y-5 text-stone-600 text-base md:text-lg leading-relaxed">
             <p>
               Upward Digital is a leading website development and SEO agency in
-              the USA, founded in 2015 with a vision to help businesses grow
-              through powerful, results-driven digital solutions. Our mission
-              is to transform how brands establish their online presence by
-              delivering high-performance websites, advanced SEO strategies,
-              and data-driven digital marketing services across the USA and
-              globally.
+              the USA, founded in 2015 to help businesses grow through powerful,
+              results-driven digital solutions.
             </p>
             <p>
-              What started as a small team of passionate experts has grown into
-              a full-service digital agency specializing in{" "}
+              We're a full-service digital agency specialising in{" "}
               <strong className="text-stone-900">
                 web development, local SEO, technical SEO, and performance
                 marketing
-              </strong>
-              . Our team combines creativity with technical expertise to build
-              scalable, secure, and user-friendly websites that not only look
-              great but also convert visitors into loyal customers.
-            </p>
-            <p>
-              As a trusted web development and SEO company in the USA, we focus
-              on delivering measurable results. Our search engine optimization
-              services are designed to improve Google rankings, increase organic
-              traffic, and generate high-quality leads — through on-page SEO,
-              off-page SEO, keyword research, content optimization, and local
-              SEO that helps businesses dominate search results.
+              </strong>{" "}
+              — building scalable, secure, user-friendly websites that turn
+              visitors into loyal customers.
             </p>
             <p className="text-stone-900 font-semibold pt-2">
-              At Upward Digital, we don't just build websites or run campaigns
-              — we create{" "}
+              We don't just build websites — we create{" "}
               <em className="font-serif italic text-primary">
                 growth-focused digital systems
               </em>{" "}
@@ -533,23 +518,6 @@ function AboutAndContactSection() {
                     <option>Website Development</option>
                     <option>SEO Services</option>
                   </select>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="hf-website"
-                    className="block text-sm font-bold text-stone-900 mb-1.5"
-                  >
-                    Enter Your Website
-                  </label>
-                  <input
-                    id="hf-website"
-                    type="text"
-                    name="website"
-                    value={form.website}
-                    onChange={handleChange}
-                    className="flex h-12 w-full rounded-md border border-stone-300 bg-white px-4 py-2 text-sm text-stone-900 placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200"
-                  />
                 </div>
 
                 <div className="mt-auto pt-3">
