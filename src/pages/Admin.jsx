@@ -23,7 +23,6 @@ export default function Admin() {
     const form = new FormData(e.currentTarget)
     const password = form.get("password")
     if (!password) return
-    // Try the password by hitting /api/queries — if it succeeds, it's valid.
     setLoginError("")
     try {
       const res = await fetch("/api/queries", {
@@ -31,6 +30,14 @@ export default function Admin() {
       })
       if (res.status === 401) {
         setLoginError("Wrong password.")
+        return
+      }
+      // Detect "API not running" — Vite dev returns the SPA index.html
+      const ct = res.headers.get("content-type") || ""
+      if (!ct.includes("application/json")) {
+        setLoginError(
+          "API endpoint not reachable. The admin panel only works on the deployed site (upwarddigitalco.com) or via `wrangler pages dev`. The Vite dev server doesn't run Cloudflare Pages Functions."
+        )
         return
       }
       if (!res.ok) {
@@ -56,6 +63,13 @@ export default function Admin() {
       if (res.status === 401) {
         sessionStorage.removeItem(TOKEN_KEY)
         setToken(null)
+        return
+      }
+      const ct = res.headers.get("content-type") || ""
+      if (!ct.includes("application/json")) {
+        setError(
+          "API endpoint returned non-JSON. Admin only works on the deployed site or via `wrangler pages dev` — the Vite dev server doesn't run Cloudflare Pages Functions."
+        )
         return
       }
       const data = await res.json()
