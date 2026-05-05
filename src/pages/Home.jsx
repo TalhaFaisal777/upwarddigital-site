@@ -235,10 +235,9 @@ export default function Home() {
             subtitle="What we do"
             title={
               <>
-                Everything your brand needs to <em className="font-serif italic font-medium text-primary">show up</em> and grow.
+                Everything for <em className="font-serif italic font-medium text-primary">your brand</em>.
               </>
             }
-            description="Full-service digital — design, development, SEO, and marketing — under one roof."
           />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {services.map((s, i) => (
