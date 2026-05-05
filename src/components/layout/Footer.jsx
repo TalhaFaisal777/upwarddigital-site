@@ -8,6 +8,7 @@ import {
   Linkedin,
   ArrowUpRight,
 } from "lucide-react"
+import { trackContact, trackSchedule, trackFooterCTAClick } from "@/lib/pixel"
 
 const quickLinks = [
   { name: "Home", path: "/" },
@@ -44,6 +45,11 @@ export default function Footer() {
           </h3>
           <a
             href="tel:+12013040657"
+            onClick={() => {
+              trackContact({ method: "phone", source: "footer_cta" })
+              trackSchedule({ source: "footer_cta" })
+              trackFooterCTAClick("book_free_call")
+            }}
             className="inline-flex items-center gap-2 bg-white text-stone-900 px-7 py-3.5 rounded-full font-medium hover:bg-blue-400 hover:text-white transition-colors group"
           >
             Book a free call
@@ -73,6 +79,7 @@ export default function Footer() {
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackContact({ method: "social", source: `footer_${s.label.toLowerCase()}` })}
                   aria-label={s.label}
                   className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-stone-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-colors"
                 >

@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer"
 import ScrollToTop from "@/components/common/ScrollToTop"
 import LoadingScreen from "@/components/common/LoadingScreen"
 import FloatingActions from "@/components/common/FloatingActions"
+import usePixelTracking from "@/hooks/usePixelTracking"
 import Home from "@/pages/Home"
 import About from "@/pages/About"
 import Services from "@/pages/Services"
@@ -53,6 +54,7 @@ function AnimatedRoutes() {
 }
 
 function MainLayout() {
+  usePixelTracking()
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />

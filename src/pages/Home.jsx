@@ -16,6 +16,7 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { trackContact, trackSchedule, trackServiceInterest } from "@/lib/pixel"
 import SectionHeading from "@/components/common/SectionHeading"
 import ServiceCard from "@/components/common/ServiceCard"
 const PHONE_HREF = "tel:+12013040657"
@@ -179,7 +180,14 @@ export default function Home() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3"
           >
-            <a href={PHONE_HREF} className="inline-flex items-center justify-center gap-2 bg-white text-stone-900 px-6 sm:px-7 py-3.5 sm:py-4 rounded-full text-base font-semibold hover:bg-blue-400 hover:text-white transition-colors group">
+            <a
+              href={PHONE_HREF}
+              onClick={() => {
+                trackContact({ method: "phone", source: "hero" })
+                trackSchedule({ source: "hero", offer: "free_strategy_call" })
+              }}
+              className="inline-flex items-center justify-center gap-2 bg-white text-stone-900 px-6 sm:px-7 py-3.5 sm:py-4 rounded-full text-base font-semibold hover:bg-blue-400 hover:text-white transition-colors group"
+            >
               <Phone className="w-5 h-5" />
               Book a free strategy call
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />

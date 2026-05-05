@@ -23,6 +23,7 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion"
 import { useNoIndex } from "@/hooks/useNoIndex"
+import { trackLead, trackContact } from "@/lib/pixel"
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -145,6 +146,13 @@ function ContactForm() {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log("Form submitted:", formData)
+    // Fire Meta Pixel Lead event with form metadata for ad optimization
+    trackLead({
+      content_name: "Contact Form",
+      content_category: "lead_form",
+      service: formData.service || "unspecified",
+      budget: formData.budget || "unspecified",
+    })
     alert("Thank you! We'll get back to you within 24 hours.")
     setFormData({
       name: "",
@@ -505,6 +513,7 @@ function SocialLinksSection() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackContact({ method: "social", source: `contact_${social.label.toLowerCase()}` })}
                 aria-label={social.label}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}

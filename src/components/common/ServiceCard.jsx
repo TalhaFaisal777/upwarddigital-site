@@ -1,6 +1,7 @@
 import { motion } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
 import { Link } from "react-router-dom"
+import { trackServiceInterest } from "@/lib/pixel"
 
 export default function ServiceCard({ icon: Icon, title, description, link = "/services", index = 0 }) {
   return (
@@ -20,6 +21,7 @@ export default function ServiceCard({ icon: Icon, title, description, link = "/s
       <p className="text-stone-600 mb-6 leading-relaxed">{description}</p>
       <Link
         to={link}
+        onClick={() => trackServiceInterest(title)}
         className="inline-flex items-center gap-1.5 text-stone-900 text-sm font-medium hover:text-primary transition-colors"
       >
         Learn more

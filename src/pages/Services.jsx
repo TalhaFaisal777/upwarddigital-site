@@ -18,6 +18,7 @@ import PageHero from "@/components/common/PageHero"
 import SectionHeading from "@/components/common/SectionHeading"
 import { Badge } from "@/components/ui/badge"
 import WhatsAppIcon from "@/components/common/WhatsAppIcon"
+import { trackContact, trackSchedule } from "@/lib/pixel"
 
 const PHONE_HREF = "tel:+12013040657"
 const WHATSAPP_HREF = "https://wa.me/18302241590"
@@ -257,12 +258,25 @@ export default function Services() {
             Let's discuss your project and create a strategy tailored to your goals.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href={PHONE_HREF} className="inline-flex items-center gap-2 bg-white text-stone-900 px-7 py-4 rounded-full text-base font-medium hover:bg-blue-400 hover:text-white transition-colors group">
+            <a
+              href={PHONE_HREF}
+              onClick={() => {
+                trackContact({ method: "phone", source: "services_cta" })
+                trackSchedule({ source: "services_cta" })
+              }}
+              className="inline-flex items-center gap-2 bg-white text-stone-900 px-7 py-4 rounded-full text-base font-medium hover:bg-blue-400 hover:text-white transition-colors group"
+            >
               <Phone className="w-5 h-5" />
               Call us now
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </a>
-            <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-[#25D366] text-white px-7 py-4 rounded-full text-base font-medium hover:bg-[#1ebe5d] transition-colors">
+            <a
+              href={WHATSAPP_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackContact({ method: "whatsapp", source: "services_cta" })}
+              className="inline-flex items-center gap-2 bg-[#25D366] text-white px-7 py-4 rounded-full text-base font-medium hover:bg-[#1ebe5d] transition-colors"
+            >
               <WhatsAppIcon className="w-5 h-5" />
               WhatsApp
             </a>

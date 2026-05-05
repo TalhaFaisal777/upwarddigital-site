@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Phone } from "lucide-react"
 import WhatsAppIcon from "@/components/common/WhatsAppIcon"
+import { trackContact } from "@/lib/pixel"
 
 const PHONE_HREF = "tel:+12013040657"
 const WHATSAPP_HREF = "https://wa.me/18302241590"
@@ -51,11 +52,11 @@ export default function Navbar() {
           <span className="hidden sm:inline font-medium">Free 30-min strategy call — limited slots this month</span>
           <span className="sm:hidden font-medium">Free strategy call</span>
           <span className="hidden sm:inline opacity-50">·</span>
-          <a href={PHONE_HREF} className="inline-flex items-center gap-1.5 font-semibold text-blue-300 hover:text-white">
+          <a href={PHONE_HREF} onClick={() => trackContact({ method: "phone", source: "announcement_bar" })} className="inline-flex items-center gap-1.5 font-semibold text-blue-300 hover:text-white">
             <Phone className="w-3.5 h-3.5" />
             <span className="hidden xs:inline sm:inline">+1 </span>(201) 304-0657
           </a>
-          <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center gap-1.5 font-semibold text-green-300 hover:text-white">
+          <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" onClick={() => trackContact({ method: "whatsapp", source: "announcement_bar" })} className="hidden sm:inline-flex items-center gap-1.5 font-semibold text-green-300 hover:text-white">
             <WhatsAppIcon className="w-3.5 h-3.5" />
             WhatsApp
           </a>
@@ -109,6 +110,7 @@ export default function Navbar() {
             <div className="flex items-center gap-2">
               <a
                 href={PHONE_HREF}
+                onClick={() => trackContact({ method: "phone", source: "navbar" })}
                 className={`hidden lg:inline-flex items-center gap-2 h-9 px-4 rounded-full text-sm font-medium transition-colors ${
                   useDarkOverlay
                     ? "bg-stone-900 text-white hover:bg-primary"
@@ -118,7 +120,13 @@ export default function Navbar() {
                 <Phone className="w-4 h-4" />
                 Call Us Now
               </a>
-              <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="hidden lg:inline-flex items-center gap-2 h-9 px-4 rounded-full bg-[#25D366] text-white text-sm font-medium hover:bg-[#1ebe5d] transition-colors">
+              <a
+                href={WHATSAPP_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackContact({ method: "whatsapp", source: "navbar" })}
+                className="hidden lg:inline-flex items-center gap-2 h-9 px-4 rounded-full bg-[#25D366] text-white text-sm font-medium hover:bg-[#1ebe5d] transition-colors"
+              >
                 <WhatsAppIcon className="w-4 h-4" />
                 WhatsApp
               </a>
@@ -185,11 +193,11 @@ export default function Navbar() {
                   ))}
                 </div>
                 <div className="p-6 border-t border-stone-900/10 space-y-3">
-                  <a href={PHONE_HREF} className="flex items-center justify-center gap-2 w-full h-11 rounded-full bg-stone-900 text-white text-sm font-medium hover:bg-primary transition-colors">
+                  <a href={PHONE_HREF} onClick={() => trackContact({ method: "phone", source: "mobile_menu" })} className="flex items-center justify-center gap-2 w-full h-11 rounded-full bg-stone-900 text-white text-sm font-medium hover:bg-primary transition-colors">
                     <Phone className="w-4 h-4" />
                     Call Us Now
                   </a>
-                  <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 w-full h-11 rounded-full bg-[#25D366] text-white text-sm font-medium hover:bg-[#1ebe5d] transition-colors">
+                  <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" onClick={() => trackContact({ method: "whatsapp", source: "mobile_menu" })} className="flex items-center justify-center gap-2 w-full h-11 rounded-full bg-[#25D366] text-white text-sm font-medium hover:bg-[#1ebe5d] transition-colors">
                     <WhatsAppIcon className="w-5 h-5" />
                     WhatsApp
                   </a>

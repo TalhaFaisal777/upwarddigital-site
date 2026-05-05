@@ -1,5 +1,6 @@
 import { Phone } from "lucide-react"
 import WhatsAppIcon from "@/components/common/WhatsAppIcon"
+import { trackContact } from "@/lib/pixel"
 
 const PHONE_HREF = "tel:+12013040657"
 const WHATSAPP_HREF = "https://wa.me/18302241590"
@@ -10,6 +11,7 @@ export default function FloatingActions() {
       {/* Call button */}
       <a
         href={PHONE_HREF}
+        onClick={() => trackContact({ method: "phone", source: "floating" })}
         aria-label="Call us"
         className="group relative flex items-center justify-center w-14 h-14 sm:w-14 sm:h-14 rounded-full bg-stone-900 text-white shadow-2xl hover:bg-primary transition-colors"
       >
@@ -24,6 +26,7 @@ export default function FloatingActions() {
         href={WHATSAPP_HREF}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackContact({ method: "whatsapp", source: "floating" })}
         aria-label="Chat on WhatsApp"
         className="group relative flex items-center justify-center w-14 h-14 sm:w-14 sm:h-14 rounded-full bg-[#25D366] text-white shadow-2xl hover:bg-[#1ebe5d] transition-colors"
       >

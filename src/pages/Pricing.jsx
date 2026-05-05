@@ -14,6 +14,7 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion"
 import { useNoIndex } from "@/hooks/useNoIndex"
+import { trackContact, trackSchedule, trackInitiateCheckout, trackPricingTierClick } from "@/lib/pixel"
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -230,7 +231,20 @@ function PricingCard({ tier, isAnnual, index }) {
           </ul>
 
           {/* CTA Button */}
-          <a href={tier.linkTo} className="mt-auto">
+          <a
+            href={tier.linkTo}
+            onClick={() => {
+              trackPricingTierClick(tier.name)
+              trackInitiateCheckout({
+                content_name: tier.name,
+                content_category: "pricing_tier",
+                value: price ?? 0,
+                currency: "USD",
+              })
+              trackContact({ method: "phone", source: `pricing_tier_${tier.name.toLowerCase()}` })
+            }}
+            className="mt-auto"
+          >
             <Button
               variant={tier.buttonVariant}
               size="lg"

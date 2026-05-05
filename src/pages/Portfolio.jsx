@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import SectionHeading from "@/components/common/SectionHeading"
 import PageHero from "@/components/common/PageHero"
 import WhatsAppIcon from "@/components/common/WhatsAppIcon"
+import { trackContact, trackSchedule, trackPortfolioClick, trackOutboundClick } from "@/lib/pixel"
 
 const PHONE_HREF = "tel:+12013040657"
 const WHATSAPP_HREF = "https://wa.me/18302241590"
@@ -148,6 +149,10 @@ export default function Portfolio() {
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => {
+                      trackPortfolioClick(project.name)
+                      trackOutboundClick(project.url, project.name)
+                    }}
                     className="block h-full"
                   >
                     <Card className="overflow-hidden group hover:border-primary transition-all duration-500 h-full">
@@ -302,7 +307,13 @@ export default function Portfolio() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
               <Button asChild size="lg" className="gap-2">
-                <a href={PHONE_HREF}>
+                <a
+                  href={PHONE_HREF}
+                  onClick={() => {
+                    trackContact({ method: "phone", source: "portfolio_cta" })
+                    trackSchedule({ source: "portfolio_cta" })
+                  }}
+                >
                   <Phone className="w-5 h-5" />
                   Call Us Now
                 </a>
@@ -311,6 +322,7 @@ export default function Portfolio() {
                 href={WHATSAPP_HREF}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackContact({ method: "whatsapp", source: "portfolio_cta" })}
                 className="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-full bg-[#25D366] text-white text-base font-medium hover:bg-[#1ebe5d] transition-colors"
               >
                 <WhatsAppIcon className="w-5 h-5" />
