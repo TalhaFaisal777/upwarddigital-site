@@ -420,6 +420,12 @@ function AboutAndContactSection() {
               — building scalable, secure, user-friendly websites that turn
               visitors into loyal customers.
             </p>
+            <p>
+              Our SEO services are designed to improve Google rankings, increase
+              organic traffic, and generate high-quality leads through proven
+              on-page, off-page, and local SEO strategies that help businesses
+              dominate search results.
+            </p>
             <p className="text-stone-900 font-semibold pt-2">
               We don't just build websites — we create{" "}
               <em className="font-serif italic text-primary">
