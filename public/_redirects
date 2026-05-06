@@ -1,1 +1,9 @@
+# Force www → apex domain (so all traffic is on https://upwarddigitalco.com)
+https://www.upwarddigitalco.com/* https://upwarddigitalco.com/:splat 301!
+http://www.upwarddigitalco.com/* https://upwarddigitalco.com/:splat 301!
+
+# Force HTTP → HTTPS on the apex too
+http://upwarddigitalco.com/* https://upwarddigitalco.com/:splat 301!
+
+# SPA fallback — every other path serves the React app
 /* /index.html 200
