@@ -1,16 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import {
-  ArrowLeft,
-  Save,
-  Trash2,
-  Plus,
-  Upload,
-  X,
-  GripVertical,
-  ExternalLink,
-  Eye,
-} from "lucide-react";
+import { ArrowLeft, Save, Plus, Upload, X, Trash2, Eye } from "lucide-react";
 import { useNoIndex } from "@/hooks/useNoIndex";
 import { uploadImage } from "@/lib/imageUpload";
 import { LoginScreen, AdminTopBar, AdminTabs } from "@/pages/AdminBlogList";
@@ -41,17 +31,19 @@ const EMPTY_POST = {
   coverImage: "",
   hero: {
     subtitle: "",
-    showRating: true,
+    showRating: false,
     rating: "4.9",
     ratingCount: "87",
     phone: "+1 (201) 304-0657",
   },
-  imageStrip: [],
-  serviceCards: [],
+  intro: {
+    heading: "",
+    body: "",
+  },
+  detailHeading: "",
+  detailSections: [],
   showQuoteForm: true,
-  sections: [],
   faq: [],
-  cta: { heading: "Ready to grow your business?", subtitle: "" },
   seo: { metaTitle: "", metaDescription: "", keywords: [] },
 };
 
@@ -91,7 +83,6 @@ export default function AdminBlogEditor() {
     }
   };
 
-  // Load existing post
   useEffect(() => {
     if (!token || isNew) return;
     setLoadingPost(true);
@@ -100,15 +91,11 @@ export default function AdminBlogEditor() {
     })
       .then((r) => r.json())
       .then((data) => {
-        if (data.ok)
-          setPost({
-            ...EMPTY_POST,
-            ...data.post,
-            hero: { ...EMPTY_POST.hero, ...data.post.hero },
-            cta: { ...EMPTY_POST.cta, ...data.post.cta },
-            seo: { ...EMPTY_POST.seo, ...data.post.seo },
-          });
-        else alert("Post not found");
+        if (!data.ok || !data.post) {
+          alert("Post not found");
+          return;
+        }
+        setPost(hydrateLoadedPost(data.post));
       })
       .catch((err) => alert("Load failed: " + err.message))
       .finally(() => setLoadingPost(false));
@@ -137,6 +124,7 @@ export default function AdminBlogEditor() {
     setSaving(true);
     setSaveError("");
     try {
+      const payload = buildPayload(post);
       const url = isNew
         ? "/api/admin/posts"
         : `/api/admin/posts/${encodeURIComponent(post.id)}`;
@@ -147,7 +135,7 @@ export default function AdminBlogEditor() {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(post),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (!data.ok) throw new Error(data.error || "Save failed");
@@ -159,9 +147,8 @@ export default function AdminBlogEditor() {
     }
   };
 
-  if (!token) {
-    return <LoginScreen onSubmit={handleLogin} error={loginError} />;
-  }
+  if (!token) return <LoginScreen onSubmit={handleLogin} error={loginError} />;
+
   if (loadingPost || !post) {
     return (
       <main className="min-h-screen bg-cream flex items-center justify-center">
@@ -212,10 +199,9 @@ export default function AdminBlogEditor() {
         )}
 
         <div className="space-y-7">
-          {/* ─── Hero / Cover ─── */}
           <Card
-            title="Hero"
-            description="The big header at the top of the post."
+            title="1) Hero"
+            description="Centered H1 title + centered subtitle + cover image + hero quote button (frontend fixed)."
           >
             <Field label="Title (H1)" required>
               <Input
@@ -224,141 +210,100 @@ export default function AdminBlogEditor() {
                 placeholder="Bathrooms in West Yorkshire"
               />
             </Field>
-            <Field label="Subtitle">
+            <Field label="Subtitle (centered below title)">
               <Input
                 value={post.hero.subtitle}
                 onChange={(e) => updateField("hero.subtitle", e.target.value)}
-                placeholder="Professional installation services across the region."
+                placeholder="Professional bathroom fitting and installation services."
               />
             </Field>
             <Field
-              label="Cover image"
-              description="Shown behind the hero title and on the blog index card."
+              label="Banner image"
+              description="Used as hero background and blog card image."
             >
               <ImagePicker
                 value={post.coverImage}
                 onChange={(v) => updateField("coverImage", v)}
               />
             </Field>
-            <div className="grid sm:grid-cols-3 gap-4">
-              <Field label="Show rating badge">
-                <Toggle
-                  checked={post.hero.showRating}
-                  onChange={(v) => updateField("hero.showRating", v)}
-                />
-              </Field>
-              {post.hero.showRating && (
-                <>
-                  <Field label="Rating">
-                    <Input
-                      value={post.hero.rating}
-                      onChange={(e) =>
-                        updateField("hero.rating", e.target.value)
-                      }
-                    />
-                  </Field>
-                  <Field label="Review count">
-                    <Input
-                      value={post.hero.ratingCount}
-                      onChange={(e) =>
-                        updateField("hero.ratingCount", e.target.value)
-                      }
-                    />
-                  </Field>
-                </>
-              )}
-            </div>
-            <Field label="Phone (shown in hero)">
+          </Card>
+
+          <Card
+            title="2) Intro + USA map"
+            description="First content section: left text (H2 + paragraph), right full USA map (frontend fixed)."
+          >
+            <Field label="Intro title (H2)">
               <Input
-                value={post.hero.phone}
-                onChange={(e) => updateField("hero.phone", e.target.value)}
-                placeholder="+1 (201) 304-0657"
+                value={post.intro.heading}
+                onChange={(e) => updateField("intro.heading", e.target.value)}
+                placeholder="Bathroom Installations West Yorkshire"
+              />
+            </Field>
+            <Field label="Intro details (paragraph)">
+              <Textarea
+                value={post.intro.body}
+                onChange={(e) => updateField("intro.body", e.target.value)}
+                rows={5}
+                placeholder="Write intro paragraph(s). Leave a blank line between paragraphs."
               />
             </Field>
           </Card>
 
-          {/* ─── Image strip ─── */}
           <Card
-            title="Image strip"
-            description="Up to 6 images shown as a horizontal row beneath the intro."
+            title="3) Services strip"
+            description="Fixed services section is auto-rendered for all blogs (not editable)."
           >
-            <ImageStripEditor
-              images={post.imageStrip}
-              onChange={(v) => updateField("imageStrip", v)}
-            />
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-stone-600">
+              <div>Bathroom Installations</div>
+              <div>Kitchen Installations</div>
+              <div>3D Design Service</div>
+              <div>Alterations & Renovations</div>
+              <div>Shop and Supplies</div>
+              <div>Tiling Work</div>
+              <div>Electrical Work</div>
+              <div>General Plumbing</div>
+            </div>
           </Card>
 
-          {/* ─── Service icon cards ─── */}
           <Card
-            title="Service cards"
-            description="Optional grid of service tiles. Add a title and short description for each."
+            title="4) Detail sections"
+            description="After services: first item can use center H3 heading, then side-by-side H2 + paragraph + image blocks."
           >
+            <Field
+              label="Center heading (H3, first detail area)"
+              description="Optional. Example: Bathroom Designs & Installation"
+            >
+              <Input
+                value={post.detailHeading}
+                onChange={(e) => updateField("detailHeading", e.target.value)}
+                placeholder="Bathroom Designs & Installation"
+              />
+            </Field>
+
             <RepeaterList
-              items={post.serviceCards}
-              onChange={(v) => updateField("serviceCards", v)}
-              emptyValue={{ title: "", description: "" }}
-              renderItem={(item, update) => (
-                <>
-                  <Input
-                    value={item.title}
-                    onChange={(e) => update("title", e.target.value)}
-                    placeholder="Bathroom Installations"
-                  />
-                  <Input
-                    value={item.description}
-                    onChange={(e) => update("description", e.target.value)}
-                    placeholder="One-line description"
-                  />
-                </>
-              )}
-              addLabel="Add service card"
-            />
-          </Card>
-
-          {/* ─── Quote form toggle ─── */}
-          <Card
-            title="Embedded quote form"
-            description="The free-consultation form will appear below the image strip."
-          >
-            <Toggle
-              checked={post.showQuoteForm}
-              onChange={(v) => updateField("showQuoteForm", v)}
-              label="Show the quote form on this post"
-            />
-          </Card>
-
-          {/* ─── Content sections ─── */}
-          <Card
-            title="Content sections"
-            description="Each section gets a heading, paragraph, and an image. Pick which side the image sits on."
-          >
-            <RepeaterList
-              items={post.sections}
-              onChange={(v) => updateField("sections", v)}
+              items={post.detailSections}
+              onChange={(v) => updateField("detailSections", v)}
               emptyValue={{
-                heading: "",
+                title: "",
                 body: "",
                 image: "",
                 imageSide: "right",
               }}
               renderItem={(item, update) => (
                 <>
-                  <Field label="Heading (H3)">
+                  <Field label="Section title (H2)">
                     <Input
-                      value={item.heading}
-                      onChange={(e) => update("heading", e.target.value)}
-                      placeholder="Fitted bathrooms in Yorkshire"
+                      value={item.title}
+                      onChange={(e) => update("title", e.target.value)}
+                      placeholder="Bathroom Installation West Yorkshire"
                     />
                   </Field>
-                  <Field
-                    label="Body"
-                    description="Supports markdown blocks: ##/### headings, - bullet lists, [links](https://...), and **bold** text."
-                  >
+                  <Field label="Details (paragraph)">
                     <Textarea
                       value={item.body}
                       onChange={(e) => update("body", e.target.value)}
-                      rows={5}
-                      placeholder="Use ## Heading, - list items, **bold**, and [internal](/services) or [external](https://...) links."
+                      rows={6}
+                      placeholder="Write paragraph details for this section."
                     />
                   </Field>
                   <div className="grid sm:grid-cols-2 gap-4">
@@ -376,18 +321,27 @@ export default function AdminBlogEditor() {
                       >
                         <option value="right">Right</option>
                         <option value="left">Left</option>
-                        <option value="full">Full width (no image side)</option>
                       </select>
                     </Field>
                   </div>
                 </>
               )}
-              addLabel="Add content section"
+              addLabel="Add detail section"
             />
           </Card>
 
-          {/* ─── FAQ ─── */}
-          <Card title="FAQ" description="Q&A pairs at the bottom of the post.">
+          <Card
+            title="5) Quote form"
+            description="Quote form is displayed after all detail sections."
+          >
+            <Toggle
+              checked={post.showQuoteForm}
+              onChange={(v) => updateField("showQuoteForm", v)}
+              label="Show quote form"
+            />
+          </Card>
+
+          <Card title="6) FAQ" description="Styled FAQ at bottom of the post.">
             <RepeaterList
               items={post.faq}
               onChange={(v) => updateField("faq", v)}
@@ -413,33 +367,12 @@ export default function AdminBlogEditor() {
             />
           </Card>
 
-          {/* ─── Bottom CTA ─── */}
-          <Card title="Bottom CTA" description="Final call-to-action block.">
-            <Field label="Heading">
-              <Input
-                value={post.cta.heading}
-                onChange={(e) => updateField("cta.heading", e.target.value)}
-              />
-            </Field>
-            <Field label="Subtitle">
-              <Textarea
-                value={post.cta.subtitle}
-                onChange={(e) => updateField("cta.subtitle", e.target.value)}
-                rows={2}
-              />
-            </Field>
-          </Card>
-
-          {/* ─── Meta + SEO ─── */}
           <Card
-            title="Meta &amp; SEO"
-            description="How the post appears in lists and Google search."
+            title="7) Meta & SEO"
+            description="Blog list and search metadata."
           >
             <div className="grid sm:grid-cols-2 gap-4">
-              <Field
-                label="Slug"
-                description="URL path. Auto-generated from title."
-              >
+              <Field label="Slug" description="URL path. Auto-generated from title.">
                 <Input
                   value={post.slug}
                   onChange={(e) => updateField("slug", e.target.value)}
@@ -452,8 +385,8 @@ export default function AdminBlogEditor() {
                   onChange={(e) => updateField("category", e.target.value)}
                   className="flex h-11 w-full rounded-lg border border-stone-300 bg-white px-3 text-sm text-stone-900 cursor-pointer"
                 >
-                  {CATEGORIES.map((c) => (
-                    <option key={c}>{c}</option>
+                  {CATEGORIES.map((category) => (
+                    <option key={category}>{category}</option>
                   ))}
                 </select>
               </Field>
@@ -478,57 +411,39 @@ export default function AdminBlogEditor() {
                 />
               </Field>
             </div>
-            <Field label="Excerpt" description="Shown on the blog index card.">
+
+            <Field label="Excerpt" description="Shown in blog list card.">
               <Textarea
                 value={post.excerpt}
                 onChange={(e) => updateField("excerpt", e.target.value)}
                 rows={2}
               />
             </Field>
+
             <Field
               label="Meta title"
-              description="Browser tab + Google title (60 chars max recommended)."
+              description="Browser tab + search result title."
             >
               <Input
                 value={post.seo.metaTitle}
                 onChange={(e) => updateField("seo.metaTitle", e.target.value)}
-                placeholder="Falls back to the post title if empty"
+                placeholder="Falls back to post title"
               />
             </Field>
+
             <Field
               label="Meta description"
-              description="Google search result snippet (160 chars max recommended)."
+              description="Search result description text."
             >
               <Textarea
                 value={post.seo.metaDescription}
-                onChange={(e) =>
-                  updateField("seo.metaDescription", e.target.value)
-                }
+                onChange={(e) => updateField("seo.metaDescription", e.target.value)}
                 rows={3}
-                placeholder="Falls back to the excerpt if empty"
-              />
-            </Field>
-            <Field
-              label="Keywords"
-              description="Comma-separated. Used for SEO meta keywords + topic tags."
-            >
-              <Input
-                value={(post.seo.keywords || []).join(", ")}
-                onChange={(e) =>
-                  updateField(
-                    "seo.keywords",
-                    e.target.value
-                      .split(",")
-                      .map((k) => k.trim())
-                      .filter(Boolean),
-                  )
-                }
-                placeholder="local seo, google maps, small business marketing"
+                placeholder="Falls back to excerpt"
               />
             </Field>
           </Card>
 
-          {/* ─── Save bar (sticky bottom) ─── */}
           <div className="sticky bottom-4 z-10 flex items-center justify-between gap-3 bg-white border border-stone-200 rounded-2xl px-5 py-3 shadow-lg">
             <div className="text-sm text-stone-600">
               {isNew ? "Creating new post" : "Editing existing post"}
@@ -556,16 +471,92 @@ export default function AdminBlogEditor() {
   );
 }
 
-// ─── Building-block components ────────────────────────────────────
+function hydrateLoadedPost(raw) {
+  const legacySections = Array.isArray(raw.sections) ? raw.sections.filter(Boolean) : [];
+  const hasDirectIntro = raw.intro && (raw.intro.heading || raw.intro.body);
+
+  const intro = hasDirectIntro
+    ? { heading: raw.intro.heading || "", body: raw.intro.body || "" }
+    : {
+        heading: legacySections[0]?.heading || "",
+        body: legacySections[0]?.body || "",
+      };
+
+  const detailSectionsSource = Array.isArray(raw.detailSections) && raw.detailSections.length > 0
+    ? raw.detailSections
+    : legacySections.slice(hasDirectIntro ? 0 : 1);
+
+  const detailSections = detailSectionsSource.map((item) => ({
+    title: item.title || item.heading || "",
+    body: item.body || "",
+    image: item.image || "",
+    imageSide: item.imageSide === "left" ? "left" : "right",
+  }));
+
+  return {
+    ...EMPTY_POST,
+    ...raw,
+    hero: { ...EMPTY_POST.hero, ...raw.hero, showRating: false },
+    seo: { ...EMPTY_POST.seo, ...raw.seo },
+    intro,
+    detailHeading: raw.detailHeading || "",
+    detailSections,
+    showQuoteForm: raw.showQuoteForm !== false,
+  };
+}
+
+function buildPayload(post) {
+  const introHeading = post.intro?.heading || "";
+  const introBody = post.intro?.body || "";
+
+  const detailSections = Array.isArray(post.detailSections)
+    ? post.detailSections.map((item) => ({
+        title: item.title || "",
+        body: item.body || "",
+        image: item.image || "",
+        imageSide: item.imageSide === "left" ? "left" : "right",
+      }))
+    : [];
+
+  const sections = [
+    ...(introHeading || introBody
+      ? [{ heading: introHeading, body: introBody, image: "", imageSide: "right" }]
+      : []),
+    ...detailSections.map((item) => ({
+      heading: item.title,
+      body: item.body,
+      image: item.image,
+      imageSide: item.imageSide,
+    })),
+  ];
+
+  return {
+    ...post,
+    intro: { heading: introHeading, body: introBody },
+    detailSections,
+    sections,
+    imageStrip: [],
+    serviceCards: [],
+    cta: { heading: "", subtitle: "" },
+    hero: {
+      ...post.hero,
+      showRating: false,
+      rating: "",
+      ratingCount: "",
+    },
+    seo: {
+      ...post.seo,
+      keywords: Array.isArray(post.seo?.keywords) ? post.seo.keywords : [],
+    },
+  };
+}
 
 function Card({ title, description, children }) {
   return (
     <div className="bg-white border border-stone-200 rounded-2xl p-6">
       <div className="mb-5 pb-5 border-b border-stone-100">
         <h3 className="text-lg font-bold text-stone-900">{title}</h3>
-        {description && (
-          <p className="text-sm text-stone-500 mt-1">{description}</p>
-        )}
+        {description && <p className="text-sm text-stone-500 mt-1">{description}</p>}
       </div>
       <div className="space-y-4">{children}</div>
     </div>
@@ -579,9 +570,7 @@ function Field({ label, description, required, children }) {
         {label}
         {required && <span className="text-primary ml-1">*</span>}
       </label>
-      {description && (
-        <p className="text-xs text-stone-500 mb-2">{description}</p>
-      )}
+      {description && <p className="text-xs text-stone-500 mb-2">{description}</p>}
       {children}
     </div>
   );
@@ -610,14 +599,10 @@ function Toggle({ checked, onChange, label }) {
     <label className="inline-flex items-center gap-3 cursor-pointer">
       <span
         onClick={() => onChange(!checked)}
-        className={`relative w-10 h-6 rounded-full transition-colors ${
-          checked ? "bg-stone-900" : "bg-stone-300"
-        }`}
+        className={`relative w-10 h-6 rounded-full transition-colors ${checked ? "bg-stone-900" : "bg-stone-300"}`}
       >
         <span
-          className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${
-            checked ? "translate-x-4" : ""
-          }`}
+          className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${checked ? "translate-x-4" : ""}`}
         />
       </span>
       {label && <span className="text-sm text-stone-700">{label}</span>}
@@ -629,8 +614,8 @@ function ImagePicker({ value, onChange }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleFile = async (e) => {
-    const file = e.target.files?.[0];
+  const handleFile = async (event) => {
+    const file = event.target.files?.[0];
     if (!file) return;
     setUploading(true);
     setError("");
@@ -641,7 +626,7 @@ function ImagePicker({ value, onChange }) {
       setError(err.message);
     } finally {
       setUploading(false);
-      e.target.value = "";
+      event.target.value = "";
     }
   };
 
@@ -649,11 +634,7 @@ function ImagePicker({ value, onChange }) {
     <div>
       {value ? (
         <div className="relative inline-block">
-          <img
-            src={value}
-            alt=""
-            className="rounded-lg border border-stone-200 max-h-48 object-contain"
-          />
+          <img src={value} alt="" className="rounded-lg border border-stone-200 max-h-48 object-contain" />
           <button
             type="button"
             onClick={() => onChange("")}
@@ -666,15 +647,8 @@ function ImagePicker({ value, onChange }) {
       ) : (
         <label className="flex items-center justify-center gap-2 h-24 border-2 border-dashed border-stone-300 rounded-lg text-stone-500 hover:border-primary hover:text-primary cursor-pointer transition-colors">
           <Upload className="w-5 h-5" />
-          <span className="text-sm font-medium">
-            {uploading ? "Uploading…" : "Upload image from your computer"}
-          </span>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFile}
-            className="hidden"
-          />
+          <span className="text-sm font-medium">{uploading ? "Uploading…" : "Upload image"}</span>
+          <input type="file" accept="image/*" onChange={handleFile} className="hidden" />
         </label>
       )}
       {error && <p className="text-red-600 text-xs mt-1">{error}</p>}
@@ -682,98 +656,40 @@ function ImagePicker({ value, onChange }) {
   );
 }
 
-function ImageStripEditor({ images, onChange }) {
-  const [uploading, setUploading] = useState(false);
-  const addImage = async (file) => {
-    if (!file) return;
-    setUploading(true);
-    try {
-      const dataUrl = await uploadImage(file);
-      onChange([...images, dataUrl].slice(0, 6));
-    } catch (err) {
-      alert(err.message);
-    } finally {
-      setUploading(false);
-    }
-  };
-  const removeAt = (i) => onChange(images.filter((_, idx) => idx !== i));
-  return (
-    <div className="space-y-3">
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-        {images.map((img, i) => (
-          <div key={i} className="relative">
-            <img
-              src={img}
-              alt=""
-              className="w-full aspect-[4/3] object-cover rounded-lg border border-stone-200"
-            />
-            <button
-              type="button"
-              onClick={() => removeAt(i)}
-              className="absolute top-1 right-1 w-7 h-7 rounded-full bg-stone-900/85 text-white flex items-center justify-center hover:bg-red-600"
-              aria-label="Remove"
-            >
-              <X className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        ))}
-        {images.length < 6 && (
-          <label className="flex flex-col items-center justify-center gap-1 aspect-[4/3] border-2 border-dashed border-stone-300 rounded-lg text-stone-500 hover:border-primary hover:text-primary cursor-pointer transition-colors">
-            <Upload className="w-5 h-5" />
-            <span className="text-xs font-medium">
-              {uploading ? "Uploading…" : "Add image"}
-            </span>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => addImage(e.target.files?.[0])}
-              className="hidden"
-            />
-          </label>
-        )}
-      </div>
-      <p className="text-xs text-stone-500">{images.length} / 6 images</p>
-    </div>
-  );
-}
-
 function RepeaterList({ items, onChange, emptyValue, renderItem, addLabel }) {
-  const updateAt = (i, key, value) => {
+  const updateAt = (index, key, value) => {
     const next = [...items];
-    next[i] = { ...next[i], [key]: value };
+    next[index] = { ...next[index], [key]: value };
     onChange(next);
   };
-  const removeAt = (i) => onChange(items.filter((_, idx) => idx !== i));
-  const moveUp = (i) => {
-    if (i === 0) return;
+
+  const removeAt = (index) => onChange(items.filter((_, idx) => idx !== index));
+
+  const moveUp = (index) => {
+    if (index === 0) return;
     const next = [...items];
-    [next[i - 1], next[i]] = [next[i], next[i - 1]];
+    [next[index - 1], next[index]] = [next[index], next[index - 1]];
     onChange(next);
   };
-  const moveDown = (i) => {
-    if (i === items.length - 1) return;
+
+  const moveDown = (index) => {
+    if (index === items.length - 1) return;
     const next = [...items];
-    [next[i + 1], next[i]] = [next[i], next[i + 1]];
+    [next[index + 1], next[index]] = [next[index], next[index + 1]];
     onChange(next);
   };
+
   return (
     <div className="space-y-3">
-      {items.length === 0 && (
-        <p className="text-sm text-stone-500 italic">None added yet.</p>
-      )}
-      {items.map((item, i) => (
-        <div
-          key={i}
-          className="bg-stone-50 border border-stone-200 rounded-xl p-4"
-        >
+      {items.length === 0 && <p className="text-sm text-stone-500 italic">None added yet.</p>}
+      {items.map((item, index) => (
+        <div key={index} className="bg-stone-50 border border-stone-200 rounded-xl p-4">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold text-stone-500 uppercase tracking-wider">
-              #{i + 1}
-            </span>
+            <span className="text-xs font-bold text-stone-500 uppercase tracking-wider">#{index + 1}</span>
             <div className="flex items-center gap-2 text-stone-400">
               <button
-                onClick={() => moveUp(i)}
-                disabled={i === 0}
+                onClick={() => moveUp(index)}
+                disabled={index === 0}
                 className="hover:text-stone-900 disabled:opacity-30"
                 title="Move up"
                 type="button"
@@ -781,8 +697,8 @@ function RepeaterList({ items, onChange, emptyValue, renderItem, addLabel }) {
                 ↑
               </button>
               <button
-                onClick={() => moveDown(i)}
-                disabled={i === items.length - 1}
+                onClick={() => moveDown(index)}
+                disabled={index === items.length - 1}
                 className="hover:text-stone-900 disabled:opacity-30"
                 title="Move down"
                 type="button"
@@ -790,7 +706,7 @@ function RepeaterList({ items, onChange, emptyValue, renderItem, addLabel }) {
                 ↓
               </button>
               <button
-                onClick={() => removeAt(i)}
+                onClick={() => removeAt(index)}
                 className="hover:text-red-600"
                 type="button"
                 title="Remove"
@@ -799,9 +715,7 @@ function RepeaterList({ items, onChange, emptyValue, renderItem, addLabel }) {
               </button>
             </div>
           </div>
-          <div className="space-y-3">
-            {renderItem(item, (key, value) => updateAt(i, key, value))}
-          </div>
+          <div className="space-y-3">{renderItem(item, (key, value) => updateAt(index, key, value))}</div>
         </div>
       ))}
       <button

@@ -66,6 +66,14 @@ function normalizePost(input, isNew) {
       ratingCount: input.hero?.ratingCount || "87",
       phone: input.hero?.phone || "",
     },
+    intro: {
+      heading: input.intro?.heading || "",
+      body: input.intro?.body || "",
+    },
+    detailHeading: input.detailHeading || "",
+    detailSections: Array.isArray(input.detailSections)
+      ? input.detailSections
+      : [],
     imageStrip: Array.isArray(input.imageStrip) ? input.imageStrip : [],
     serviceCards: Array.isArray(input.serviceCards) ? input.serviceCards : [],
     showQuoteForm: input.showQuoteForm !== false,

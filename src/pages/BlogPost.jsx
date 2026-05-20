@@ -1,19 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
-import {
-  ArrowLeft,
-  ArrowUpRight,
-  Phone,
-  Tag,
-  Star,
-  Sparkles,
-  CheckCircle2,
-} from "lucide-react";
-import WhatsAppIcon from "@/components/common/WhatsAppIcon";
-import { trackContact, trackBlogPostClick, trackLead } from "@/lib/pixel";
+import { ArrowLeft, ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { trackBlogPostClick, trackLead } from "@/lib/pixel";
 
-const PHONE_HREF = "tel:+12013040657";
-const WHATSAPP_HREF = "https://wa.me/15812947936";
+const SERVICE_ITEMS = [
+  "Bathroom Installations",
+  "Kitchen Installations",
+  "3D Design Service",
+  "Alterations & Renovations",
+  "Shop and Supplies",
+  "Tiling Work",
+  "Electrical Work",
+  "General Plumbing",
+];
+
+const SERVICE_ICONS = ["🛁", "🍽️", "📐", "🛠️", "🏬", "🧱", "💡", "🚰"];
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -24,6 +25,7 @@ export default function BlogPost() {
     let cancelled = false;
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000);
+
     fetch(`/api/posts/${encodeURIComponent(slug)}`, {
       signal: controller.signal,
     })
@@ -40,15 +42,23 @@ export default function BlogPost() {
           setStatus("ok");
           trackBlogPostClick(data.post.title);
           updateMeta(data.post);
-        } else setStatus("error");
+        } else {
+          setStatus("error");
+        }
       })
-      .catch(() => !cancelled && setStatus("error"));
+      .catch(() => {
+        if (!cancelled) setStatus("error");
+      });
+
     return () => {
       cancelled = true;
       clearTimeout(timeoutId);
       controller.abort();
     };
   }, [slug]);
+
+  const intro = useMemo(() => getIntroSection(post), [post]);
+  const detailSections = useMemo(() => getDetailSections(post), [post]);
 
   if (status === "loading") {
     return (
@@ -57,7 +67,9 @@ export default function BlogPost() {
       </main>
     );
   }
+
   if (status === "notfound") return <Navigate to="/blog" replace />;
+
   if (status === "error" || !post) {
     return (
       <main className="min-h-screen bg-cream flex items-center justify-center px-6">
@@ -74,159 +86,121 @@ export default function BlogPost() {
   return (
     <main className="bg-cream">
       <HeroSection post={post} />
-      {post.imageStrip?.length > 0 && (
-        <ImageStripSection images={post.imageStrip} />
-      )}
-      {post.serviceCards?.length > 0 && (
-        <ServiceCardsSection cards={post.serviceCards} />
-      )}
-      {post.showQuoteForm && <QuoteFormSection slug={post.slug} />}
-      {post.sections?.length > 0 && (
-        <ContentSections
-          title={post.sectionsTitle || "Find out more"}
-          sections={post.sections}
-        />
-      )}
-      {post.faq?.length > 0 && <FaqSection faq={post.faq} />}
-      <CtaSection cta={post.cta} />
-      {post.seo?.keywords?.length > 0 && (
-        <KeywordsSection keywords={post.seo.keywords} />
-      )}
+      <IntroMapSection intro={intro} />
+      <ServicesGridSection />
+      <DetailSectionsSection
+        heading={post.detailHeading || ""}
+        sections={detailSections}
+      />
+      {post.showQuoteForm !== false && <QuoteFormSection slug={post.slug} />}
+      {Array.isArray(post.faq) && post.faq.length > 0 && <FaqSection faq={post.faq} />}
     </main>
   );
 }
 
-// ─── Hero ────────────────────────────────────────────────────────
 function HeroSection({ post }) {
+  const scrollToQuoteForm = (event) => {
+    event.preventDefault();
+    const form = document.getElementById("quote-form");
+    if (!form) return;
+    form.scrollIntoView({ behavior: "smooth", block: "start" });
+    trackLead({ content_name: "Blog Hero Quote CTA", content_category: "cta" });
+  };
+
   return (
-    <section className="relative pt-32 sm:pt-36 pb-12 sm:pb-16 overflow-hidden">
+    <section className="relative pt-32 sm:pt-36 pb-14 sm:pb-20 overflow-hidden min-h-[500px] flex items-center">
       {post.coverImage && (
         <div className="absolute inset-0 z-0">
-          <img
-            src={post.coverImage}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-cream/95 via-cream/85 to-cream" />
+          <img src={post.coverImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-stone-900/55 via-stone-900/40 to-cream" />
         </div>
       )}
+      {!post.coverImage && <div className="absolute inset-0 bg-gradient-to-b from-stone-900/15 to-cream" />}
+
       <div
-        className="absolute inset-0 opacity-[0.04] pointer-events-none"
+        className="absolute inset-0 opacity-[0.06] pointer-events-none"
         style={{
-          backgroundImage:
-            "radial-gradient(circle, #1c1917 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(circle, #1c1917 1px, transparent 1px)",
           backgroundSize: "28px 28px",
         }}
       />
-      <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-6 md:px-8">
-        <Link
-          to="/blog"
-          className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 text-sm font-medium mb-6 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          All articles
-        </Link>
 
-        <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-5">
-          <Tag className="w-3 h-3" />
-          {post.category}
+      <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-6 md:px-8 text-center w-full">
+        <div className="text-left mb-7">
+          <Link
+            to="/blog"
+            className="inline-flex items-center gap-2 text-stone-700 hover:text-stone-900 text-sm font-medium transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            All articles
+          </Link>
         </div>
 
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight text-stone-900 mb-5">
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.08] tracking-tight text-stone-900 mb-5">
           {post.title}
         </h1>
 
         {post.hero?.subtitle && (
-          <p className="text-stone-600 text-lg md:text-xl leading-relaxed mb-7">
+          <p className="max-w-3xl mx-auto text-stone-700 text-lg md:text-2xl leading-relaxed mb-8">
             {post.hero.subtitle}
           </p>
         )}
 
-        {(post.hero?.showRating || post.hero?.phone) && (
-          <div className="flex flex-wrap items-center gap-4 mb-7">
-            {post.hero?.showRating && (
-              <div className="inline-flex items-center gap-2 bg-white border border-stone-200 px-4 py-2 rounded-full">
-                <div className="flex items-center gap-0.5 text-amber-500">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                  ))}
-                </div>
-                <span className="text-sm font-semibold text-stone-900">
-                  {post.hero.rating || "4.9"}/5
-                </span>
-                {post.hero.ratingCount && (
-                  <span className="text-xs text-stone-500">
-                    · {post.hero.ratingCount} reviews
-                  </span>
-                )}
-              </div>
-            )}
-            {post.hero?.phone && (
-              <a
-                href={`tel:${post.hero.phone.replace(/\D/g, "")}`}
-                onClick={() =>
-                  trackContact({ method: "phone", source: "blog_hero" })
-                }
-                className="inline-flex items-center gap-2 text-stone-900 font-semibold hover:text-primary"
-              >
-                <Phone className="w-4 h-4" />
-                {post.hero.phone}
-              </a>
-            )}
-          </div>
-        )}
+        <a
+          href="#quote-form"
+          onClick={scrollToQuoteForm}
+          className="inline-flex items-center justify-center gap-2 bg-primary text-white px-7 py-3.5 rounded-full text-sm md:text-base font-semibold hover:bg-primary-dark transition-colors"
+        >
+          Get a Quote
+          <ArrowUpRight className="w-4 h-4" />
+        </a>
       </div>
     </section>
   );
 }
 
-// ─── Image strip ─────────────────────────────────────────────────
-function ImageStripSection({ images }) {
+function IntroMapSection({ intro }) {
+  if (!intro?.heading && !intro?.body) return null;
+
   return (
-    <section className="py-8 md:py-10 bg-white border-y border-stone-200">
+    <section className="py-14 md:py-20 bg-white border-y border-stone-200">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
-        <div
-          className="grid gap-3 md:gap-4"
-          style={{
-            gridTemplateColumns: `repeat(${Math.min(images.length, 4)}, minmax(0, 1fr))`,
-          }}
-        >
-          {images.map((src, i) => (
-            <img
-              key={i}
-              src={src}
-              alt=""
-              className="w-full aspect-[4/3] object-cover rounded-2xl"
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-start">
+          <div>
+            {intro.heading && (
+              <h2 className="text-3xl md:text-4xl font-bold text-stone-900 tracking-tight leading-[1.15] mb-5">
+                {intro.heading}
+              </h2>
+            )}
+            <BodyText text={intro.body} />
+          </div>
+
+          <div className="rounded-3xl overflow-hidden border border-stone-200 bg-stone-100">
+            <iframe
+              title="United States Map"
+              src="https://www.google.com/maps?q=United+States&output=embed"
+              className="w-full aspect-[5/4]"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
             />
-          ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-// ─── Service cards ───────────────────────────────────────────────
-function ServiceCardsSection({ cards }) {
+function ServicesGridSection() {
   return (
-    <section className="py-14 md:py-20">
+    <section className="py-14 md:py-18 bg-cream border-b border-stone-200">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {cards.map((card, i) => (
-            <div
-              key={i}
-              className="bg-white border border-stone-200 rounded-2xl p-5 hover:border-stone-900 transition-colors"
-            >
-              <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-3">
-                <Sparkles className="w-5 h-5" />
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 md:gap-5">
+          {SERVICE_ITEMS.map((service, index) => (
+            <div key={service} className="bg-white border border-stone-200 rounded-2xl p-4 text-center">
+              <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-stone-100 flex items-center justify-center text-xl">
+                {SERVICE_ICONS[index]}
               </div>
-              <h3 className="font-bold text-stone-900 text-sm mb-1">
-                {card.title}
-              </h3>
-              {card.description && (
-                <p className="text-stone-600 text-xs leading-relaxed">
-                  {card.description}
-                </p>
-              )}
+              <h3 className="text-sm font-bold text-stone-900 leading-snug">{service}</h3>
             </div>
           ))}
         </div>
@@ -235,7 +209,54 @@ function ServiceCardsSection({ cards }) {
   );
 }
 
-// ─── Embedded quote form ─────────────────────────────────────────
+function DetailSectionsSection({ heading, sections }) {
+  if (!Array.isArray(sections) || sections.length === 0) return null;
+
+  return (
+    <section className="py-16 md:py-24 bg-white">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8 space-y-0">
+        {heading && (
+          <h3 className="text-center text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-stone-900 mb-12">
+            {heading}
+          </h3>
+        )}
+
+        {sections.map((section, index) => {
+          const bgClass = index % 2 === 0 ? "bg-cream" : "bg-white";
+          const imageRight = section.imageSide !== "left";
+          return (
+            <article key={`${section.title}-${index}`} className={`${bgClass} border border-stone-200 rounded-3xl p-6 md:p-10 mb-8`}>
+              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+                <div className={imageRight ? "" : "lg:order-2"}>
+                  {section.title && (
+                    <h2 className="text-3xl md:text-4xl font-bold text-stone-900 tracking-tight leading-[1.15] mb-5">
+                      {section.title}
+                    </h2>
+                  )}
+                  <BodyText text={section.body} />
+                </div>
+                <div className={imageRight ? "lg:order-2" : ""}>
+                  {section.image ? (
+                    <img
+                      src={section.image}
+                      alt=""
+                      className="w-full aspect-[4/3] object-cover rounded-2xl border border-stone-200"
+                    />
+                  ) : (
+                    <div className="w-full aspect-[4/3] rounded-2xl border border-dashed border-stone-300 bg-stone-100 flex items-center justify-center text-stone-400 text-sm">
+                      Add image in admin
+                    </div>
+                  )}
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 function QuoteFormSection({ slug }) {
   const [form, setForm] = useState({
     name: "",
@@ -245,14 +266,12 @@ function QuoteFormSection({ slug }) {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
-  const handle = (e) =>
-    setForm((s) => ({ ...s, [e.target.name]: e.target.value }));
+
+  const handle = (e) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+
   const submit = async (e) => {
     e.preventDefault();
-    trackLead({
-      content_name: "Blog Quote Form",
-      content_category: "lead_form",
-    });
+    trackLead({ content_name: "Blog Quote Form", content_category: "lead_form" });
     setSubmitted(true);
     try {
       await fetch("/api/submit", {
@@ -260,23 +279,25 @@ function QuoteFormSection({ slug }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ source: `blog:${slug}`, ...form }),
       });
-    } catch (err) {
-      console.error(err);
+    } catch {
+      // optimistic UX: keep thank-you state even if network fails
     }
+
     setTimeout(() => {
       setForm({ name: "", email: "", phone: "", service: "", message: "" });
       setSubmitted(false);
     }, 4000);
   };
+
   return (
-    <section className="py-14 md:py-20 bg-blue-50/40">
+    <section id="quote-form" className="py-16 md:py-22 bg-cream border-y border-stone-200 scroll-mt-28">
       <div className="max-w-4xl mx-auto px-5 sm:px-6 md:px-8">
-        <div className="bg-white border border-stone-200 rounded-3xl p-8 md:p-10">
+        <div className="bg-white border border-stone-200 rounded-3xl p-8 md:p-10 shadow-sm">
           <div className="text-center mb-7">
-            <h2 className="text-2xl md:text-3xl font-bold text-primary tracking-tight mb-2">
+            <h2 className="text-3xl md:text-4xl font-bold text-stone-900 tracking-tight mb-2">
               Get a free consultation
             </h2>
-            <p className="text-stone-600 text-sm">
+            <p className="text-stone-600 text-sm md:text-base">
               Tell us about your project and we'll get back within 24 hours.
             </p>
           </div>
@@ -284,9 +305,7 @@ function QuoteFormSection({ slug }) {
             <div className="text-center py-10">
               <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto mb-3" />
               <p className="text-stone-900 font-bold">Thank you!</p>
-              <p className="text-stone-600 text-sm">
-                We'll reply within 24 hours.
-              </p>
+              <p className="text-stone-600 text-sm">We'll reply within 24 hours.</p>
             </div>
           ) : (
             <form onSubmit={submit} className="grid sm:grid-cols-2 gap-3">
@@ -341,7 +360,7 @@ function QuoteFormSection({ slug }) {
               />
               <button
                 type="submit"
-                className="sm:col-span-2 h-11 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-blue-700"
+                className="sm:col-span-2 h-11 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary-dark"
               >
                 Get my free consultation
               </button>
@@ -353,22 +372,32 @@ function QuoteFormSection({ slug }) {
   );
 }
 
-// ─── Content sections (image + heading + body) ───────────────────
-function ContentSections({ title, sections }) {
-  const safeSections = Array.isArray(sections) ? sections.filter(Boolean) : [];
-  if (safeSections.length === 0) return null;
+function FaqSection({ faq }) {
+  const safeFaq = faq.filter((item) => item?.question && item?.answer);
+  if (safeFaq.length === 0) return null;
 
   return (
-    <section className="py-14 md:py-20">
-      <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8">
-        {title && (
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-stone-900 text-center mb-10 md:mb-14">
-            {title}
-          </h2>
-        )}
-        <div className="space-y-14 md:space-y-20">
-          {safeSections.map((s, i) => (
-            <ContentSection key={i} section={s} />
+    <section className="py-16 md:py-22 bg-white border-b border-stone-200">
+      <div className="max-w-5xl mx-auto px-5 sm:px-6 md:px-8">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-stone-900 mb-10 text-center">
+          Frequently asked questions
+        </h2>
+        <div className="space-y-4">
+          {safeFaq.map((item, index) => (
+            <details
+              key={`${item.question}-${index}`}
+              className="group bg-cream border border-stone-200 rounded-2xl p-5 md:p-6 cursor-pointer open:bg-white open:border-stone-300"
+            >
+              <summary className="font-semibold text-stone-900 text-base md:text-lg flex items-center justify-between gap-4 list-none">
+                {item.question}
+                <span className="text-primary group-open:rotate-45 transition-transform text-2xl leading-none">
+                  +
+                </span>
+              </summary>
+              <div className="mt-4 text-stone-600 leading-relaxed text-[15px] md:text-base">
+                {renderInline(item.answer)}
+              </div>
+            </details>
           ))}
         </div>
       </div>
@@ -376,153 +405,29 @@ function ContentSections({ title, sections }) {
   );
 }
 
-function ContentSection({ section }) {
-  if (!section || typeof section !== "object") return null;
-
-  if (section.imageSide === "full" || !section.image) {
-    return (
-      <div>
-        <h3 className="text-2xl md:text-3xl font-bold text-stone-900 leading-snug tracking-tight mb-4">
-          {section.heading}
-        </h3>
-        <BodyText text={section.body} />
-        {section.image && (
-          <img
-            src={section.image}
-            alt=""
-            className="w-full rounded-3xl mt-6 object-cover"
-          />
-        )}
-      </div>
-    );
-  }
-  const imageRight = section.imageSide === "right";
-  return (
-    <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
-      <div className={imageRight ? "" : "md:order-2"}>
-        <h3 className="text-2xl md:text-3xl font-bold text-stone-900 leading-snug tracking-tight mb-4">
-          {section.heading}
-        </h3>
-        <BodyText text={section.body} />
-      </div>
-      <div className={imageRight ? "md:order-2" : ""}>
-        <img
-          src={section.image}
-          alt=""
-          className="w-full aspect-[4/3] object-cover rounded-3xl"
-        />
-      </div>
-    </div>
-  );
-}
-
-// Render paragraphs with bold + inline links from a simple markdown subset.
 function BodyText({ text }) {
   if (!text) return null;
-  const blocks = parseTextBlocks(text);
+
+  const paragraphs = String(text)
+    .split(/\n\s*\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+
   return (
-    <div className="space-y-4 text-stone-700 text-base md:text-lg leading-relaxed">
-      {blocks.map((block, index) => {
-        if (block.type === "heading") {
-          const headingClasses = {
-            2: "text-2xl md:text-3xl font-bold text-stone-900 tracking-tight leading-snug mt-4",
-            3: "text-xl md:text-2xl font-bold text-stone-900 tracking-tight leading-snug mt-3",
-            4: "text-lg md:text-xl font-bold text-stone-900 tracking-tight leading-snug mt-3",
-            5: "text-base md:text-lg font-semibold text-stone-900 tracking-tight leading-snug mt-2",
-          };
-          const Element =
-            block.level <= 2 ? "h3" : block.level === 3 ? "h4" : "h5";
-          return (
-            <Element
-              key={`h-${index}`}
-              className={headingClasses[block.level] || headingClasses[5]}
-            >
-              {renderInline(block.text)}
-            </Element>
-          );
-        }
-        if (block.type === "list") {
-          return (
-            <ul key={`l-${index}`} className="list-disc pl-6 space-y-1.5">
-              {block.items.map((item, itemIndex) => (
-                <li key={`${index}-${itemIndex}`}>{renderInline(item)}</li>
-              ))}
-            </ul>
-          );
-        }
-        return <p key={`p-${index}`}>{renderInline(block.text)}</p>;
-      })}
+    <div className="space-y-5 text-stone-700 text-base md:text-lg leading-relaxed md:leading-[1.8]">
+      {paragraphs.map((paragraph, index) => (
+        <p key={index}>{renderInline(paragraph)}</p>
+      ))}
     </div>
   );
 }
 
-function parseTextBlocks(text) {
-  if (typeof text !== "string") {
-    const value = String(text ?? "").trim();
-    return value ? [{ type: "paragraph", text: value }] : [];
-  }
-
-  const lines = String(text).split("\n");
-  const blocks = [];
-  let paragraphLines = [];
-  let listItems = [];
-
-  const flushParagraph = () => {
-    if (!paragraphLines.length) return;
-    const value = paragraphLines.join(" ").trim();
-    if (value) blocks.push({ type: "paragraph", text: value });
-    paragraphLines = [];
-  };
-
-  const flushList = () => {
-    if (!listItems.length) return;
-    blocks.push({ type: "list", items: listItems });
-    listItems = [];
-  };
-
-  lines.forEach((rawLine) => {
-    const line = rawLine.trim();
-    if (!line) {
-      flushParagraph();
-      flushList();
-      return;
-    }
-
-    const headingMatch = line.match(/^(#{2,5})\s+(.+)$/);
-    if (headingMatch) {
-      flushParagraph();
-      flushList();
-      blocks.push({
-        type: "heading",
-        level: headingMatch[1].length,
-        text: headingMatch[2].trim(),
-      });
-      return;
-    }
-
-    const listMatch = line.match(/^[-*]\s+(.+)$/);
-    if (listMatch) {
-      flushParagraph();
-      listItems.push(listMatch[1].trim());
-      return;
-    }
-
-    flushList();
-    paragraphLines.push(line);
-  });
-
-  flushParagraph();
-  flushList();
-  return blocks;
-}
-
-// Inline parser for **bold**, [text](url), and bare URLs.
 function renderInline(text) {
-  // Tokenize: [text](url), **bold**, plain
   const tokens = [];
   const regex = /(\[([^\]]+)\]\(([^)]+)\))|(\*\*([^*]+)\*\*)/g;
   let lastIndex = 0;
   let match;
+
   while ((match = regex.exec(text)) !== null) {
     if (match.index > lastIndex) {
       tokens.push({ type: "text", value: text.slice(lastIndex, match.index) });
@@ -534,137 +439,88 @@ function renderInline(text) {
     }
     lastIndex = regex.lastIndex;
   }
+
   if (lastIndex < text.length) {
     tokens.push({ type: "text", value: text.slice(lastIndex) });
   }
 
-  return tokens.map((tok, i) => {
-    if (tok.type === "link") {
-      const isInternal = tok.href.startsWith("/");
+  return tokens.map((token, index) => {
+    if (token.type === "link") {
+      const isInternal = token.href.startsWith("/");
       return (
         <a
-          key={i}
-          href={tok.href}
+          key={index}
+          href={token.href}
           target={isInternal ? undefined : "_blank"}
           rel={isInternal ? undefined : "noopener noreferrer"}
           className="text-primary font-medium underline decoration-primary/30 underline-offset-4 hover:decoration-primary"
         >
-          {tok.text}
+          {token.text}
         </a>
       );
     }
-    if (tok.type === "bold") {
+
+    if (token.type === "bold") {
       return (
-        <strong key={i} className="text-stone-900">
-          {tok.value}
+        <strong key={index} className="text-stone-900 font-semibold">
+          {token.value}
         </strong>
       );
     }
-    return <span key={i}>{tok.value}</span>;
+
+    return <span key={index}>{token.value}</span>;
   });
 }
 
-// ─── FAQ ─────────────────────────────────────────────────────────
-function FaqSection({ faq }) {
-  return (
-    <section className="py-14 md:py-20 bg-white border-y border-stone-200">
-      <div className="max-w-4xl mx-auto px-5 sm:px-6 md:px-8">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-stone-900 mb-10 text-center">
-          Frequently asked questions
-        </h2>
-        <div className="space-y-4">
-          {faq.map((item, i) => (
-            <details
-              key={i}
-              className="group bg-stone-50 border border-stone-200 rounded-2xl p-5 cursor-pointer"
-            >
-              <summary className="font-semibold text-stone-900 text-base md:text-lg flex items-center justify-between gap-4 list-none">
-                {item.question}
-                <span className="text-stone-400 group-open:rotate-45 transition-transform text-2xl leading-none">
-                  +
-                </span>
-              </summary>
-              <div className="mt-3 text-stone-600 leading-relaxed">
-                {renderInline(item.answer)}
-              </div>
-            </details>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+function getIntroSection(post) {
+  if (!post) return null;
+
+  if (post.intro && (post.intro.heading || post.intro.body)) {
+    return {
+      heading: post.intro.heading || "",
+      body: post.intro.body || "",
+    };
+  }
+
+  if (Array.isArray(post.sections) && post.sections.length > 0) {
+    const first = post.sections[0];
+    if (first?.heading || first?.body) {
+      return {
+        heading: first.heading || "",
+        body: first.body || "",
+      };
+    }
+  }
+
+  return null;
 }
 
-// ─── Bottom CTA ─────────────────────────────────────────────────
-function CtaSection({ cta }) {
-  if (!cta) return null;
-  return (
-    <section className="py-14 md:py-20">
-      <div className="max-w-4xl mx-auto px-5 sm:px-6 md:px-8">
-        <div className="bg-stone-900 text-white rounded-3xl p-8 md:p-10 text-center">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-3">
-            {cta.heading}
-          </h2>
-          {cta.subtitle && (
-            <p className="text-stone-300 mb-7 max-w-2xl mx-auto leading-relaxed">
-              {cta.subtitle}
-            </p>
-          )}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href={PHONE_HREF}
-              onClick={() =>
-                trackContact({ method: "phone", source: "blog_bottom_cta" })
-              }
-              className="inline-flex items-center justify-center gap-2 bg-white text-stone-900 px-6 py-3.5 rounded-full font-semibold hover:bg-blue-400 hover:text-white transition-colors"
-            >
-              <Phone className="w-5 h-5" />
-              Call Us Now
-              <ArrowUpRight className="w-4 h-4" />
-            </a>
-            <a
-              href={WHATSAPP_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() =>
-                trackContact({ method: "whatsapp", source: "blog_bottom_cta" })
-              }
-              className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3.5 rounded-full font-semibold hover:bg-[#1ebe5d] transition-colors"
-            >
-              <WhatsAppIcon className="w-5 h-5" />
-              WhatsApp
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+function getDetailSections(post) {
+  if (!post) return [];
+
+  if (Array.isArray(post.detailSections) && post.detailSections.length > 0) {
+    return post.detailSections
+      .filter(Boolean)
+      .map((section) => ({
+        title: section.title || section.heading || "",
+        body: section.body || "",
+        image: section.image || "",
+        imageSide: section.imageSide === "left" ? "left" : "right",
+      }));
+  }
+
+  if (Array.isArray(post.sections) && post.sections.length > 0) {
+    return post.sections.slice(1).map((section) => ({
+      title: section?.heading || "",
+      body: section?.body || "",
+      image: section?.image || "",
+      imageSide: section?.imageSide === "left" ? "left" : "right",
+    }));
+  }
+
+  return [];
 }
 
-// ─── Topics (keywords) ──────────────────────────────────────────
-function KeywordsSection({ keywords }) {
-  return (
-    <section className="py-10 border-t border-stone-200 bg-white">
-      <div className="max-w-4xl mx-auto px-5 sm:px-6 md:px-8">
-        <div className="text-xs uppercase tracking-[0.2em] text-stone-500 mb-3 font-semibold">
-          Topics
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {keywords.map((k) => (
-            <span
-              key={k}
-              className="px-3 py-1.5 bg-stone-100 text-stone-700 text-xs rounded-full font-medium"
-            >
-              {k}
-            </span>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// Set <title> + meta description for SEO when the post loads.
 function updateMeta(post) {
   const seo = post.seo || {};
   if (typeof document === "undefined") return;
@@ -675,11 +531,11 @@ function updateMeta(post) {
 
 function setMeta(name, content) {
   if (!content) return;
-  let el = document.querySelector(`meta[name="${name}"]`);
-  if (!el) {
-    el = document.createElement("meta");
-    el.setAttribute("name", name);
-    document.head.appendChild(el);
+  let element = document.querySelector(`meta[name="${name}"]`);
+  if (!element) {
+    element = document.createElement("meta");
+    element.setAttribute("name", name);
+    document.head.appendChild(element);
   }
-  el.setAttribute("content", content);
+  element.setAttribute("content", content);
 }
