@@ -1,141 +1,90 @@
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Search, Clock, ArrowRight } from "lucide-react"
+import { useEffect, useMemo, useState } from "react"
+import { motion } from "framer-motion"
+import { Search, Clock, ArrowRight, ArrowUpRight, Calendar } from "lucide-react"
 import { Link } from "react-router-dom"
 import PageHero from "@/components/common/PageHero"
-import SectionHeading from "@/components/common/SectionHeading"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 
-const categories = ["All", "SEO", "Marketing", "Web Dev", "Design", "Strategy"]
-
-const featuredPost = {
-  category: "SEO",
-  title: "The Complete Guide to SEO in 2024: Strategies That Actually Work",
-  excerpt:
-    "Discover the latest SEO techniques and proven strategies that are driving results for top brands. From AI-powered content optimization to technical SEO fundamentals...",
-  author: "Alex Mitchell",
-  date: "Dec 15, 2024",
-  readTime: "12 min",
-  gradient: "from-blue-600 via-purple-600 to-cyan-500",
-}
-
-const blogPosts = [
-  {
-    id: 1,
-    category: "Marketing",
-    title: "10 Social Media Trends Shaping 2024",
-    excerpt:
-      "From short-form video dominance to AI-powered personalization, these trends are reshaping how brands connect with audiences...",
-    author: "Muhammad Talha",
-    date: "Dec 10, 2024",
-    readTime: "8 min",
-    gradient: "from-pink-500 via-rose-500 to-orange-400",
-    avatarColor: "bg-pink-500",
-  },
-  {
-    id: 2,
-    category: "Web Dev",
-    title: "Why React Server Components Change Everything",
-    excerpt:
-      "Server Components represent a paradigm shift in how we build React applications. Here's what you need to know...",
-    author: "James Wilson",
-    date: "Dec 5, 2024",
-    readTime: "10 min",
-    gradient: "from-cyan-500 via-blue-500 to-indigo-500",
-    avatarColor: "bg-cyan-500",
-  },
-  {
-    id: 3,
-    category: "SEO",
-    title: "Local SEO: The Ultimate Guide for Small Businesses",
-    excerpt:
-      "Learn how to dominate local search results and drive foot traffic to your business with proven local SEO strategies...",
-    author: "Maya Patel",
-    date: "Nov 28, 2024",
-    readTime: "15 min",
-    gradient: "from-green-500 via-emerald-500 to-teal-500",
-    avatarColor: "bg-green-500",
-  },
-  {
-    id: 4,
-    category: "Design",
-    title: "The Psychology of Color in Brand Design",
-    excerpt:
-      "Color influences up to 90% of snap judgments about products. Learn how to leverage color psychology in your brand...",
-    author: "Lisa Tanaka",
-    date: "Nov 20, 2024",
-    readTime: "7 min",
-    gradient: "from-violet-500 via-purple-500 to-fuchsia-500",
-    avatarColor: "bg-violet-500",
-  },
-  {
-    id: 5,
-    category: "Strategy",
-    title: "Building a Data-Driven Marketing Strategy",
-    excerpt:
-      "How to leverage analytics and data insights to create marketing campaigns that deliver consistent ROI...",
-    author: "Ryan Cooper",
-    date: "Nov 15, 2024",
-    readTime: "11 min",
-    gradient: "from-amber-500 via-orange-500 to-red-500",
-    avatarColor: "bg-amber-500",
-  },
-  {
-    id: 6,
-    category: "Marketing",
-    title: "Email Marketing Automation: A Complete Playbook",
-    excerpt:
-      "Unlock the power of email automation to nurture leads, boost conversions, and scale your marketing efforts...",
-    author: "David Okonkwo",
-    date: "Nov 8, 2024",
-    readTime: "9 min",
-    gradient: "from-sky-500 via-blue-600 to-indigo-600",
-    avatarColor: "bg-sky-500",
-  },
-]
-
 export default function Blog() {
+  const [posts, setPosts] = useState(null)
+  const [error, setError] = useState("")
   const [activeCategory, setActiveCategory] = useState("All")
   const [searchQuery, setSearchQuery] = useState("")
 
-  const filteredPosts = blogPosts.filter((post) => {
-    const matchesCategory =
-      activeCategory === "All" || post.category === activeCategory
-    const matchesSearch =
-      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesCategory && matchesSearch
-  })
+  useEffect(() => {
+    fetch("/api/posts")
+      .then(async (r) => {
+        if (!r.ok) throw new Error(`Server ${r.status}`)
+        const ct = r.headers.get("content-type") || ""
+        if (!ct.includes("application/json")) {
+          throw new Error("API not reachable in dev — deploy or use wrangler.")
+        }
+        return r.json()
+      })
+      .then((data) => {
+        if (data.ok) setPosts(data.posts || [])
+        else setError(data.error || "Failed to load posts")
+      })
+      .catch((err) => setError(err.message))
+  }, [])
+
+  const categories = useMemo(() => {
+    if (!posts) return ["All"]
+    const set = new Set(posts.map((p) => p.category).filter(Boolean))
+    return ["All", ...Array.from(set)]
+  }, [posts])
+
+  const filtered = useMemo(() => {
+    if (!posts) return []
+    return posts.filter((p) => {
+      const matchesCat =
+        activeCategory === "All" || p.category === activeCategory
+      const q = searchQuery.toLowerCase()
+      const matchesSearch =
+        !q ||
+        p.title.toLowerCase().includes(q) ||
+        (p.excerpt || "").toLowerCase().includes(q)
+      return matchesCat && matchesSearch
+    })
+  }, [posts, activeCategory, searchQuery])
+
+  const [featured, ...rest] = filtered
 
   return (
     <main className="min-h-screen bg-cream text-stone-900">
-      {/* Section 1: Page Hero */}
       <PageHero
-        title={<>Insights & <em className="font-serif italic font-medium text-primary">resources</em>.</>}
+        title={
+          <>
+            Insights &{" "}
+            <em className="font-serif italic font-medium text-primary">
+              resources
+            </em>
+            .
+          </>
+        }
         subtitle="Our Blog"
         description="Stay ahead with the latest trends, strategies, and insights in digital marketing, web development, and SEO."
       />
 
-      {/* Section 2: Category Filter & Search */}
-      <section className="max-w-6xl mx-auto px-6 md:px-8 -mt-8 relative z-20">
+      {/* Filters */}
+      <section className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8 -mt-8 relative z-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="flex flex-col md:flex-row items-center justify-between gap-6"
         >
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer ${
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all cursor-pointer ${
                   activeCategory === category
-                    ? "bg-primary text-white shadow-lg shadow-primary/25"
-                    : "bg-stone-900/5 text-stone-600 hover:bg-stone-900/10 hover:text-stone-900 border border-stone-200"
+                    ? "bg-primary text-white shadow"
+                    : "bg-white text-stone-600 hover:text-stone-900 border border-stone-200"
                 }`}
               >
                 {category}
@@ -154,183 +103,145 @@ export default function Blog() {
         </motion.div>
       </section>
 
-      {/* Section 3: Featured Post */}
-      <section className="max-w-6xl mx-auto px-6 md:px-8 py-16">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6 }}
-        >
-          <Card className="overflow-hidden">
-            <div className="grid md:grid-cols-2">
-              {/* Image placeholder */}
-              <div
-                className={`bg-gradient-to-br ${featuredPost.gradient} min-h-[300px] md:min-h-[400px] relative`}
-              >
-                <div className="absolute inset-0 bg-stone-900/20" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-20 h-20 rounded-full bg-stone-900/10 backdrop-blur-sm flex items-center justify-center">
-                    <ArrowRight className="w-8 h-8 text-stone-900" />
-                  </div>
-                </div>
-              </div>
+      {error && (
+        <div className="max-w-3xl mx-auto px-6 mt-10">
+          <div className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-800 text-sm text-center">
+            {error}
+          </div>
+        </div>
+      )}
 
-              {/* Content */}
-              <div className="p-8 md:p-10 flex flex-col justify-center">
-                <div className="flex items-center gap-3 mb-4">
-                  <Badge>Featured</Badge>
-                  <Badge variant="secondary">{featuredPost.category}</Badge>
+      {posts === null && !error && (
+        <div className="text-center py-24 text-stone-500">Loading posts…</div>
+      )}
+
+      {posts && filtered.length === 0 && (
+        <div className="text-center py-24 text-stone-500 px-6">
+          No posts found. Try a different search or category.
+        </div>
+      )}
+
+      {/* Featured */}
+      {featured && (
+        <section className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8 py-12 md:py-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <Link
+              to={`/blog/${featured.slug}`}
+              className="group block bg-white border border-stone-200 rounded-3xl overflow-hidden hover:border-stone-900 transition-colors"
+            >
+              <div className="grid md:grid-cols-2">
+                <div className="relative aspect-[4/3] md:aspect-auto bg-stone-100">
+                  {featured.coverImage ? (
+                    <img
+                      src={featured.coverImage}
+                      alt={featured.title}
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary to-blue-700" />
+                  )}
                 </div>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-4">
-                  {featuredPost.title}
-                </h2>
-                <p className="text-stone-600 mb-6 leading-relaxed">
-                  {featuredPost.excerpt}
-                </p>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-primary/30 flex items-center justify-center text-xs font-bold text-primary">
-                      {featuredPost.author
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </div>
-                    <span className="text-sm text-stone-700">
-                      {featuredPost.author}
+                <div className="p-8 md:p-10 flex flex-col justify-center">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Badge>Featured</Badge>
+                    <Badge variant="secondary">{featured.category}</Badge>
+                  </div>
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight tracking-tight mb-4 group-hover:text-primary transition-colors">
+                    {featured.title}
+                  </h2>
+                  <p className="text-stone-600 leading-relaxed mb-6">
+                    {featured.excerpt}
+                  </p>
+                  <div className="flex items-center gap-4 text-xs text-stone-500 mb-5">
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5" />
+                      {formatDate(featured.date)}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5" />
+                      {featured.readTime}
                     </span>
                   </div>
-                  <span className="text-stone-500">|</span>
-                  <span className="text-sm text-stone-600">
-                    {featuredPost.date}
+                  <span className="inline-flex items-center gap-1.5 text-stone-900 text-sm font-semibold">
+                    Read article
+                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </span>
-                  <span className="text-stone-500">|</span>
-                  <div className="flex items-center gap-1 text-sm text-stone-600">
-                    <Clock className="w-3.5 h-3.5" />
-                    <span>{featuredPost.readTime} read</span>
-                  </div>
-                </div>
-                <div>
-                  <Button variant="outline">
-                    Read More
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
                 </div>
               </div>
-            </div>
-          </Card>
-        </motion.div>
-      </section>
+            </Link>
+          </motion.div>
+        </section>
+      )}
 
-      {/* Section 4: Blog Grid */}
-      <section className="max-w-6xl mx-auto px-6 md:px-8 pb-20">
-        <SectionHeading
-          subtitle="Latest Articles"
-          title="From Our Blog"
-          description="Explore our latest insights and strategies to help grow your digital presence."
-        />
-
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeCategory + searchQuery}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
-          >
-            {filteredPosts.map((post, index) => (
-              <motion.div
-                key={post.id}
-                initial={{ opacity: 0, y: 30 }}
+      {/* Grid */}
+      {rest.length > 0 && (
+        <section className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8 pb-20">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {rest.map((post, i) => (
+              <motion.article
+                key={post.id || post.slug}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-30px" }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.4, delay: (i % 3) * 0.08 }}
               >
-                <Card className="group overflow-hidden hover:-translate-y-2 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 h-full flex flex-col">
-                  {/* Image placeholder */}
-                  <div
-                    className={`bg-gradient-to-br ${post.gradient} aspect-video relative overflow-hidden`}
-                  >
-                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-all duration-300" />
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="w-12 h-12 rounded-full bg-stone-200 backdrop-blur-sm flex items-center justify-center">
-                        <ArrowRight className="w-5 h-5 text-stone-900" />
-                      </div>
+                <Link
+                  to={`/blog/${post.slug}`}
+                  className="group flex flex-col h-full bg-white border border-stone-200 rounded-3xl overflow-hidden hover:border-stone-900 hover:shadow-lg transition-all"
+                >
+                  <div className="relative aspect-[16/10] bg-stone-100 overflow-hidden">
+                    {post.coverImage ? (
+                      <img
+                        src={post.coverImage}
+                        alt={post.title}
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary to-blue-700" />
+                    )}
+                    <div className="absolute top-4 left-4">
+                      <span className="inline-block bg-white/95 backdrop-blur text-stone-900 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">
+                        {post.category}
+                      </span>
                     </div>
                   </div>
-
-                  {/* Content */}
-                  <div className="p-6 flex flex-col flex-1">
-                    <div className="mb-3">
-                      <Badge variant="secondary">{post.category}</Badge>
-                    </div>
-                    <h3 className="text-lg font-bold mb-2 group-hover:text-primary transition-colors duration-300 cursor-pointer">
+                  <CardContent className="p-6 flex flex-col flex-1">
+                    <h3 className="text-lg font-bold text-stone-900 leading-snug mb-3 group-hover:text-primary transition-colors">
                       {post.title}
                     </h3>
-                    <p className="text-stone-600 text-sm leading-relaxed mb-4 line-clamp-3 flex-1">
+                    <p className="text-stone-600 text-sm leading-relaxed mb-5 flex-1 line-clamp-3">
                       {post.excerpt}
                     </p>
-
-                    {/* Bottom row */}
-                    <div className="flex items-center justify-between pt-4 border-t border-stone-200">
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={`w-6 h-6 rounded-full ${post.avatarColor} flex items-center justify-center text-[10px] font-bold text-stone-900`}
-                        >
-                          {post.author
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")}
-                        </div>
-                        <div className="flex items-center gap-2 text-xs text-stone-600">
-                          <span>{post.author}</span>
-                          <span className="text-stone-500">&middot;</span>
-                          <span>{post.date}</span>
-                          <span className="text-stone-500">&middot;</span>
-                          <span>{post.readTime}</span>
-                        </div>
-                      </div>
+                    <div className="flex items-center justify-between pt-4 border-t border-stone-200 text-xs text-stone-500">
+                      <span>{formatDate(post.date)}</span>
+                      <span>{post.readTime}</span>
                     </div>
-                    <div className="mt-3">
-                      <Link
-                        to="#"
-                        className="text-primary text-sm font-medium inline-flex items-center gap-1 hover:gap-2 transition-all duration-300"
-                      >
-                        Read More
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Link>
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
+                  </CardContent>
+                </Link>
+              </motion.article>
             ))}
-          </motion.div>
-        </AnimatePresence>
-
-        {filteredPosts.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-20"
-          >
-            <p className="text-stone-600 text-lg">
-              No articles found matching your criteria.
-            </p>
-            <Button
-              variant="outline"
-              className="mt-4"
-              onClick={() => {
-                setActiveCategory("All")
-                setSearchQuery("")
-              }}
-            >
-              Clear Filters
-            </Button>
-          </motion.div>
-        )}
-      </section>
-
+          </div>
+        </section>
+      )}
     </main>
   )
+}
+
+function formatDate(d) {
+  if (!d) return ""
+  try {
+    return new Date(d).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    })
+  } catch {
+    return d
+  }
 }

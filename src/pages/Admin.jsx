@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react"
 import { Lock, RefreshCw, Trash2, Mail, Phone, Globe, Search, LogOut, Inbox } from "lucide-react"
 import { useNoIndex } from "@/hooks/useNoIndex"
+import { AdminTabs } from "@/pages/AdminBlogList"
 
 const TOKEN_KEY = "ud_admin_token"
 
@@ -217,6 +218,7 @@ export default function Admin() {
       </header>
 
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-8">
+        <AdminTabs />
         {/* Stats + Filters */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <div className="flex items-center gap-3">

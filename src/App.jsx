@@ -15,6 +15,8 @@ import Contact from "@/pages/Contact"
 import Pricing from "@/pages/Pricing"
 import BlogPost from "@/pages/BlogPost"
 import Admin from "@/pages/Admin"
+import AdminBlogList from "@/pages/AdminBlogList"
+import AdminBlogEditor from "@/pages/AdminBlogEditor"
 import AdMeta from "@/pages/ads/AdMeta"
 
 const pageTransition = {
@@ -77,6 +79,9 @@ function App() {
       <Routes>
         <Route path="/ads/preview" element={<AdMeta />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/blog" element={<AdminBlogList />} />
+        <Route path="/admin/blog/new" element={<AdminBlogEditor />} />
+        <Route path="/admin/blog/:id" element={<AdminBlogEditor />} />
         <Route path="*" element={<><LoadingScreen /><MainLayout /></>} />
       </Routes>
     </Router>
