@@ -40,7 +40,7 @@ const EMPTY_POST = {
     heading: "",
     body: "",
   },
-  detailHeading: "",
+  detailHeading: "Service Details",
   detailSections: [],
   showQuoteForm: true,
   faq: [],
@@ -236,7 +236,7 @@ export default function AdminBlogEditor() {
               <Input
                 value={post.intro.heading}
                 onChange={(e) => updateField("intro.heading", e.target.value)}
-                placeholder="Bathroom Installations West Yorkshire"
+                placeholder="Website Development Services Across the USA"
               />
             </Field>
             <Field label="Intro details (paragraph)">
@@ -254,14 +254,14 @@ export default function AdminBlogEditor() {
             description="Fixed services section is auto-rendered for all blogs (not editable)."
           >
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-stone-600">
-              <div>Bathroom Installations</div>
-              <div>Kitchen Installations</div>
-              <div>3D Design Service</div>
-              <div>Alterations & Renovations</div>
-              <div>Shop and Supplies</div>
-              <div>Tiling Work</div>
-              <div>Electrical Work</div>
-              <div>General Plumbing</div>
+              <div>Website Development</div>
+              <div>SEO Services</div>
+              <div>Local SEO / Google Maps</div>
+              <div>Google Ads (PPC)</div>
+              <div>Social Media Marketing</div>
+              <div>Branding & Design</div>
+              <div>E-Commerce Development</div>
+              <div>Digital Marketing</div>
             </div>
           </Card>
 
@@ -271,12 +271,12 @@ export default function AdminBlogEditor() {
           >
             <Field
               label="Center heading (H3, first detail area)"
-              description="Optional. Example: Bathroom Designs & Installation"
+              description="Centered heading shown before detail cards."
             >
               <Input
                 value={post.detailHeading}
                 onChange={(e) => updateField("detailHeading", e.target.value)}
-                placeholder="Bathroom Designs & Installation"
+                placeholder="Service Details"
               />
             </Field>
 
@@ -295,7 +295,7 @@ export default function AdminBlogEditor() {
                     <Input
                       value={item.title}
                       onChange={(e) => update("title", e.target.value)}
-                      placeholder="Bathroom Installation West Yorkshire"
+                      placeholder="Custom Website Development for Service Businesses"
                     />
                   </Field>
                   <Field label="Details (paragraph)">
@@ -372,7 +372,10 @@ export default function AdminBlogEditor() {
             description="Blog list and search metadata."
           >
             <div className="grid sm:grid-cols-2 gap-4">
-              <Field label="Slug" description="URL path. Auto-generated from title.">
+              <Field
+                label="Slug"
+                description="URL path. Auto-generated from title."
+              >
                 <Input
                   value={post.slug}
                   onChange={(e) => updateField("slug", e.target.value)}
@@ -437,7 +440,9 @@ export default function AdminBlogEditor() {
             >
               <Textarea
                 value={post.seo.metaDescription}
-                onChange={(e) => updateField("seo.metaDescription", e.target.value)}
+                onChange={(e) =>
+                  updateField("seo.metaDescription", e.target.value)
+                }
                 rows={3}
                 placeholder="Falls back to excerpt"
               />
@@ -472,7 +477,9 @@ export default function AdminBlogEditor() {
 }
 
 function hydrateLoadedPost(raw) {
-  const legacySections = Array.isArray(raw.sections) ? raw.sections.filter(Boolean) : [];
+  const legacySections = Array.isArray(raw.sections)
+    ? raw.sections.filter(Boolean)
+    : [];
   const hasDirectIntro = raw.intro && (raw.intro.heading || raw.intro.body);
 
   const intro = hasDirectIntro
@@ -482,14 +489,15 @@ function hydrateLoadedPost(raw) {
         body: legacySections[0]?.body || "",
       };
 
-  const detailSectionsSource = Array.isArray(raw.detailSections) && raw.detailSections.length > 0
-    ? raw.detailSections
-    : legacySections.slice(hasDirectIntro ? 0 : 1);
+  const detailSectionsSource =
+    Array.isArray(raw.detailSections) && raw.detailSections.length > 0
+      ? raw.detailSections
+      : legacySections.slice(hasDirectIntro ? 0 : 1);
 
   const detailSections = detailSectionsSource.map((item) => ({
     title: item.title || item.heading || "",
     body: item.body || "",
-    image: item.image || "",
+    image: item.image || raw.coverImage || "",
     imageSide: item.imageSide === "left" ? "left" : "right",
   }));
 
@@ -499,7 +507,7 @@ function hydrateLoadedPost(raw) {
     hero: { ...EMPTY_POST.hero, ...raw.hero, showRating: false },
     seo: { ...EMPTY_POST.seo, ...raw.seo },
     intro,
-    detailHeading: raw.detailHeading || "",
+    detailHeading: raw.detailHeading || raw.sectionsTitle || "Service Details",
     detailSections,
     showQuoteForm: raw.showQuoteForm !== false,
   };
@@ -513,14 +521,21 @@ function buildPayload(post) {
     ? post.detailSections.map((item) => ({
         title: item.title || "",
         body: item.body || "",
-        image: item.image || "",
+        image: item.image || post.coverImage || "",
         imageSide: item.imageSide === "left" ? "left" : "right",
       }))
     : [];
 
   const sections = [
     ...(introHeading || introBody
-      ? [{ heading: introHeading, body: introBody, image: "", imageSide: "right" }]
+      ? [
+          {
+            heading: introHeading,
+            body: introBody,
+            image: "",
+            imageSide: "right",
+          },
+        ]
       : []),
     ...detailSections.map((item) => ({
       heading: item.title,
@@ -556,7 +571,9 @@ function Card({ title, description, children }) {
     <div className="bg-white border border-stone-200 rounded-2xl p-6">
       <div className="mb-5 pb-5 border-b border-stone-100">
         <h3 className="text-lg font-bold text-stone-900">{title}</h3>
-        {description && <p className="text-sm text-stone-500 mt-1">{description}</p>}
+        {description && (
+          <p className="text-sm text-stone-500 mt-1">{description}</p>
+        )}
       </div>
       <div className="space-y-4">{children}</div>
     </div>
@@ -570,7 +587,9 @@ function Field({ label, description, required, children }) {
         {label}
         {required && <span className="text-primary ml-1">*</span>}
       </label>
-      {description && <p className="text-xs text-stone-500 mb-2">{description}</p>}
+      {description && (
+        <p className="text-xs text-stone-500 mb-2">{description}</p>
+      )}
       {children}
     </div>
   );
@@ -634,7 +653,11 @@ function ImagePicker({ value, onChange }) {
     <div>
       {value ? (
         <div className="relative inline-block">
-          <img src={value} alt="" className="rounded-lg border border-stone-200 max-h-48 object-contain" />
+          <img
+            src={value}
+            alt=""
+            className="rounded-lg border border-stone-200 max-h-48 object-contain"
+          />
           <button
             type="button"
             onClick={() => onChange("")}
@@ -647,8 +670,15 @@ function ImagePicker({ value, onChange }) {
       ) : (
         <label className="flex items-center justify-center gap-2 h-24 border-2 border-dashed border-stone-300 rounded-lg text-stone-500 hover:border-primary hover:text-primary cursor-pointer transition-colors">
           <Upload className="w-5 h-5" />
-          <span className="text-sm font-medium">{uploading ? "Uploading…" : "Upload image"}</span>
-          <input type="file" accept="image/*" onChange={handleFile} className="hidden" />
+          <span className="text-sm font-medium">
+            {uploading ? "Uploading…" : "Upload image"}
+          </span>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFile}
+            className="hidden"
+          />
         </label>
       )}
       {error && <p className="text-red-600 text-xs mt-1">{error}</p>}
@@ -681,11 +711,18 @@ function RepeaterList({ items, onChange, emptyValue, renderItem, addLabel }) {
 
   return (
     <div className="space-y-3">
-      {items.length === 0 && <p className="text-sm text-stone-500 italic">None added yet.</p>}
+      {items.length === 0 && (
+        <p className="text-sm text-stone-500 italic">None added yet.</p>
+      )}
       {items.map((item, index) => (
-        <div key={index} className="bg-stone-50 border border-stone-200 rounded-xl p-4">
+        <div
+          key={index}
+          className="bg-stone-50 border border-stone-200 rounded-xl p-4"
+        >
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold text-stone-500 uppercase tracking-wider">#{index + 1}</span>
+            <span className="text-xs font-bold text-stone-500 uppercase tracking-wider">
+              #{index + 1}
+            </span>
             <div className="flex items-center gap-2 text-stone-400">
               <button
                 onClick={() => moveUp(index)}
@@ -715,7 +752,9 @@ function RepeaterList({ items, onChange, emptyValue, renderItem, addLabel }) {
               </button>
             </div>
           </div>
-          <div className="space-y-3">{renderItem(item, (key, value) => updateAt(index, key, value))}</div>
+          <div className="space-y-3">
+            {renderItem(item, (key, value) => updateAt(index, key, value))}
+          </div>
         </div>
       ))}
       <button

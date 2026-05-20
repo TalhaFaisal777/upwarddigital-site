@@ -1,11 +1,11 @@
 // Client-side image compression → base64.
 // We don't have a separate image host bound yet, so images travel with the
-// post payload (base64 data URLs). Each upload is downsized to max 1600px on
-// the longest edge and compressed to JPEG ~0.82 quality. Typical output is
-// 80–250 KB per image — fine for KV (25 MB per value limit, plenty of room).
+// post payload (base64 data URLs). Each upload is downsized to max 2200px on
+// the longest edge and compressed to JPEG ~0.9 quality for sharper hero/detail
+// images while still staying well under KV value limits in normal usage.
 
-const MAX_DIMENSION = 1600
-const JPEG_QUALITY = 0.82
+const MAX_DIMENSION = 2200
+const JPEG_QUALITY = 0.9
 
 export async function uploadImage(file) {
   if (!file) throw new Error("No file")

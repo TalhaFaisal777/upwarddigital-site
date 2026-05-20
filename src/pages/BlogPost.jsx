@@ -4,17 +4,17 @@ import { ArrowLeft, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { trackBlogPostClick, trackLead } from "@/lib/pixel";
 
 const SERVICE_ITEMS = [
-  "Bathroom Installations",
-  "Kitchen Installations",
-  "3D Design Service",
-  "Alterations & Renovations",
-  "Shop and Supplies",
-  "Tiling Work",
-  "Electrical Work",
-  "General Plumbing",
+  "Website Development",
+  "SEO Services",
+  "Local SEO / Google Maps",
+  "Google Ads (PPC)",
+  "Social Media Marketing",
+  "Branding & Design",
+  "E-Commerce Development",
+  "Digital Marketing",
 ];
 
-const SERVICE_ICONS = ["🛁", "🍽️", "📐", "🛠️", "🏬", "🧱", "💡", "🚰"];
+const SERVICE_ICONS = ["💻", "🔎", "📍", "📣", "📱", "🎨", "🛒", "📈"];
 
 export default function BlogPost() {
   const { slug } = useParams();
@@ -89,11 +89,13 @@ export default function BlogPost() {
       <IntroMapSection intro={intro} />
       <ServicesGridSection />
       <DetailSectionsSection
-        heading={post.detailHeading || ""}
+        heading={post.detailHeading || "Service Details"}
         sections={detailSections}
       />
       {post.showQuoteForm !== false && <QuoteFormSection slug={post.slug} />}
-      {Array.isArray(post.faq) && post.faq.length > 0 && <FaqSection faq={post.faq} />}
+      {Array.isArray(post.faq) && post.faq.length > 0 && (
+        <FaqSection faq={post.faq} />
+      )}
     </main>
   );
 }
@@ -111,16 +113,23 @@ function HeroSection({ post }) {
     <section className="relative pt-32 sm:pt-36 pb-14 sm:pb-20 overflow-hidden min-h-[500px] flex items-center">
       {post.coverImage && (
         <div className="absolute inset-0 z-0">
-          <img src={post.coverImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
+          <img
+            src={post.coverImage}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-stone-900/55 via-stone-900/40 to-cream" />
         </div>
       )}
-      {!post.coverImage && <div className="absolute inset-0 bg-gradient-to-b from-stone-900/15 to-cream" />}
+      {!post.coverImage && (
+        <div className="absolute inset-0 bg-gradient-to-b from-stone-900/15 to-cream" />
+      )}
 
       <div
         className="absolute inset-0 opacity-[0.06] pointer-events-none"
         style={{
-          backgroundImage: "radial-gradient(circle, #1c1917 1px, transparent 1px)",
+          backgroundImage:
+            "radial-gradient(circle, #1c1917 1px, transparent 1px)",
           backgroundSize: "28px 28px",
         }}
       />
@@ -141,7 +150,7 @@ function HeroSection({ post }) {
         </h1>
 
         {post.hero?.subtitle && (
-          <p className="max-w-3xl mx-auto text-stone-700 text-lg md:text-2xl leading-relaxed mb-8">
+          <p className="max-w-3xl mx-auto text-center text-stone-700 text-lg md:text-2xl leading-relaxed mb-8 break-words [overflow-wrap:anywhere]">
             {post.hero.subtitle}
           </p>
         )}
@@ -196,11 +205,16 @@ function ServicesGridSection() {
       <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 md:gap-5">
           {SERVICE_ITEMS.map((service, index) => (
-            <div key={service} className="bg-white border border-stone-200 rounded-2xl p-4 text-center">
+            <div
+              key={service}
+              className="bg-white border border-stone-200 rounded-2xl p-4 text-center"
+            >
               <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-stone-100 flex items-center justify-center text-xl">
                 {SERVICE_ICONS[index]}
               </div>
-              <h3 className="text-sm font-bold text-stone-900 leading-snug">{service}</h3>
+              <h3 className="text-sm font-bold text-stone-900 leading-snug">
+                {service}
+              </h3>
             </div>
           ))}
         </div>
@@ -225,7 +239,10 @@ function DetailSectionsSection({ heading, sections }) {
           const bgClass = index % 2 === 0 ? "bg-cream" : "bg-white";
           const imageRight = section.imageSide !== "left";
           return (
-            <article key={`${section.title}-${index}`} className={`${bgClass} border border-stone-200 rounded-3xl p-6 md:p-10 mb-8`}>
+            <article
+              key={`${section.title}-${index}`}
+              className={`${bgClass} border border-stone-200 rounded-3xl p-6 md:p-10 mb-8`}
+            >
               <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
                 <div className={imageRight ? "" : "lg:order-2"}>
                   {section.title && (
@@ -243,8 +260,14 @@ function DetailSectionsSection({ heading, sections }) {
                       className="w-full aspect-[4/3] object-cover rounded-2xl border border-stone-200"
                     />
                   ) : (
-                    <div className="w-full aspect-[4/3] rounded-2xl border border-dashed border-stone-300 bg-stone-100 flex items-center justify-center text-stone-400 text-sm">
-                      Add image in admin
+                    <div className="rounded-2xl overflow-hidden border border-stone-200 bg-stone-100">
+                      <iframe
+                        title="United States Map"
+                        src="https://www.google.com/maps?q=United+States&output=embed"
+                        className="w-full aspect-[4/3]"
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                      />
                     </div>
                   )}
                 </div>
@@ -267,11 +290,15 @@ function QuoteFormSection({ slug }) {
   });
   const [submitted, setSubmitted] = useState(false);
 
-  const handle = (e) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handle = (e) =>
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const submit = async (e) => {
     e.preventDefault();
-    trackLead({ content_name: "Blog Quote Form", content_category: "lead_form" });
+    trackLead({
+      content_name: "Blog Quote Form",
+      content_category: "lead_form",
+    });
     setSubmitted(true);
     try {
       await fetch("/api/submit", {
@@ -290,7 +317,10 @@ function QuoteFormSection({ slug }) {
   };
 
   return (
-    <section id="quote-form" className="py-16 md:py-22 bg-cream border-y border-stone-200 scroll-mt-28">
+    <section
+      id="quote-form"
+      className="py-16 md:py-22 bg-cream border-y border-stone-200 scroll-mt-28"
+    >
       <div className="max-w-4xl mx-auto px-5 sm:px-6 md:px-8">
         <div className="bg-white border border-stone-200 rounded-3xl p-8 md:p-10 shadow-sm">
           <div className="text-center mb-7">
@@ -305,7 +335,9 @@ function QuoteFormSection({ slug }) {
             <div className="text-center py-10">
               <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto mb-3" />
               <p className="text-stone-900 font-bold">Thank you!</p>
-              <p className="text-stone-600 text-sm">We'll reply within 24 hours.</p>
+              <p className="text-stone-600 text-sm">
+                We'll reply within 24 hours.
+              </p>
             </div>
           ) : (
             <form onSubmit={submit} className="grid sm:grid-cols-2 gap-3">
@@ -499,21 +531,19 @@ function getDetailSections(post) {
   if (!post) return [];
 
   if (Array.isArray(post.detailSections) && post.detailSections.length > 0) {
-    return post.detailSections
-      .filter(Boolean)
-      .map((section) => ({
-        title: section.title || section.heading || "",
-        body: section.body || "",
-        image: section.image || "",
-        imageSide: section.imageSide === "left" ? "left" : "right",
-      }));
+    return post.detailSections.filter(Boolean).map((section) => ({
+      title: section.title || section.heading || "",
+      body: section.body || "",
+      image: section.image || post.coverImage || "",
+      imageSide: section.imageSide === "left" ? "left" : "right",
+    }));
   }
 
   if (Array.isArray(post.sections) && post.sections.length > 0) {
     return post.sections.slice(1).map((section) => ({
       title: section?.heading || "",
       body: section?.body || "",
-      image: section?.image || "",
+      image: section?.image || post.coverImage || "",
       imageSide: section?.imageSide === "left" ? "left" : "right",
     }));
   }
