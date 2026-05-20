@@ -5,6 +5,10 @@
 // hardcoded content survives in the new system.
 
 const POST_PREFIX = "post:"
+const POST_ORDER_PREFIX = "post_order:"
+const POST_SLUG_PREFIX = "post_slug:"
+const SEED_MARKER_KEY = "meta:blog_seed_migrated_v2"
+const MAX_LIMIT = 100
 
 const SEED_POSTS = [
   {
@@ -249,37 +253,61 @@ const SEED_POSTS = [
   },
 ]
 
-// Idempotent — only writes seeds if they don't exist yet.
+// One-time seed migration + index backfill. This does NOT resurrect deleted
+// seed posts after the migration marker is set.
 export async function ensureSeedPosts(env) {
   if (!env.QUERIES) return
-  for (const seed of SEED_POSTS) {
-    const key = `${POST_PREFIX}${seed.id}`
-    const existing = await env.QUERIES.get(key)
-    if (!existing) {
-      await env.QUERIES.put(key, JSON.stringify(seed))
+  const migrated = await env.QUERIES.get(SEED_MARKER_KEY)
+  if (migrated === "1") return
+
+  const hasAnyPosts = await hasAnyPost(env)
+  if (!hasAnyPosts) {
+    for (const seed of SEED_POSTS) {
+      await savePost(env, seed)
     }
+  } else {
+    await backfillIndexes(env)
+  }
+
+  await env.QUERIES.put(SEED_MARKER_KEY, "1")
+}
+
+export async function listPostsPage(env, { cursor, limit = 20, summary = false } = {}) {
+  if (!env.QUERIES) return { posts: [], nextCursor: null, hasMore: false }
+
+  const safeLimit = clamp(limit, 1, MAX_LIMIT)
+  const list = await env.QUERIES.list({
+    prefix: POST_ORDER_PREFIX,
+    cursor: cursor || undefined,
+    limit: safeLimit,
+  })
+
+  const ids = list.keys.map((k) => parseIdFromOrderKey(k.name)).filter(Boolean)
+  const posts = (
+    await Promise.all(ids.map((id) => getPostById(env, id)))
+  ).filter(Boolean)
+
+  const mapped = summary
+    ? posts.map((p) => toSummary(p))
+    : posts
+
+  return {
+    posts: mapped,
+    nextCursor: list.list_complete ? null : list.cursor,
+    hasMore: !list.list_complete,
   }
 }
 
 // Newest-first list of all posts.
 export async function listAllPosts(env) {
-  if (!env.QUERIES) return []
-  const list = await env.QUERIES.list({ prefix: POST_PREFIX })
-  const posts = await Promise.all(
-    list.keys.map(async (k) => {
-      const raw = await env.QUERIES.get(k.name)
-      try {
-        return raw ? JSON.parse(raw) : null
-      } catch {
-        return null
-      }
-    })
-  )
-  return posts
-    .filter(Boolean)
-    .sort((a, b) =>
-      (b.date || b.createdAt || "").localeCompare(a.date || a.createdAt || "")
-    )
+  const all = []
+  let cursor
+  do {
+    const page = await listPostsPage(env, { cursor, limit: MAX_LIMIT, summary: false })
+    all.push(...page.posts)
+    cursor = page.nextCursor
+  } while (cursor)
+  return all
 }
 
 export async function getPostById(env, id) {
@@ -294,19 +322,59 @@ export async function getPostById(env, id) {
 }
 
 export async function getPostBySlug(env, slug) {
+  if (!env.QUERIES || !slug) return null
+
+  const id = await env.QUERIES.get(slugIndexKey(slug))
+  if (id) {
+    return await getPostById(env, id)
+  }
+
+  // Fallback for old records before slug index exists.
   const posts = await listAllPosts(env)
-  return posts.find((p) => p.slug === slug) || null
+  const post = posts.find((p) => p.slug === slug) || null
+  if (post) {
+    await env.QUERIES.put(slugIndexKey(post.slug), post.id)
+  }
+  return post
 }
 
 export async function savePost(env, post) {
   if (!env.QUERIES) throw new Error("QUERIES KV not bound")
-  const key = `${POST_PREFIX}${post.id}`
-  await env.QUERIES.put(key, JSON.stringify(post))
+
+  const existing = await getPostById(env, post.id)
+  const persisted = {
+    ...post,
+    updatedAt: post.updatedAt || new Date().toISOString(),
+  }
+
+  const newOrderKey = orderKeyForPost(persisted)
+  persisted.orderKey = newOrderKey
+
+  await env.QUERIES.put(postKey(persisted.id), JSON.stringify(persisted))
+  await env.QUERIES.put(slugIndexKey(persisted.slug), persisted.id)
+  await env.QUERIES.put(newOrderKey, persisted.id)
+
+  if (existing?.slug && existing.slug !== persisted.slug) {
+    await env.QUERIES.delete(slugIndexKey(existing.slug))
+  }
+
+  const oldOrderKey = existing?.orderKey || (existing ? orderKeyForPost(existing) : null)
+  if (oldOrderKey && oldOrderKey !== newOrderKey) {
+    await env.QUERIES.delete(oldOrderKey)
+  }
 }
 
 export async function deletePost(env, id) {
   if (!env.QUERIES) throw new Error("QUERIES KV not bound")
-  await env.QUERIES.delete(`${POST_PREFIX}${id}`)
+  const existing = await getPostById(env, id)
+  await env.QUERIES.delete(postKey(id))
+  if (existing?.slug) {
+    await env.QUERIES.delete(slugIndexKey(existing.slug))
+  }
+  const orderKey = existing?.orderKey || (existing ? orderKeyForPost(existing) : null)
+  if (orderKey) {
+    await env.QUERIES.delete(orderKey)
+  }
 }
 
 export function jsonResponse(body, status = 200) {
@@ -322,4 +390,88 @@ export function jsonResponse(body, status = 200) {
 export function isAuthorized(request, env) {
   const auth = request.headers.get("authorization") || ""
   return auth === `Bearer ${env.ADMIN_PASSWORD || ""}` && !!env.ADMIN_PASSWORD
+}
+
+function postKey(id) {
+  return `${POST_PREFIX}${id}`
+}
+
+function slugIndexKey(slug) {
+  return `${POST_SLUG_PREFIX}${slug}`
+}
+
+function orderKeyForPost(post) {
+  const ts = resolveTimestamp(post)
+  const reverseTs = String(9999999999999 - ts).padStart(13, "0")
+  return `${POST_ORDER_PREFIX}${reverseTs}:${post.id}`
+}
+
+function resolveTimestamp(post) {
+  const fromUpdated = Date.parse(post?.updatedAt || "")
+  if (!Number.isNaN(fromUpdated)) return fromUpdated
+  const fromCreated = Date.parse(post?.createdAt || "")
+  if (!Number.isNaN(fromCreated)) return fromCreated
+  const fromDate = Date.parse(post?.date || "")
+  if (!Number.isNaN(fromDate)) return fromDate
+  return Date.now()
+}
+
+function parseIdFromOrderKey(key) {
+  const parts = String(key || "").split(":")
+  return parts.length >= 3 ? parts[2] : null
+}
+
+function clamp(n, min, max) {
+  const num = Number(n)
+  if (!Number.isFinite(num)) return min
+  return Math.min(Math.max(Math.trunc(num), min), max)
+}
+
+function toSummary(post) {
+  return {
+    id: post.id,
+    slug: post.slug,
+    title: post.title,
+    excerpt: post.excerpt,
+    category: post.category,
+    author: post.author,
+    date: post.date,
+    readTime: post.readTime,
+    coverImage: post.coverImage,
+    updatedAt: post.updatedAt,
+  }
+}
+
+async function hasAnyPost(env) {
+  const list = await env.QUERIES.list({ prefix: POST_PREFIX, limit: 1 })
+  return list.keys.length > 0
+}
+
+async function backfillIndexes(env) {
+  let cursor
+  do {
+    const list = await env.QUERIES.list({
+      prefix: POST_PREFIX,
+      limit: MAX_LIMIT,
+      cursor,
+    })
+    for (const key of list.keys) {
+      const raw = await env.QUERIES.get(key.name)
+      if (!raw) continue
+      try {
+        const post = JSON.parse(raw)
+        if (!post?.id || !post?.slug) continue
+        const orderKey = post.orderKey || orderKeyForPost(post)
+        await env.QUERIES.put(slugIndexKey(post.slug), post.id)
+        await env.QUERIES.put(orderKey, post.id)
+        if (!post.orderKey) {
+          post.orderKey = orderKey
+          await env.QUERIES.put(postKey(post.id), JSON.stringify(post))
+        }
+      } catch {
+        // Ignore malformed values and continue index backfill.
+      }
+    }
+    cursor = list.list_complete ? null : list.cursor
+  } while (cursor)
 }

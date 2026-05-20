@@ -1,26 +1,25 @@
 // Public — list all blog posts (newest first).
-import { listAllPosts, ensureSeedPosts, jsonResponse } from "../_shared/blog"
+import { listPostsPage, ensureSeedPosts, jsonResponse } from "../_shared/blog"
 
-export async function onRequestGet({ env }) {
+export async function onRequestGet({ env, request }) {
   await ensureSeedPosts(env)
-  const posts = await listAllPosts(env)
+  const url = new URL(request.url)
+  const cursor = url.searchParams.get("cursor") || undefined
+  const limitParam = Number(url.searchParams.get("limit"))
+  const limit = Number.isFinite(limitParam) && limitParam > 0 ? limitParam : 24
 
-  // For the index list, strip heavy fields (sections, faq, images) to keep
-  // payload small. The detail endpoint returns the full post.
-  const summary = posts.map((p) => ({
-    id: p.id,
-    slug: p.slug,
-    title: p.title,
-    excerpt: p.excerpt,
-    category: p.category,
-    author: p.author,
-    date: p.date,
-    readTime: p.readTime,
-    coverImage: p.coverImage,
-    updatedAt: p.updatedAt,
-  }))
+  const page = await listPostsPage(env, {
+    cursor,
+    limit,
+    summary: true,
+  })
 
-  return jsonResponse({ ok: true, posts: summary })
+  return jsonResponse({
+    ok: true,
+    posts: page.posts,
+    nextCursor: page.nextCursor,
+    hasMore: page.hasMore,
+  })
 }
 
 export async function onRequestOptions() {

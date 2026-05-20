@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import { motion } from "framer-motion"
-import { Search, Clock, ArrowRight, ArrowUpRight, Calendar } from "lucide-react"
+import { Search, Clock, ArrowUpRight, Calendar } from "lucide-react"
 import { Link } from "react-router-dom"
 import PageHero from "@/components/common/PageHero"
 import { Card, CardContent } from "@/components/ui/card"
@@ -8,13 +7,20 @@ import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 
 export default function Blog() {
-  const [posts, setPosts] = useState(null)
+  const [posts, setPosts] = useState([])
+  const [initialLoading, setInitialLoading] = useState(true)
+  const [loadingMore, setLoadingMore] = useState(false)
+  const [nextCursor, setNextCursor] = useState(null)
+  const [hasMore, setHasMore] = useState(false)
   const [error, setError] = useState("")
   const [activeCategory, setActiveCategory] = useState("All")
   const [searchQuery, setSearchQuery] = useState("")
 
-  useEffect(() => {
-    fetch("/api/posts")
+  const fetchPage = (cursor = null) => {
+    const query = new URLSearchParams({ limit: "24" })
+    if (cursor) query.set("cursor", cursor)
+
+    return fetch(`/api/posts?${query.toString()}`)
       .then(async (r) => {
         if (!r.ok) throw new Error(`Server ${r.status}`)
         const ct = r.headers.get("content-type") || ""
@@ -24,20 +30,36 @@ export default function Blog() {
         return r.json()
       })
       .then((data) => {
-        if (data.ok) setPosts(data.posts || [])
-        else setError(data.error || "Failed to load posts")
+        if (!data.ok) {
+          setError(data.error || "Failed to load posts")
+          return
+        }
+        const incoming = data.posts || []
+        setPosts((curr) => {
+          if (!cursor) return incoming
+          const seen = new Set(curr.map((p) => p.id || p.slug))
+          const appended = incoming.filter((p) => !seen.has(p.id || p.slug))
+          return [...curr, ...appended]
+        })
+        setNextCursor(data.nextCursor || null)
+        setHasMore(!!data.hasMore)
       })
       .catch((err) => setError(err.message))
+  }
+
+  useEffect(() => {
+    fetchPage()
+      .finally(() => setInitialLoading(false))
   }, [])
 
   const categories = useMemo(() => {
-    if (!posts) return ["All"]
+    if (!posts.length) return ["All"]
     const set = new Set(posts.map((p) => p.category).filter(Boolean))
     return ["All", ...Array.from(set)]
   }, [posts])
 
   const filtered = useMemo(() => {
-    if (!posts) return []
+    if (!posts.length) return []
     return posts.filter((p) => {
       const matchesCat =
         activeCategory === "All" || p.category === activeCategory
@@ -70,12 +92,7 @@ export default function Blog() {
 
       {/* Filters */}
       <section className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8 -mt-8 relative z-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-col md:flex-row items-center justify-between gap-6"
-        >
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex flex-wrap items-center gap-2">
             {categories.map((category) => (
               <button
@@ -100,7 +117,7 @@ export default function Blog() {
               className="pl-10"
             />
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {error && (
@@ -111,11 +128,11 @@ export default function Blog() {
         </div>
       )}
 
-      {posts === null && !error && (
+      {initialLoading && !error && (
         <div className="text-center py-24 text-stone-500">Loading posts…</div>
       )}
 
-      {posts && filtered.length === 0 && (
+      {!initialLoading && filtered.length === 0 && (
         <div className="text-center py-24 text-stone-500 px-6">
           No posts found. Try a different search or category.
         </div>
@@ -124,12 +141,7 @@ export default function Blog() {
       {/* Featured */}
       {featured && (
         <section className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8 py-12 md:py-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6 }}
-          >
+          <div>
             <Link
               to={`/blog/${featured.slug}`}
               className="group block bg-white border border-stone-200 rounded-3xl overflow-hidden hover:border-stone-900 transition-colors"
@@ -174,7 +186,7 @@ export default function Blog() {
                 </div>
               </div>
             </Link>
-          </motion.div>
+          </div>
         </section>
       )}
 
@@ -182,13 +194,9 @@ export default function Blog() {
       {rest.length > 0 && (
         <section className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8 pb-20">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {rest.map((post, i) => (
-              <motion.article
+            {rest.map((post) => (
+              <article
                 key={post.id || post.slug}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.4, delay: (i % 3) * 0.08 }}
               >
                 <Link
                   to={`/blog/${post.slug}`}
@@ -224,9 +232,24 @@ export default function Blog() {
                     </div>
                   </CardContent>
                 </Link>
-              </motion.article>
+              </article>
             ))}
           </div>
+          {hasMore && activeCategory === "All" && !searchQuery && (
+            <div className="text-center mt-10">
+              <button
+                onClick={() => {
+                  if (!nextCursor || loadingMore) return
+                  setLoadingMore(true)
+                  fetchPage(nextCursor).finally(() => setLoadingMore(false))
+                }}
+                disabled={loadingMore}
+                className="inline-flex items-center gap-2 bg-stone-900 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-primary disabled:opacity-60"
+              >
+                {loadingMore ? "Loading…" : "Load more articles"}
+              </button>
+            </div>
+          )}
         </section>
       )}
     </main>
