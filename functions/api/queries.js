@@ -24,16 +24,21 @@ export async function onRequestGet({ request, env }) {
     )
   }
 
-  // Paginate through KV keys (max 1000 per call).
+  // Paginate through KV keys (max 1000 per call), filtered to form submissions
+  // only — the same namespace also stores blog posts under the `post:` prefix.
   const allKeys = []
   let cursor
   do {
-    const list = await env.QUERIES.list({ cursor, limit: 1000 })
+    const list = await env.QUERIES.list({
+      prefix: "query:",
+      cursor,
+      limit: 1000,
+    })
     allKeys.push(...list.keys)
     cursor = list.list_complete ? null : list.cursor
   } while (cursor)
 
-  // Newest first — keys start with `query:{epoch_ms}:...`
+  // Newest first — keys are `query:{epoch_ms}:{uuid}`
   allKeys.sort((a, b) => (a.name < b.name ? 1 : a.name > b.name ? -1 : 0))
 
   // Fetch all (parallel)
