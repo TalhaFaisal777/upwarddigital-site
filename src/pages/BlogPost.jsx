@@ -1,61 +1,58 @@
-import { useEffect, useState } from "react"
-import { useParams, Link, Navigate } from "react-router-dom"
-import { motion } from "framer-motion"
+import { useEffect, useState } from "react";
+import { useParams, Link, Navigate } from "react-router-dom";
 import {
   ArrowLeft,
   ArrowUpRight,
   Phone,
-  Calendar,
-  Clock,
   Tag,
   Star,
   Sparkles,
   CheckCircle2,
-} from "lucide-react"
-import WhatsAppIcon from "@/components/common/WhatsAppIcon"
-import { trackContact, trackBlogPostClick, trackLead } from "@/lib/pixel"
+} from "lucide-react";
+import WhatsAppIcon from "@/components/common/WhatsAppIcon";
+import { trackContact, trackBlogPostClick, trackLead } from "@/lib/pixel";
 
-const PHONE_HREF = "tel:+12013040657"
-const WHATSAPP_HREF = "https://wa.me/15812947936"
+const PHONE_HREF = "tel:+12013040657";
+const WHATSAPP_HREF = "https://wa.me/15812947936";
 
 export default function BlogPost() {
-  const { slug } = useParams()
-  const [post, setPost] = useState(null)
-  const [status, setStatus] = useState("loading") // loading | ok | notfound | error
+  const { slug } = useParams();
+  const [post, setPost] = useState(null);
+  const [status, setStatus] = useState("loading"); // loading | ok | notfound | error
 
   useEffect(() => {
-    let cancelled = false
-    setStatus("loading")
+    let cancelled = false;
+    setStatus("loading");
     fetch(`/api/posts/${encodeURIComponent(slug)}`)
       .then(async (r) => {
-        if (r.status === 404) return { ok: false, notfound: true }
-        if (!r.ok) throw new Error(`Server ${r.status}`)
-        return r.json()
+        if (r.status === 404) return { ok: false, notfound: true };
+        if (!r.ok) throw new Error(`Server ${r.status}`);
+        return r.json();
       })
       .then((data) => {
-        if (cancelled) return
-        if (data?.notfound) return setStatus("notfound")
+        if (cancelled) return;
+        if (data?.notfound) return setStatus("notfound");
         if (data?.ok && data.post) {
-          setPost(data.post)
-          setStatus("ok")
-          trackBlogPostClick(data.post.title)
-          updateMeta(data.post)
-        } else setStatus("error")
+          setPost(data.post);
+          setStatus("ok");
+          trackBlogPostClick(data.post.title);
+          updateMeta(data.post);
+        } else setStatus("error");
       })
-      .catch(() => !cancelled && setStatus("error"))
+      .catch(() => !cancelled && setStatus("error"));
     return () => {
-      cancelled = true
-    }
-  }, [slug])
+      cancelled = true;
+    };
+  }, [slug]);
 
   if (status === "loading") {
     return (
       <main className="min-h-screen bg-cream flex items-center justify-center">
         <div className="text-stone-500">Loading…</div>
       </main>
-    )
+    );
   }
-  if (status === "notfound") return <Navigate to="/blog" replace />
+  if (status === "notfound") return <Navigate to="/blog" replace />;
   if (status === "error" || !post) {
     return (
       <main className="min-h-screen bg-cream flex items-center justify-center px-6">
@@ -66,23 +63,32 @@ export default function BlogPost() {
           </Link>
         </div>
       </main>
-    )
+    );
   }
 
   return (
     <main className="bg-cream">
       <HeroSection post={post} />
-      {post.imageStrip?.length > 0 && <ImageStripSection images={post.imageStrip} />}
+      {post.imageStrip?.length > 0 && (
+        <ImageStripSection images={post.imageStrip} />
+      )}
       {post.serviceCards?.length > 0 && (
         <ServiceCardsSection cards={post.serviceCards} />
       )}
       {post.showQuoteForm && <QuoteFormSection slug={post.slug} />}
-      {post.sections?.length > 0 && <ContentSections sections={post.sections} />}
+      {post.sections?.length > 0 && (
+        <ContentSections
+          title={post.sectionsTitle || "Find out more"}
+          sections={post.sections}
+        />
+      )}
       {post.faq?.length > 0 && <FaqSection faq={post.faq} />}
       <CtaSection cta={post.cta} />
-      {post.seo?.keywords?.length > 0 && <KeywordsSection keywords={post.seo.keywords} />}
+      {post.seo?.keywords?.length > 0 && (
+        <KeywordsSection keywords={post.seo.keywords} />
+      )}
     </main>
-  )
+  );
 }
 
 // ─── Hero ────────────────────────────────────────────────────────
@@ -102,7 +108,8 @@ function HeroSection({ post }) {
       <div
         className="absolute inset-0 opacity-[0.04] pointer-events-none"
         style={{
-          backgroundImage: "radial-gradient(circle, #1c1917 1px, transparent 1px)",
+          backgroundImage:
+            "radial-gradient(circle, #1c1917 1px, transparent 1px)",
           backgroundSize: "28px 28px",
         }}
       />
@@ -157,7 +164,9 @@ function HeroSection({ post }) {
             {post.hero?.phone && (
               <a
                 href={`tel:${post.hero.phone.replace(/\D/g, "")}`}
-                onClick={() => trackContact({ method: "phone", source: "blog_hero" })}
+                onClick={() =>
+                  trackContact({ method: "phone", source: "blog_hero" })
+                }
                 className="inline-flex items-center gap-2 text-stone-900 font-semibold hover:text-primary"
               >
                 <Phone className="w-4 h-4" />
@@ -166,30 +175,9 @@ function HeroSection({ post }) {
             )}
           </div>
         )}
-
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-stone-600 pb-2">
-          <span className="flex items-center gap-1.5">
-            <span className="w-7 h-7 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold">
-              {post.author
-                .split(" ")
-                .map((n) => n[0])
-                .join("")
-                .slice(0, 2)}
-            </span>
-            {post.author}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <Calendar className="w-4 h-4" />
-            {formatDate(post.date)}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <Clock className="w-4 h-4" />
-            {post.readTime}
-          </span>
-        </div>
       </div>
     </section>
-  )
+  );
 }
 
 // ─── Image strip ─────────────────────────────────────────────────
@@ -214,7 +202,7 @@ function ImageStripSection({ images }) {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 // ─── Service cards ───────────────────────────────────────────────
@@ -244,7 +232,7 @@ function ServiceCardsSection({ cards }) {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 // ─── Embedded quote form ─────────────────────────────────────────
@@ -255,28 +243,31 @@ function QuoteFormSection({ slug }) {
     phone: "",
     service: "",
     message: "",
-  })
-  const [submitted, setSubmitted] = useState(false)
+  });
+  const [submitted, setSubmitted] = useState(false);
   const handle = (e) =>
-    setForm((s) => ({ ...s, [e.target.name]: e.target.value }))
+    setForm((s) => ({ ...s, [e.target.name]: e.target.value }));
   const submit = async (e) => {
-    e.preventDefault()
-    trackLead({ content_name: "Blog Quote Form", content_category: "lead_form" })
-    setSubmitted(true)
+    e.preventDefault();
+    trackLead({
+      content_name: "Blog Quote Form",
+      content_category: "lead_form",
+    });
+    setSubmitted(true);
     try {
       await fetch("/api/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ source: `blog:${slug}`, ...form }),
-      })
+      });
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
     setTimeout(() => {
-      setForm({ name: "", email: "", phone: "", service: "", message: "" })
-      setSubmitted(false)
-    }, 4000)
-  }
+      setForm({ name: "", email: "", phone: "", service: "", message: "" });
+      setSubmitted(false);
+    }, 4000);
+  };
   return (
     <section className="py-14 md:py-20 bg-blue-50/40">
       <div className="max-w-4xl mx-auto px-5 sm:px-6 md:px-8">
@@ -359,23 +350,30 @@ function QuoteFormSection({ slug }) {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 // ─── Content sections (image + heading + body) ───────────────────
-function ContentSections({ sections }) {
+function ContentSections({ title, sections }) {
   return (
     <section className="py-14 md:py-20">
-      <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8 space-y-14 md:space-y-20">
-        {sections.map((s, i) => (
-          <ContentSection key={i} section={s} index={i} />
-        ))}
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8">
+        {title && (
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-stone-900 text-center mb-10 md:mb-14">
+            {title}
+          </h2>
+        )}
+        <div className="space-y-14 md:space-y-20">
+          {sections.map((s, i) => (
+            <ContentSection key={i} section={s} />
+          ))}
+        </div>
       </div>
     </section>
-  )
+  );
 }
 
-function ContentSection({ section, index }) {
+function ContentSection({ section }) {
   if (section.imageSide === "full" || !section.image) {
     return (
       <motion.div
@@ -396,9 +394,9 @@ function ContentSection({ section, index }) {
           />
         )}
       </motion.div>
-    )
+    );
   }
-  const imageRight = section.imageSide === "right"
+  const imageRight = section.imageSide === "right";
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -421,47 +419,129 @@ function ContentSection({ section, index }) {
         />
       </div>
     </motion.div>
-  )
+  );
 }
 
 // Render paragraphs with bold + inline links from a simple markdown subset.
 function BodyText({ text }) {
-  if (!text) return null
-  const paragraphs = text.split(/\n\s*\n/)
+  if (!text) return null;
+  const blocks = parseTextBlocks(text);
   return (
     <div className="space-y-4 text-stone-700 text-base md:text-lg leading-relaxed">
-      {paragraphs.map((p, i) => (
-        <p key={i}>{renderInline(p)}</p>
-      ))}
+      {blocks.map((block, index) => {
+        if (block.type === "heading") {
+          const headingClasses = {
+            2: "text-2xl md:text-3xl font-bold text-stone-900 tracking-tight leading-snug mt-4",
+            3: "text-xl md:text-2xl font-bold text-stone-900 tracking-tight leading-snug mt-3",
+            4: "text-lg md:text-xl font-bold text-stone-900 tracking-tight leading-snug mt-3",
+            5: "text-base md:text-lg font-semibold text-stone-900 tracking-tight leading-snug mt-2",
+          };
+          const Element =
+            block.level <= 2 ? "h3" : block.level === 3 ? "h4" : "h5";
+          return (
+            <Element
+              key={`h-${index}`}
+              className={headingClasses[block.level] || headingClasses[5]}
+            >
+              {renderInline(block.text)}
+            </Element>
+          );
+        }
+        if (block.type === "list") {
+          return (
+            <ul key={`l-${index}`} className="list-disc pl-6 space-y-1.5">
+              {block.items.map((item, itemIndex) => (
+                <li key={`${index}-${itemIndex}`}>{renderInline(item)}</li>
+              ))}
+            </ul>
+          );
+        }
+        return <p key={`p-${index}`}>{renderInline(block.text)}</p>;
+      })}
     </div>
-  )
+  );
+}
+
+function parseTextBlocks(text) {
+  const lines = String(text).split("\n");
+  const blocks = [];
+  let paragraphLines = [];
+  let listItems = [];
+
+  const flushParagraph = () => {
+    if (!paragraphLines.length) return;
+    const value = paragraphLines.join(" ").trim();
+    if (value) blocks.push({ type: "paragraph", text: value });
+    paragraphLines = [];
+  };
+
+  const flushList = () => {
+    if (!listItems.length) return;
+    blocks.push({ type: "list", items: listItems });
+    listItems = [];
+  };
+
+  lines.forEach((rawLine) => {
+    const line = rawLine.trim();
+    if (!line) {
+      flushParagraph();
+      flushList();
+      return;
+    }
+
+    const headingMatch = line.match(/^(#{2,5})\s+(.+)$/);
+    if (headingMatch) {
+      flushParagraph();
+      flushList();
+      blocks.push({
+        type: "heading",
+        level: headingMatch[1].length,
+        text: headingMatch[2].trim(),
+      });
+      return;
+    }
+
+    const listMatch = line.match(/^[-*]\s+(.+)$/);
+    if (listMatch) {
+      flushParagraph();
+      listItems.push(listMatch[1].trim());
+      return;
+    }
+
+    flushList();
+    paragraphLines.push(line);
+  });
+
+  flushParagraph();
+  flushList();
+  return blocks;
 }
 
 // Inline parser for **bold**, [text](url), and bare URLs.
 function renderInline(text) {
   // Tokenize: [text](url), **bold**, plain
-  const tokens = []
-  const regex = /(\[([^\]]+)\]\(([^)]+)\))|(\*\*([^*]+)\*\*)/g
-  let lastIndex = 0
-  let match
+  const tokens = [];
+  const regex = /(\[([^\]]+)\]\(([^)]+)\))|(\*\*([^*]+)\*\*)/g;
+  let lastIndex = 0;
+  let match;
   while ((match = regex.exec(text)) !== null) {
     if (match.index > lastIndex) {
-      tokens.push({ type: "text", value: text.slice(lastIndex, match.index) })
+      tokens.push({ type: "text", value: text.slice(lastIndex, match.index) });
     }
     if (match[1]) {
-      tokens.push({ type: "link", text: match[2], href: match[3] })
+      tokens.push({ type: "link", text: match[2], href: match[3] });
     } else if (match[4]) {
-      tokens.push({ type: "bold", value: match[5] })
+      tokens.push({ type: "bold", value: match[5] });
     }
-    lastIndex = regex.lastIndex
+    lastIndex = regex.lastIndex;
   }
   if (lastIndex < text.length) {
-    tokens.push({ type: "text", value: text.slice(lastIndex) })
+    tokens.push({ type: "text", value: text.slice(lastIndex) });
   }
 
   return tokens.map((tok, i) => {
     if (tok.type === "link") {
-      const isInternal = tok.href.startsWith("/")
+      const isInternal = tok.href.startsWith("/");
       return (
         <a
           key={i}
@@ -472,17 +552,17 @@ function renderInline(text) {
         >
           {tok.text}
         </a>
-      )
+      );
     }
     if (tok.type === "bold") {
       return (
         <strong key={i} className="text-stone-900">
           {tok.value}
         </strong>
-      )
+      );
     }
-    return <span key={i}>{tok.value}</span>
-  })
+    return <span key={i}>{tok.value}</span>;
+  });
 }
 
 // ─── FAQ ─────────────────────────────────────────────────────────
@@ -513,12 +593,12 @@ function FaqSection({ faq }) {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 // ─── Bottom CTA ─────────────────────────────────────────────────
 function CtaSection({ cta }) {
-  if (!cta) return null
+  if (!cta) return null;
   return (
     <section className="py-14 md:py-20">
       <div className="max-w-4xl mx-auto px-5 sm:px-6 md:px-8">
@@ -534,7 +614,9 @@ function CtaSection({ cta }) {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
               href={PHONE_HREF}
-              onClick={() => trackContact({ method: "phone", source: "blog_bottom_cta" })}
+              onClick={() =>
+                trackContact({ method: "phone", source: "blog_bottom_cta" })
+              }
               className="inline-flex items-center justify-center gap-2 bg-white text-stone-900 px-6 py-3.5 rounded-full font-semibold hover:bg-blue-400 hover:text-white transition-colors"
             >
               <Phone className="w-5 h-5" />
@@ -545,7 +627,9 @@ function CtaSection({ cta }) {
               href={WHATSAPP_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => trackContact({ method: "whatsapp", source: "blog_bottom_cta" })}
+              onClick={() =>
+                trackContact({ method: "whatsapp", source: "blog_bottom_cta" })
+              }
               className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3.5 rounded-full font-semibold hover:bg-[#1ebe5d] transition-colors"
             >
               <WhatsAppIcon className="w-5 h-5" />
@@ -555,7 +639,7 @@ function CtaSection({ cta }) {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 // ─── Topics (keywords) ──────────────────────────────────────────
@@ -578,39 +662,25 @@ function KeywordsSection({ keywords }) {
         </div>
       </div>
     </section>
-  )
-}
-
-// ─── Utils ──────────────────────────────────────────────────────
-function formatDate(d) {
-  if (!d) return ""
-  try {
-    return new Date(d).toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    })
-  } catch {
-    return d
-  }
+  );
 }
 
 // Set <title> + meta description for SEO when the post loads.
 function updateMeta(post) {
-  const seo = post.seo || {}
-  if (typeof document === "undefined") return
-  document.title = seo.metaTitle || post.title
-  setMeta("description", seo.metaDescription || post.excerpt)
-  setMeta("keywords", (seo.keywords || []).join(", "))
+  const seo = post.seo || {};
+  if (typeof document === "undefined") return;
+  document.title = seo.metaTitle || post.title;
+  setMeta("description", seo.metaDescription || post.excerpt);
+  setMeta("keywords", (seo.keywords || []).join(", "));
 }
 
 function setMeta(name, content) {
-  if (!content) return
-  let el = document.querySelector(`meta[name="${name}"]`)
+  if (!content) return;
+  let el = document.querySelector(`meta[name="${name}"]`);
   if (!el) {
-    el = document.createElement("meta")
-    el.setAttribute("name", name)
-    document.head.appendChild(el)
+    el = document.createElement("meta");
+    el.setAttribute("name", name);
+    document.head.appendChild(el);
   }
-  el.setAttribute("content", content)
+  el.setAttribute("content", content);
 }

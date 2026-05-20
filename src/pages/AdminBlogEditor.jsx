@@ -1,5 +1,5 @@
-import { useEffect, useState, useCallback } from "react"
-import { useNavigate, useParams, Link } from "react-router-dom"
+import { useEffect, useState, useCallback } from "react";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import {
   ArrowLeft,
   Save,
@@ -10,12 +10,12 @@ import {
   GripVertical,
   ExternalLink,
   Eye,
-} from "lucide-react"
-import { useNoIndex } from "@/hooks/useNoIndex"
-import { uploadImage } from "@/lib/imageUpload"
-import { LoginScreen, AdminTopBar, AdminTabs } from "@/pages/AdminBlogList"
+} from "lucide-react";
+import { useNoIndex } from "@/hooks/useNoIndex";
+import { uploadImage } from "@/lib/imageUpload";
+import { LoginScreen, AdminTopBar, AdminTabs } from "@/pages/AdminBlogList";
 
-const TOKEN_KEY = "ud_admin_token"
+const TOKEN_KEY = "ud_admin_token";
 
 const CATEGORIES = [
   "Website Development",
@@ -27,7 +27,7 @@ const CATEGORIES = [
   "Branding & Design",
   "Web Development",
   "Insights",
-]
+];
 
 const EMPTY_POST = {
   id: "",
@@ -53,87 +53,94 @@ const EMPTY_POST = {
   faq: [],
   cta: { heading: "Ready to grow your business?", subtitle: "" },
   seo: { metaTitle: "", metaDescription: "", keywords: [] },
-}
+};
 
 export default function AdminBlogEditor() {
-  useNoIndex()
-  const navigate = useNavigate()
-  const { id } = useParams()
-  const isNew = !id || id === "new"
+  useNoIndex();
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const isNew = !id || id === "new";
 
   const [token, setToken] = useState(() =>
-    typeof window !== "undefined" ? sessionStorage.getItem(TOKEN_KEY) : null
-  )
-  const [loginError, setLoginError] = useState("")
-  const [post, setPost] = useState(isNew ? EMPTY_POST : null)
-  const [loadingPost, setLoadingPost] = useState(!isNew)
-  const [saving, setSaving] = useState(false)
-  const [saveError, setSaveError] = useState("")
+    typeof window !== "undefined" ? sessionStorage.getItem(TOKEN_KEY) : null,
+  );
+  const [loginError, setLoginError] = useState("");
+  const [post, setPost] = useState(isNew ? EMPTY_POST : null);
+  const [loadingPost, setLoadingPost] = useState(!isNew);
+  const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
 
   const handleLogin = async (e) => {
-    e.preventDefault()
-    const password = new FormData(e.currentTarget).get("password")
-    if (!password) return
-    setLoginError("")
+    e.preventDefault();
+    const password = new FormData(e.currentTarget).get("password");
+    if (!password) return;
+    setLoginError("");
     try {
       const res = await fetch("/api/admin/posts", {
         headers: { Authorization: `Bearer ${password}` },
-      })
-      if (res.status === 401) return setLoginError("Wrong password.")
-      const ct = res.headers.get("content-type") || ""
+      });
+      if (res.status === 401) return setLoginError("Wrong password.");
+      const ct = res.headers.get("content-type") || "";
       if (!ct.includes("application/json")) {
-        return setLoginError("API not reachable — deploy or run wrangler.")
+        return setLoginError("API not reachable — deploy or run wrangler.");
       }
-      sessionStorage.setItem(TOKEN_KEY, password)
-      setToken(password)
+      sessionStorage.setItem(TOKEN_KEY, password);
+      setToken(password);
     } catch (err) {
-      setLoginError("Network error: " + err.message)
+      setLoginError("Network error: " + err.message);
     }
-  }
+  };
 
   // Load existing post
   useEffect(() => {
-    if (!token || isNew) return
-    setLoadingPost(true)
+    if (!token || isNew) return;
+    setLoadingPost(true);
     fetch(`/api/admin/posts/${encodeURIComponent(id)}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((r) => r.json())
       .then((data) => {
-        if (data.ok) setPost({ ...EMPTY_POST, ...data.post, hero: { ...EMPTY_POST.hero, ...data.post.hero }, cta: { ...EMPTY_POST.cta, ...data.post.cta }, seo: { ...EMPTY_POST.seo, ...data.post.seo } })
-        else alert("Post not found")
+        if (data.ok)
+          setPost({
+            ...EMPTY_POST,
+            ...data.post,
+            hero: { ...EMPTY_POST.hero, ...data.post.hero },
+            cta: { ...EMPTY_POST.cta, ...data.post.cta },
+            seo: { ...EMPTY_POST.seo, ...data.post.seo },
+          });
+        else alert("Post not found");
       })
       .catch((err) => alert("Load failed: " + err.message))
-      .finally(() => setLoadingPost(false))
-  }, [token, id, isNew])
+      .finally(() => setLoadingPost(false));
+  }, [token, id, isNew]);
 
   const handleLogout = () => {
-    sessionStorage.removeItem(TOKEN_KEY)
-    setToken(null)
-  }
+    sessionStorage.removeItem(TOKEN_KEY);
+    setToken(null);
+  };
 
   const updateField = useCallback((path, value) => {
     setPost((curr) => {
-      const next = { ...curr }
-      const parts = path.split(".")
-      let target = next
+      const next = { ...curr };
+      const parts = path.split(".");
+      let target = next;
       for (let i = 0; i < parts.length - 1; i++) {
-        target[parts[i]] = { ...target[parts[i]] }
-        target = target[parts[i]]
+        target[parts[i]] = { ...target[parts[i]] };
+        target = target[parts[i]];
       }
-      target[parts[parts.length - 1]] = value
-      return next
-    })
-  }, [])
+      target[parts[parts.length - 1]] = value;
+      return next;
+    });
+  }, []);
 
   const save = async () => {
-    setSaving(true)
-    setSaveError("")
+    setSaving(true);
+    setSaveError("");
     try {
       const url = isNew
         ? "/api/admin/posts"
-        : `/api/admin/posts/${encodeURIComponent(post.id)}`
-      const method = isNew ? "POST" : "PUT"
+        : `/api/admin/posts/${encodeURIComponent(post.id)}`;
+      const method = isNew ? "POST" : "PUT";
       const res = await fetch(url, {
         method,
         headers: {
@@ -141,26 +148,26 @@ export default function AdminBlogEditor() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(post),
-      })
-      const data = await res.json()
-      if (!data.ok) throw new Error(data.error || "Save failed")
-      navigate("/admin/blog")
+      });
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.error || "Save failed");
+      navigate("/admin/blog");
     } catch (err) {
-      setSaveError(err.message)
+      setSaveError(err.message);
     } finally {
-      setSaving(false)
+      setSaving(false);
     }
-  }
+  };
 
   if (!token) {
-    return <LoginScreen onSubmit={handleLogin} error={loginError} />
+    return <LoginScreen onSubmit={handleLogin} error={loginError} />;
   }
   if (loadingPost || !post) {
     return (
       <main className="min-h-screen bg-cream flex items-center justify-center">
         <div className="text-stone-500">Loading post…</div>
       </main>
-    )
+    );
   }
 
   return (
@@ -206,7 +213,10 @@ export default function AdminBlogEditor() {
 
         <div className="space-y-7">
           {/* ─── Hero / Cover ─── */}
-          <Card title="Hero" description="The big header at the top of the post.">
+          <Card
+            title="Hero"
+            description="The big header at the top of the post."
+          >
             <Field label="Title (H1)" required>
               <Input
                 value={post.title}
@@ -242,7 +252,9 @@ export default function AdminBlogEditor() {
                   <Field label="Rating">
                     <Input
                       value={post.hero.rating}
-                      onChange={(e) => updateField("hero.rating", e.target.value)}
+                      onChange={(e) =>
+                        updateField("hero.rating", e.target.value)
+                      }
                     />
                   </Field>
                   <Field label="Review count">
@@ -340,13 +352,13 @@ export default function AdminBlogEditor() {
                   </Field>
                   <Field
                     label="Body"
-                    description="Add links inline with markdown: [click here](https://example.com) or [pricing](/pricing). **bold text** uses asterisks."
+                    description="Supports markdown blocks: ##/### headings, - bullet lists, [links](https://...), and **bold** text."
                   >
                     <Textarea
                       value={item.body}
                       onChange={(e) => update("body", e.target.value)}
                       rows={5}
-                      placeholder="Tell your story. Mix in **bold** and [external links](https://...) or [internal pages](/services)."
+                      placeholder="Use ## Heading, - list items, **bold**, and [internal](/services) or [external](https://...) links."
                     />
                   </Field>
                   <div className="grid sm:grid-cols-2 gap-4">
@@ -419,9 +431,15 @@ export default function AdminBlogEditor() {
           </Card>
 
           {/* ─── Meta + SEO ─── */}
-          <Card title="Meta &amp; SEO" description="How the post appears in lists and Google search.">
+          <Card
+            title="Meta &amp; SEO"
+            description="How the post appears in lists and Google search."
+          >
             <div className="grid sm:grid-cols-2 gap-4">
-              <Field label="Slug" description="URL path. Auto-generated from title.">
+              <Field
+                label="Slug"
+                description="URL path. Auto-generated from title."
+              >
                 <Input
                   value={post.slug}
                   onChange={(e) => updateField("slug", e.target.value)}
@@ -502,7 +520,7 @@ export default function AdminBlogEditor() {
                     e.target.value
                       .split(",")
                       .map((k) => k.trim())
-                      .filter(Boolean)
+                      .filter(Boolean),
                   )
                 }
                 placeholder="local seo, google maps, small business marketing"
@@ -535,7 +553,7 @@ export default function AdminBlogEditor() {
         </div>
       </div>
     </main>
-  )
+  );
 }
 
 // ─── Building-block components ────────────────────────────────────
@@ -551,7 +569,7 @@ function Card({ title, description, children }) {
       </div>
       <div className="space-y-4">{children}</div>
     </div>
-  )
+  );
 }
 
 function Field({ label, description, required, children }) {
@@ -566,7 +584,7 @@ function Field({ label, description, required, children }) {
       )}
       {children}
     </div>
-  )
+  );
 }
 
 function Input(props) {
@@ -575,7 +593,7 @@ function Input(props) {
       {...props}
       className="flex h-11 w-full rounded-lg border border-stone-300 bg-white px-4 text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
     />
-  )
+  );
 }
 
 function Textarea(props) {
@@ -584,7 +602,7 @@ function Textarea(props) {
       {...props}
       className="w-full rounded-lg border border-stone-300 bg-white px-4 py-3 text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary leading-relaxed"
     />
-  )
+  );
 }
 
 function Toggle({ checked, onChange, label }) {
@@ -604,28 +622,28 @@ function Toggle({ checked, onChange, label }) {
       </span>
       {label && <span className="text-sm text-stone-700">{label}</span>}
     </label>
-  )
+  );
 }
 
 function ImagePicker({ value, onChange }) {
-  const [uploading, setUploading] = useState(false)
-  const [error, setError] = useState("")
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleFile = async (e) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    setUploading(true)
-    setError("")
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setError("");
     try {
-      const dataUrl = await uploadImage(file)
-      onChange(dataUrl)
+      const dataUrl = await uploadImage(file);
+      onChange(dataUrl);
     } catch (err) {
-      setError(err.message)
+      setError(err.message);
     } finally {
-      setUploading(false)
-      e.target.value = ""
+      setUploading(false);
+      e.target.value = "";
     }
-  }
+  };
 
   return (
     <div>
@@ -661,24 +679,24 @@ function ImagePicker({ value, onChange }) {
       )}
       {error && <p className="text-red-600 text-xs mt-1">{error}</p>}
     </div>
-  )
+  );
 }
 
 function ImageStripEditor({ images, onChange }) {
-  const [uploading, setUploading] = useState(false)
+  const [uploading, setUploading] = useState(false);
   const addImage = async (file) => {
-    if (!file) return
-    setUploading(true)
+    if (!file) return;
+    setUploading(true);
     try {
-      const dataUrl = await uploadImage(file)
-      onChange([...images, dataUrl].slice(0, 6))
+      const dataUrl = await uploadImage(file);
+      onChange([...images, dataUrl].slice(0, 6));
     } catch (err) {
-      alert(err.message)
+      alert(err.message);
     } finally {
-      setUploading(false)
+      setUploading(false);
     }
-  }
-  const removeAt = (i) => onChange(images.filter((_, idx) => idx !== i))
+  };
+  const removeAt = (i) => onChange(images.filter((_, idx) => idx !== i));
   return (
     <div className="space-y-3">
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -716,34 +734,28 @@ function ImageStripEditor({ images, onChange }) {
       </div>
       <p className="text-xs text-stone-500">{images.length} / 6 images</p>
     </div>
-  )
+  );
 }
 
-function RepeaterList({
-  items,
-  onChange,
-  emptyValue,
-  renderItem,
-  addLabel,
-}) {
+function RepeaterList({ items, onChange, emptyValue, renderItem, addLabel }) {
   const updateAt = (i, key, value) => {
-    const next = [...items]
-    next[i] = { ...next[i], [key]: value }
-    onChange(next)
-  }
-  const removeAt = (i) => onChange(items.filter((_, idx) => idx !== i))
+    const next = [...items];
+    next[i] = { ...next[i], [key]: value };
+    onChange(next);
+  };
+  const removeAt = (i) => onChange(items.filter((_, idx) => idx !== i));
   const moveUp = (i) => {
-    if (i === 0) return
-    const next = [...items]
-    ;[next[i - 1], next[i]] = [next[i], next[i - 1]]
-    onChange(next)
-  }
+    if (i === 0) return;
+    const next = [...items];
+    [next[i - 1], next[i]] = [next[i], next[i - 1]];
+    onChange(next);
+  };
   const moveDown = (i) => {
-    if (i === items.length - 1) return
-    const next = [...items]
-    ;[next[i + 1], next[i]] = [next[i], next[i + 1]]
-    onChange(next)
-  }
+    if (i === items.length - 1) return;
+    const next = [...items];
+    [next[i + 1], next[i]] = [next[i], next[i + 1]];
+    onChange(next);
+  };
   return (
     <div className="space-y-3">
       {items.length === 0 && (
@@ -801,5 +813,5 @@ function RepeaterList({
         {addLabel || "Add item"}
       </button>
     </div>
-  )
+  );
 }
