@@ -22,8 +22,11 @@ export default function BlogPost() {
 
   useEffect(() => {
     let cancelled = false;
-    setStatus("loading");
-    fetch(`/api/posts/${encodeURIComponent(slug)}`)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+    fetch(`/api/posts/${encodeURIComponent(slug)}`, {
+      signal: controller.signal,
+    })
       .then(async (r) => {
         if (r.status === 404) return { ok: false, notfound: true };
         if (!r.ok) throw new Error(`Server ${r.status}`);
@@ -42,6 +45,8 @@ export default function BlogPost() {
       .catch(() => !cancelled && setStatus("error"));
     return () => {
       cancelled = true;
+      clearTimeout(timeoutId);
+      controller.abort();
     };
   }, [slug]);
 
@@ -127,14 +132,9 @@ function HeroSection({ post }) {
           {post.category}
         </div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight text-stone-900 mb-5"
-        >
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight text-stone-900 mb-5">
           {post.title}
-        </motion.h1>
+        </h1>
 
         {post.hero?.subtitle && (
           <p className="text-stone-600 text-lg md:text-xl leading-relaxed mb-7">
@@ -355,6 +355,9 @@ function QuoteFormSection({ slug }) {
 
 // ─── Content sections (image + heading + body) ───────────────────
 function ContentSections({ title, sections }) {
+  const safeSections = Array.isArray(sections) ? sections.filter(Boolean) : [];
+  if (safeSections.length === 0) return null;
+
   return (
     <section className="py-14 md:py-20">
       <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8">
@@ -364,7 +367,7 @@ function ContentSections({ title, sections }) {
           </h2>
         )}
         <div className="space-y-14 md:space-y-20">
-          {sections.map((s, i) => (
+          {safeSections.map((s, i) => (
             <ContentSection key={i} section={s} />
           ))}
         </div>
@@ -374,14 +377,11 @@ function ContentSections({ title, sections }) {
 }
 
 function ContentSection({ section }) {
+  if (!section || typeof section !== "object") return null;
+
   if (section.imageSide === "full" || !section.image) {
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-50px" }}
-        transition={{ duration: 0.5 }}
-      >
+      <div>
         <h3 className="text-2xl md:text-3xl font-bold text-stone-900 leading-snug tracking-tight mb-4">
           {section.heading}
         </h3>
@@ -393,18 +393,12 @@ function ContentSection({ section }) {
             className="w-full rounded-3xl mt-6 object-cover"
           />
         )}
-      </motion.div>
+      </div>
     );
   }
   const imageRight = section.imageSide === "right";
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6 }}
-      className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center"
-    >
+    <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
       <div className={imageRight ? "" : "md:order-2"}>
         <h3 className="text-2xl md:text-3xl font-bold text-stone-900 leading-snug tracking-tight mb-4">
           {section.heading}
@@ -418,7 +412,7 @@ function ContentSection({ section }) {
           className="w-full aspect-[4/3] object-cover rounded-3xl"
         />
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -463,6 +457,11 @@ function BodyText({ text }) {
 }
 
 function parseTextBlocks(text) {
+  if (typeof text !== "string") {
+    const value = String(text ?? "").trim();
+    return value ? [{ type: "paragraph", text: value }] : [];
+  }
+
   const lines = String(text).split("\n");
   const blocks = [];
   let paragraphLines = [];
