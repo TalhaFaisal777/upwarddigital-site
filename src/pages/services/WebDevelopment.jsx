@@ -50,7 +50,7 @@ export default function WebDevelopment() {
       />
 
       {/* Stats */}
-      <section className="bg-stone-900 py-12">
+      <section className="bg-white border-y border-stone-100 py-12">
         <div className="max-w-5xl mx-auto px-5 sm:px-6 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {stats.map((s, i) => (
             <motion.div
@@ -61,7 +61,7 @@ export default function WebDevelopment() {
               transition={{ delay: i * 0.08 }}
             >
               <div className="text-3xl md:text-4xl font-bold text-primary mb-1">{s.value}</div>
-              <div className="text-stone-400 text-sm">{s.label}</div>
+              <div className="text-stone-500 text-sm">{s.label}</div>
             </motion.div>
           ))}
         </div>
@@ -137,22 +137,22 @@ export default function WebDevelopment() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 md:py-24 bg-stone-900">
+      <section className="py-16 md:py-24 bg-primary">
         <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">Ready to build something great?</h2>
-            <p className="text-stone-400 text-lg mb-8">Get a free consultation and custom quote — no commitment required.</p>
+            <p className="text-white/70 text-lg mb-8">Get a free consultation and custom quote — no commitment required.</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href={PHONE_HREF}
                 onClick={() => trackContact({ method: "phone", source: "web_dev_cta" })}
-                className="inline-flex items-center justify-center gap-2 bg-primary text-white px-8 py-3.5 rounded-full font-semibold hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-3.5 rounded-full font-semibold hover:bg-stone-100 transition-colors"
               >
                 Call Us Now <ArrowUpRight className="w-4 h-4" />
               </a>
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center gap-2 bg-white/10 text-white px-8 py-3.5 rounded-full font-semibold hover:bg-white/20 transition-colors"
+                className="inline-flex items-center justify-center gap-2 bg-white/20 text-white px-8 py-3.5 rounded-full font-semibold hover:bg-white/30 transition-colors"
               >
                 Get a Free Quote
               </Link>

@@ -8,7 +8,6 @@ import FloatingActions from "@/components/common/FloatingActions"
 import usePixelTracking from "@/hooks/usePixelTracking"
 import Home from "@/pages/Home"
 import About from "@/pages/About"
-import Services from "@/pages/Services"
 import Portfolio from "@/pages/Portfolio"
 import Blog from "@/pages/Blog"
 import Contact from "@/pages/Contact"
@@ -52,7 +51,6 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
         <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
-        <Route path="/services" element={<PageWrapper><Services /></PageWrapper>} />
         <Route path="/portfolio" element={<PageWrapper><Portfolio /></PageWrapper>} />
         <Route path="/blog" element={<PageWrapper><Blog /></PageWrapper>} />
         <Route path="/blog/:slug" element={<PageWrapper><BlogPost /></PageWrapper>} />

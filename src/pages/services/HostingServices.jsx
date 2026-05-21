@@ -65,7 +65,7 @@ export default function HostingServices() {
       />
 
       {/* Stats */}
-      <section className="bg-stone-900 py-12">
+      <section className="bg-white border-y border-stone-100 py-12">
         <div className="max-w-5xl mx-auto px-5 sm:px-6 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {stats.map((s, i) => (
             <motion.div
@@ -76,7 +76,7 @@ export default function HostingServices() {
               transition={{ delay: i * 0.08 }}
             >
               <div className="text-3xl md:text-4xl font-bold text-primary mb-1">{s.value}</div>
-              <div className="text-stone-400 text-sm">{s.label}</div>
+              <div className="text-stone-500 text-sm">{s.label}</div>
             </motion.div>
           ))}
         </div>
@@ -127,22 +127,22 @@ export default function HostingServices() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className={`rounded-2xl p-7 border ${plan.featured ? "bg-stone-900 border-stone-700 ring-2 ring-primary" : "bg-white border-stone-200"}`}
+                className={`rounded-2xl p-7 border ${plan.featured ? "bg-white border-primary ring-2 ring-primary" : "bg-white border-stone-200"}`}
               >
                 {plan.featured && (
                   <span className="inline-block bg-primary text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4">Most Popular</span>
                 )}
-                <h3 className={`text-xl font-bold mb-1 ${plan.featured ? "text-white" : "text-stone-900"}`}>{plan.name}</h3>
+                <h3 className="text-xl font-bold mb-1 text-stone-900">{plan.name}</h3>
                 <div className="flex items-end gap-1 mb-2">
                   <span className={`text-4xl font-bold ${plan.featured ? "text-primary" : "text-stone-900"}`}>{plan.price}</span>
-                  <span className={`text-sm mb-1 ${plan.featured ? "text-stone-400" : "text-stone-500"}`}>{plan.period}</span>
+                  <span className="text-sm mb-1 text-stone-500">{plan.period}</span>
                 </div>
-                <p className={`text-sm mb-6 ${plan.featured ? "text-stone-400" : "text-stone-600"}`}>{plan.description}</p>
+                <p className="text-sm mb-6 text-stone-600">{plan.description}</p>
                 <ul className="space-y-3 mb-7">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-center gap-2">
-                      <CheckCircle2 className={`w-4 h-4 shrink-0 ${plan.featured ? "text-primary" : "text-primary"}`} />
-                      <span className={`text-sm ${plan.featured ? "text-stone-300" : "text-stone-700"}`}>{f}</span>
+                      <CheckCircle2 className="w-4 h-4 shrink-0 text-primary" />
+                      <span className="text-sm text-stone-700">{f}</span>
                     </li>
                   ))}
                 </ul>
@@ -159,22 +159,22 @@ export default function HostingServices() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 md:py-24 bg-stone-900">
+      <section className="py-16 md:py-24 bg-primary">
         <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 tracking-tight">Ready for hosting that just works?</h2>
-            <p className="text-stone-400 text-lg mb-8">Talk to our team about migrating your existing site or launching something new.</p>
+            <p className="text-white/70 text-lg mb-8">Talk to our team about migrating your existing site or launching something new.</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href={PHONE_HREF}
                 onClick={() => trackContact({ method: "phone", source: "hosting_cta" })}
-                className="inline-flex items-center justify-center gap-2 bg-primary text-white px-8 py-3.5 rounded-full font-semibold hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center justify-center gap-2 bg-white text-primary px-8 py-3.5 rounded-full font-semibold hover:bg-stone-100 transition-colors"
               >
                 Call Us Now <ArrowUpRight className="w-4 h-4" />
               </a>
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center gap-2 bg-white/10 text-white px-8 py-3.5 rounded-full font-semibold hover:bg-white/20 transition-colors"
+                className="inline-flex items-center justify-center gap-2 bg-white/20 text-white px-8 py-3.5 rounded-full font-semibold hover:bg-white/30 transition-colors"
               >
                 Get a Quote
               </Link>

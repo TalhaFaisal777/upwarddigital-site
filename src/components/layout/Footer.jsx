@@ -31,7 +31,7 @@ const services = [
 const socialLinks = [
   { icon: Facebook, href: "https://www.facebook.com/upwarddigitalllcagency", label: "Facebook" },
   { icon: Instagram, href: "https://www.instagram.com/upwarddigital.agency/", label: "Instagram" },
-  { icon: Linkedin, href: "https://www.linkedin.com/in/upward-digital-90b7a2406/", label: "LinkedIn" },
+  { icon: Linkedin, href: "https://www.linkedin.com/company/upward-digital-co/", label: "LinkedIn" },
 ]
 
 export default function Footer() {
@@ -40,9 +40,9 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* CTA strip */}
         <div className="py-12 border-b border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <h3 className="text-3xl md:text-4xl font-bold tracking-tight text-white max-w-xl">
-            Let's build something <em className="font-serif italic text-blue-400">worth scaling</em>.
-          </h3>
+          <h5 className="text-3xl md:text-4xl font-bold tracking-tight text-white max-w-xl">
+            Let's build something worth scaling.
+          </h5>
           <a
             href="tel:+12013040657"
             onClick={() => {
@@ -68,10 +68,17 @@ export default function Footer() {
                 style={{ filter: "drop-shadow(0 0 18px rgba(96,165,250,0.35)) brightness(1.15)" }}
               />
             </Link>
-            <p className="text-stone-400 text-sm leading-relaxed mb-6">
-              A full-service digital studio building high-performance websites,
-              data-driven SEO and marketing strategies for ambitious brands.
+            <p className="text-stone-400 text-sm leading-relaxed mb-3">
+              Website development, SEO, local SEO, and digital marketing services designed to help your business rank higher, get more leads, and grow online.
             </p>
+            <a
+              href="https://www.linkedin.com/company/upward-digital-co/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-primary text-xs font-medium hover:text-blue-400 transition-colors mb-4"
+            >
+              Follow us on LinkedIn →
+            </a>
             <div className="flex items-center gap-3">
               {socialLinks.map((s) => (
                 <a
@@ -90,7 +97,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-5 text-sm uppercase tracking-widest">Pages</h4>
+            <h5 className="text-white font-semibold mb-5 text-sm uppercase tracking-widest">Pages</h5>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.name}>
@@ -103,7 +110,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-5 text-sm uppercase tracking-widest">Services</h4>
+            <h5 className="text-white font-semibold mb-5 text-sm uppercase tracking-widest">Services</h5>
             <ul className="space-y-3">
               {services.map((s) => (
                 <li key={s.name}>
@@ -116,7 +123,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-5 text-sm uppercase tracking-widest">Contact</h4>
+            <h5 className="text-white font-semibold mb-5 text-sm uppercase tracking-widest">Contact</h5>
             <ul className="space-y-4 text-sm">
               <li className="flex items-start gap-3">
                 <Mail className="w-4 h-4 text-blue-400 mt-1 shrink-0" />

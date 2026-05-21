@@ -277,15 +277,6 @@ function ServicesDropdown({ useDarkOverlay, location }) {
                 )
               })}
             </div>
-            <div className="border-t border-stone-100 p-2">
-              <Link
-                to="/services"
-                onClick={() => setOpen(false)}
-                className="block text-center text-xs font-semibold text-primary hover:text-blue-700 py-2"
-              >
-                View all services →
-              </Link>
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -330,12 +321,6 @@ function MobileServicesAccordion({ location }) {
                   {s.name}
                 </Link>
               ))}
-              <Link
-                to="/services"
-                className="block px-3 py-2 text-xs font-semibold text-primary hover:text-blue-700"
-              >
-                View all services →
-              </Link>
             </div>
           </motion.div>
         )}

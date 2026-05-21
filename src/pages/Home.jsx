@@ -223,7 +223,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-serif italic text-blue-400 text-xl sm:text-2xl md:text-3xl mb-6 sm:mb-8"
+            className="text-base sm:text-lg md:text-xl text-blue-400 max-w-2xl mb-3 leading-relaxed"
           >
             Your growth partner.
           </motion.p>
@@ -296,10 +296,9 @@ export default function Home() {
       <section className="bg-white py-16 md:py-24 border-y border-stone-900/10">
         <div className="max-w-7xl mx-auto px-6 md:px-8">
           <SectionHeading
-            subtitle="What we do"
             title={
               <>
-                Everything for <em className="font-serif italic font-medium text-primary">your brand</em>.
+                <span className="text-primary">Upward Digital Marketing Agency</span>
               </>
             }
           />
@@ -324,11 +323,8 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="mb-14 max-w-4xl mx-auto text-center"
           >
-            <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-3">
-              — What We Offer —
-            </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-5 text-stone-900">
-              High-Performance <em className="font-serif italic font-medium text-primary">Web Development</em> & Digital Marketing Solutions
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-5 text-primary">
+              Web Development & Digital Marketing Solutions
             </h2>
             <p className="text-stone-600 text-base md:text-lg leading-relaxed">
               We are a trusted website development and SEO agency in the USA,
@@ -464,11 +460,10 @@ function AboutAndContactSection() {
           className="flex flex-col justify-center"
         >
           <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-3">
-            — About Us —
+            About Us
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-6 text-stone-900">
-            <span className="text-primary">Upward Digital LLC</span>, USA's
-            Leading <em className="font-serif italic font-medium text-primary">Web Development</em> & SEO Agency
+          <h2 className="text-2xl md:text-3xl font-bold leading-[1.2] tracking-tight mb-6 text-stone-900">
+            Upward Digital LLC, USA's Leading Web Development & SEO Agency
           </h2>
 
           <div className="space-y-5 text-stone-600 text-base md:text-lg leading-relaxed">
@@ -512,9 +507,9 @@ function AboutAndContactSection() {
         >
           <div className="bg-blue-50/70 border border-blue-100 rounded-2xl p-7 sm:p-10 h-full flex flex-col">
             <div className="text-center mb-7">
-              <h3 className="text-2xl md:text-3xl font-bold text-primary mb-3 tracking-tight">
+              <h4 className="text-2xl md:text-3xl font-bold text-primary mb-3 tracking-tight">
                 Contact Us — Free Consultation
-              </h3>
+              </h4>
               <p className="text-stone-700 text-sm leading-relaxed">
                 Book a free consultation and let the best{" "}
                 <strong className="text-stone-900">
@@ -671,10 +666,11 @@ function TestimonialsSection() {
   return (
     <section className="py-16 md:py-24 bg-cream">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
-        <SectionHeading
-          subtitle="What clients say"
-          title="Words from those we've grown."
-        />
+        <div className="mb-14 text-center">
+          <h4 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight text-primary">
+            What Clients Say
+          </h4>
+        </div>
 
         {/* Desktop: 3 cards visible, center highlighted */}
         <div className="hidden md:block overflow-hidden py-8">
@@ -831,12 +827,6 @@ function BlogTeaserSection() {
       <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <div className="max-w-2xl">
-            <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-3">
-              — From the Blog —
-            </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight text-stone-900">
-              Insights to help your business <em className="font-serif italic font-medium text-primary">grow online</em>.
-            </h2>
           </div>
           <Link
             to="/blog"
