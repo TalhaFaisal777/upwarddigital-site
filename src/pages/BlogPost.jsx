@@ -218,7 +218,7 @@ function ServicesGridSection() {
           {SERVICE_ITEMS.map((service, index) => (
             <span
               key={service}
-              className="inline-flex items-center gap-2 bg-white border border-stone-200 rounded-full px-4 py-2 text-sm font-medium text-stone-700 shadow-sm hover:border-primary/40 hover:text-primary transition-all cursor-default"
+              className="inline-flex items-center gap-1.5 bg-white border border-stone-200 rounded-full px-3.5 py-1.5 text-[13px] font-medium text-stone-700 shadow-sm hover:border-primary/40 hover:text-primary transition-all cursor-default"
             >
               <span className="text-base leading-none">{SERVICE_ICONS[index]}</span>
               {service}
@@ -234,7 +234,7 @@ function DetailSectionsSection({ heading, sections }) {
   if (!Array.isArray(sections) || sections.length === 0) return null;
 
   return (
-    <section className="py-14 md:py-20 bg-white">
+    <section className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
         {heading && (
           <motion.h2
@@ -248,7 +248,7 @@ function DetailSectionsSection({ heading, sections }) {
           </motion.h2>
         )}
 
-        <div className="space-y-6">
+        <div className="space-y-8">
           {sections.map((section, index) => {
             const imageRight = section.imageSide !== "left";
             return (
@@ -260,9 +260,9 @@ function DetailSectionsSection({ heading, sections }) {
                 transition={{ duration: 0.5 }}
                 className="border border-stone-200 rounded-3xl overflow-hidden bg-white shadow-sm"
               >
-                <div className="flex flex-col lg:flex-row min-h-95">
+                <div className="flex flex-col lg:flex-row min-h-140">
                   {/* Image — fills its column edge to edge, height matches text */}
-                  <div className={`relative lg:w-[44%] shrink-0 min-h-65 ${imageRight ? "lg:order-2" : "lg:order-1"}`}>
+                  <div className={`relative lg:w-1/2 shrink-0 min-h-75 ${imageRight ? "lg:order-2" : "lg:order-1"}`}>
                     {section.image ? (
                       <img
                         src={section.image}
@@ -283,9 +283,9 @@ function DetailSectionsSection({ heading, sections }) {
                   </div>
 
                   {/* Text — padded, fills remaining height */}
-                  <div className={`flex-1 p-8 md:p-12 flex flex-col justify-center ${imageRight ? "lg:order-1" : "lg:order-2"}`}>
+                  <div className={`flex-1 p-10 md:p-14 lg:p-16 flex flex-col justify-center ${imageRight ? "lg:order-1" : "lg:order-2"}`}>
                     {section.title && (
-                      <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-stone-900 tracking-tight leading-[1.2] mb-5">
+                      <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-stone-900 tracking-tight leading-[1.15] mb-6">
                         {section.title}
                       </h3>
                     )}
