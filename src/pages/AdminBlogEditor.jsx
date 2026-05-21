@@ -1,6 +1,6 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { ArrowLeft, Save, Plus, Upload, X, Trash2, Eye } from "lucide-react";
+import { ArrowLeft, Save, Plus, Upload, X, Trash2, Eye, Link2 } from "lucide-react";
 import { useNoIndex } from "@/hooks/useNoIndex";
 import { uploadImage } from "@/lib/imageUpload";
 import { LoginScreen, AdminTopBar, AdminTabs } from "@/pages/AdminBlogList";
@@ -240,7 +240,7 @@ export default function AdminBlogEditor() {
               />
             </Field>
             <Field label="Intro details (paragraph)">
-              <Textarea
+              <RichTextarea
                 value={post.intro.body}
                 onChange={(e) => updateField("intro.body", e.target.value)}
                 rows={5}
@@ -299,7 +299,7 @@ export default function AdminBlogEditor() {
                     />
                   </Field>
                   <Field label="Details (paragraph)">
-                    <Textarea
+                    <RichTextarea
                       value={item.body}
                       onChange={(e) => update("body", e.target.value)}
                       rows={6}
@@ -355,7 +355,7 @@ export default function AdminBlogEditor() {
                     />
                   </Field>
                   <Field label="Answer">
-                    <Textarea
+                    <RichTextarea
                       value={item.answer}
                       onChange={(e) => update("answer", e.target.value)}
                       rows={3}
@@ -610,6 +610,98 @@ function Textarea(props) {
       {...props}
       className="w-full rounded-lg border border-stone-300 bg-white px-4 py-3 text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary leading-relaxed"
     />
+  );
+}
+
+function RichTextarea({ value, onChange, rows, placeholder }) {
+  const ref = useRef(null);
+  const [showLink, setShowLink] = useState(false);
+  const [linkText, setLinkText] = useState("");
+  const [linkUrl, setLinkUrl] = useState("");
+
+  const openLinkForm = () => {
+    const ta = ref.current;
+    if (ta) {
+      const selected = value.slice(ta.selectionStart, ta.selectionEnd);
+      if (selected) setLinkText(selected);
+    }
+    setShowLink(true);
+  };
+
+  const insertLink = () => {
+    const text = linkText.trim() || "link text";
+    const url = linkUrl.trim();
+    if (!url) return;
+    const ta = ref.current;
+    const start = ta ? ta.selectionStart : value.length;
+    const end = ta ? ta.selectionEnd : value.length;
+    const insertion = `[${text}](${url})`;
+    const next = value.slice(0, start) + insertion + value.slice(end);
+    onChange({ target: { value: next } });
+    setShowLink(false);
+    setLinkText("");
+    setLinkUrl("");
+  };
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={openLinkForm}
+          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-stone-300 text-stone-600 text-xs font-medium hover:bg-stone-50 hover:text-primary hover:border-primary transition-colors"
+        >
+          <Link2 className="w-3.5 h-3.5" />
+          Insert link
+        </button>
+        <span className="text-[11px] text-stone-400">
+          Supports <code className="bg-stone-100 px-1 rounded">[text](url)</code> and <code className="bg-stone-100 px-1 rounded">**bold**</code>
+        </span>
+      </div>
+
+      {showLink && (
+        <div className="flex flex-wrap items-center gap-2 p-3 bg-stone-50 border border-stone-200 rounded-lg">
+          <input
+            type="text"
+            placeholder="Link text"
+            value={linkText}
+            onChange={(e) => setLinkText(e.target.value)}
+            className="h-9 flex-1 min-w-32 rounded-md border border-stone-300 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
+          />
+          <input
+            type="text"
+            placeholder="URL — https://example.com or /internal-path"
+            value={linkUrl}
+            onChange={(e) => setLinkUrl(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && insertLink()}
+            className="h-9 flex-2 min-w-48 rounded-md border border-stone-300 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
+          />
+          <button
+            type="button"
+            onClick={insertLink}
+            className="h-9 px-4 rounded-md bg-stone-900 text-white text-sm font-semibold hover:bg-primary transition-colors"
+          >
+            Insert
+          </button>
+          <button
+            type="button"
+            onClick={() => { setShowLink(false); setLinkText(""); setLinkUrl(""); }}
+            className="h-9 px-3 rounded-md border border-stone-300 text-stone-600 text-sm hover:bg-stone-100"
+          >
+            Cancel
+          </button>
+        </div>
+      )}
+
+      <textarea
+        ref={ref}
+        value={value}
+        onChange={onChange}
+        rows={rows}
+        placeholder={placeholder}
+        className="w-full rounded-lg border border-stone-300 bg-white px-4 py-3 text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary leading-relaxed"
+      />
+    </div>
   );
 }
 
