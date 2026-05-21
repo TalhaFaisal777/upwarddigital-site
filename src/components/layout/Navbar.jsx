@@ -1,16 +1,23 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Link, useLocation } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Phone } from "lucide-react"
+import { Menu, X, Phone, ChevronDown, Code2, Search, Share2, Server, Megaphone } from "lucide-react"
 import WhatsAppIcon from "@/components/common/WhatsAppIcon"
 import { trackContact } from "@/lib/pixel"
 
 const PHONE_HREF = "tel:+12013040657"
 const WHATSAPP_HREF = "https://wa.me/15812947936"
 
+const serviceLinks = [
+  { name: "Web Development", path: "/services/web-development", icon: Code2, description: "Custom websites & web apps" },
+  { name: "Google SEO Services", path: "/services/seo", icon: Search, description: "Rank higher, grow organically" },
+  { name: "Social Media", path: "/services/social-media", icon: Share2, description: "Content, community & growth" },
+  { name: "Hosting Services", path: "/services/hosting", icon: Server, description: "Fast, secure & reliable hosting" },
+  { name: "Meta Ads & Google Ads", path: "/services/ads", icon: Megaphone, description: "PPC campaigns that convert" },
+]
+
 const navLinks = [
   { name: "Home", path: "/" },
-  { name: "Services", path: "/services" },
   { name: "Portfolio", path: "/portfolio" },
   { name: "Blog", path: "/blog" },
   { name: "Pricing", path: "/pricing" },
@@ -66,6 +73,27 @@ export default function Navbar() {
 
             {/* Desktop Nav */}
             <div className="hidden lg:flex items-center gap-1">
+              {/* Home first */}
+              {(() => {
+                const isActive = location.pathname === "/"
+                return (
+                  <Link
+                    to="/"
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+                      useDarkOverlay
+                        ? isActive ? "text-primary bg-primary/10" : "text-stone-700 hover:text-stone-900 hover:bg-stone-900/5"
+                        : isActive ? "text-white bg-white/15" : "text-white/85 hover:text-white hover:bg-white/10"
+                    }`}
+                  >
+                    Home
+                  </Link>
+                )
+              })()}
+
+              {/* Services dropdown */}
+              <ServicesDropdown useDarkOverlay={useDarkOverlay} location={location} />
+
+              {/* Remaining links */}
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.path
                 return (
@@ -74,12 +102,8 @@ export default function Navbar() {
                     to={link.path}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
                       useDarkOverlay
-                        ? isActive
-                          ? "text-primary bg-primary/10"
-                          : "text-stone-700 hover:text-stone-900 hover:bg-stone-900/5"
-                        : isActive
-                          ? "text-white bg-white/15"
-                          : "text-white/85 hover:text-white hover:bg-white/10"
+                        ? isActive ? "text-primary bg-primary/10" : "text-stone-700 hover:text-stone-900 hover:bg-stone-900/5"
+                        : isActive ? "text-white bg-white/15" : "text-white/85 hover:text-white hover:bg-white/10"
                     }`}
                   >
                     {link.name}
@@ -154,12 +178,13 @@ export default function Navbar() {
                   </button>
                 </div>
                 <div className="flex-1 py-6 px-4 overflow-y-auto">
+                  <MobileServicesAccordion location={location} />
                   {navLinks.map((link, index) => (
                     <motion.div
                       key={link.path}
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.05 }}
+                      transition={{ delay: (index + 1) * 0.05 }}
                     >
                       <Link
                         to={link.path}
@@ -190,5 +215,131 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </>
+  )
+}
+
+function ServicesDropdown({ useDarkOverlay, location }) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef(null)
+  const isServiceActive = location.pathname.startsWith("/services")
+
+  useEffect(() => {
+    function handleClick(e) {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false)
+    }
+    document.addEventListener("mousedown", handleClick)
+    return () => document.removeEventListener("mousedown", handleClick)
+  }, [])
+
+  return (
+    <div ref={ref} className="relative" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className={`inline-flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+          useDarkOverlay
+            ? isServiceActive ? "text-primary bg-primary/10" : "text-stone-700 hover:text-stone-900 hover:bg-stone-900/5"
+            : isServiceActive ? "text-white bg-white/15" : "text-white/85 hover:text-white hover:bg-white/10"
+        }`}
+      >
+        Services
+        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.18 }}
+            className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 bg-white border border-stone-200 rounded-2xl shadow-xl overflow-hidden z-50"
+          >
+            <div className="p-2">
+              {serviceLinks.map((s) => {
+                const isActive = location.pathname === s.path
+                return (
+                  <Link
+                    key={s.path}
+                    to={s.path}
+                    onClick={() => setOpen(false)}
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors duration-150 group ${
+                      isActive ? "bg-primary/10 text-primary" : "hover:bg-stone-50 text-stone-700"
+                    }`}
+                  >
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${isActive ? "bg-primary text-white" : "bg-stone-100 text-stone-600 group-hover:bg-primary/10 group-hover:text-primary"}`}>
+                      <s.icon className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold leading-tight">{s.name}</div>
+                      <div className="text-xs text-stone-500 leading-tight mt-0.5">{s.description}</div>
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+            <div className="border-t border-stone-100 p-2">
+              <Link
+                to="/services"
+                onClick={() => setOpen(false)}
+                className="block text-center text-xs font-semibold text-primary hover:text-blue-700 py-2"
+              >
+                View all services →
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
+
+function MobileServicesAccordion({ location }) {
+  const [open, setOpen] = useState(false)
+  const isServiceActive = location.pathname.startsWith("/services")
+
+  return (
+    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 }}>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${
+          isServiceActive ? "text-primary bg-primary/10" : "text-stone-700 hover:text-stone-900 hover:bg-stone-900/5"
+        }`}
+      >
+        Services
+        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="overflow-hidden"
+          >
+            <div className="pl-4 pt-1 pb-2 space-y-1">
+              {serviceLinks.map((s) => (
+                <Link
+                  key={s.path}
+                  to={s.path}
+                  className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    location.pathname === s.path ? "text-primary bg-primary/10" : "text-stone-600 hover:text-stone-900 hover:bg-stone-900/5"
+                  }`}
+                >
+                  <s.icon className="w-4 h-4 shrink-0" />
+                  {s.name}
+                </Link>
+              ))}
+              <Link
+                to="/services"
+                className="block px-3 py-2 text-xs font-semibold text-primary hover:text-blue-700"
+              >
+                View all services →
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   )
 }
