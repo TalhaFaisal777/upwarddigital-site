@@ -102,21 +102,14 @@ function HeroSection({ post }) {
 
   return (
     <section className="relative h-[72vh] min-h-[580px] max-h-[820px] overflow-hidden flex items-center justify-center">
-      {/* Full-bleed image — no cream fade */}
       {post.coverImage ? (
-        <img
-          src={post.coverImage}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        <img src={post.coverImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
       ) : (
         <div className="absolute inset-0 bg-gradient-to-br from-stone-900 via-primary-dark to-primary" />
       )}
 
-      {/* Cinematic edge vignette only — top and bottom darken, center stays clear */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/65" />
 
-      {/* Subtle dot pattern */}
       <div
         className="absolute inset-0 opacity-[0.035] pointer-events-none"
         style={{
@@ -125,7 +118,6 @@ function HeroSection({ post }) {
         }}
       />
 
-      {/* Back link */}
       <div className="absolute top-28 sm:top-32 left-0 right-0 z-20">
         <div className="max-w-5xl mx-auto px-5 sm:px-6 md:px-8">
           <Link
@@ -138,18 +130,7 @@ function HeroSection({ post }) {
         </div>
       </div>
 
-      {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-6 md:px-8 text-center">
-        {post.category && (
-          <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-block text-blue-300 text-[11px] font-bold uppercase tracking-[0.2em] mb-4"
-          >
-            — {post.category} —
-          </motion.span>
-        )}
         <motion.h1
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
@@ -198,12 +179,9 @@ function IntroMapSection({ intro }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6 }}
-          className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center"
+          className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start"
         >
           <div>
-            <span className="inline-block text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-4">
-              — Overview —
-            </span>
             {intro.heading && (
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 tracking-tight leading-[1.1] mb-6">
                 {intro.heading}
@@ -211,11 +189,11 @@ function IntroMapSection({ intro }) {
             )}
             <BodyText text={intro.body} />
           </div>
-          <div className="rounded-3xl overflow-hidden border border-stone-200 shadow-lg">
+          <div className="rounded-3xl overflow-hidden border border-stone-200 shadow-md">
             <iframe
               title="United States Map"
               src="https://www.google.com/maps?q=United+States&output=embed"
-              className="w-full aspect-[5/4]"
+              className="w-full aspect-4/3"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
@@ -228,42 +206,25 @@ function IntroMapSection({ intro }) {
 
 function ServicesGridSection() {
   return (
-    <section className="py-16 md:py-20 bg-cream border-b border-stone-200">
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
+    <section className="py-8 bg-cream border-b border-stone-200">
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, margin: "-30px" }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-10"
+          className="flex flex-wrap items-center justify-center gap-2.5"
         >
-          <span className="inline-block text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
-            — What We Offer —
-          </span>
-          <h2 className="text-2xl md:text-3xl font-bold text-stone-900 tracking-tight leading-[1.15]">
-            Our Digital Services
-          </h2>
-        </motion.div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 md:gap-5">
           {SERVICE_ITEMS.map((service, index) => (
-            <motion.div
+            <span
               key={service}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
-              className="bg-white border border-stone-200 rounded-2xl p-4 text-center hover:border-primary/40 hover:shadow-md transition-all duration-200"
+              className="inline-flex items-center gap-2 bg-white border border-stone-200 rounded-full px-4 py-2 text-sm font-medium text-stone-700 shadow-sm hover:border-primary/40 hover:text-primary transition-all cursor-default"
             >
-              <div className="w-11 h-11 mx-auto mb-3 rounded-xl bg-stone-100 flex items-center justify-center text-xl">
-                {SERVICE_ICONS[index]}
-              </div>
-              <h3 className="text-xs font-bold text-stone-900 leading-snug">
-                {service}
-              </h3>
-            </motion.div>
+              <span className="text-base leading-none">{SERVICE_ICONS[index]}</span>
+              {service}
+            </span>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -273,28 +234,22 @@ function DetailSectionsSection({ heading, sections }) {
   if (!Array.isArray(sections) || sections.length === 0) return null;
 
   return (
-    <section className="py-16 md:py-24 bg-white">
+    <section className="py-14 md:py-20 bg-white">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
         {heading && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+          <motion.h2
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5 }}
-            className="text-center mb-14"
+            className="text-center text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-stone-900 mb-12"
           >
-            <span className="inline-block text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
-              — Details —
-            </span>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-stone-900">
-              {heading}
-            </h2>
-          </motion.div>
+            {heading}
+          </motion.h2>
         )}
 
-        <div className="space-y-8">
+        <div className="space-y-6">
           {sections.map((section, index) => {
-            const isEven = index % 2 === 0;
             const imageRight = section.imageSide !== "left";
             return (
               <motion.article
@@ -303,35 +258,38 @@ function DetailSectionsSection({ heading, sections }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5 }}
-                className={`${isEven ? "bg-cream" : "bg-white"} border border-stone-200 rounded-3xl p-7 md:p-12 overflow-hidden`}
+                className="border border-stone-200 rounded-3xl overflow-hidden bg-white shadow-sm"
               >
-                <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
-                  <div className={imageRight ? "" : "lg:order-2"}>
-                    {section.title && (
-                      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-stone-900 tracking-tight leading-[1.15] mb-5">
-                        {section.title}
-                      </h2>
-                    )}
-                    <BodyText text={section.body} />
-                  </div>
-                  <div className={imageRight ? "lg:order-2" : ""}>
+                <div className="flex flex-col lg:flex-row min-h-95">
+                  {/* Image — fills its column edge to edge, height matches text */}
+                  <div className={`relative lg:w-[44%] shrink-0 min-h-65 ${imageRight ? "lg:order-2" : "lg:order-1"}`}>
                     {section.image ? (
                       <img
                         src={section.image}
                         alt=""
-                        className="w-full aspect-[4/3] object-cover rounded-2xl border border-stone-200 shadow-md"
+                        className="absolute inset-0 w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="rounded-2xl overflow-hidden border border-stone-200 shadow-md">
+                      <div className="absolute inset-0">
                         <iframe
                           title="United States Map"
                           src="https://www.google.com/maps?q=United+States&output=embed"
-                          className="w-full aspect-[4/3]"
+                          className="w-full h-full border-0"
                           loading="lazy"
                           referrerPolicy="no-referrer-when-downgrade"
                         />
                       </div>
                     )}
+                  </div>
+
+                  {/* Text — padded, fills remaining height */}
+                  <div className={`flex-1 p-8 md:p-12 flex flex-col justify-center ${imageRight ? "lg:order-1" : "lg:order-2"}`}>
+                    {section.title && (
+                      <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-stone-900 tracking-tight leading-[1.2] mb-5">
+                        {section.title}
+                      </h3>
+                    )}
+                    <BodyText text={section.body} />
                   </div>
                 </div>
               </motion.article>
@@ -381,9 +339,6 @@ function QuoteFormSection({ slug }) {
           transition={{ duration: 0.6 }}
         >
           <div className="text-center mb-10">
-            <span className="inline-block text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
-              — Free Consultation —
-            </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 tracking-tight leading-[1.1] mb-3">
               Let's grow your business
             </h2>
@@ -458,20 +413,15 @@ function FaqSection({ faq }) {
   return (
     <section className="py-16 md:py-24 bg-white border-b border-stone-200">
       <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8">
-        <motion.div
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          className="text-center text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-stone-900 mb-12"
         >
-          <span className="inline-block text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
-            — FAQ —
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-stone-900">
-            Frequently asked questions
-          </h2>
-        </motion.div>
+          Frequently asked questions
+        </motion.h2>
 
         <div className="space-y-3">
           {safeFaq.map((item, index) => (
@@ -487,7 +437,7 @@ function FaqSection({ faq }) {
                   <span className="font-semibold text-stone-900 text-base md:text-lg">
                     {item.question}
                   </span>
-                  <span className="flex-shrink-0 w-7 h-7 rounded-full bg-stone-200 group-open:bg-primary/10 flex items-center justify-center transition-colors">
+                  <span className="shrink-0 w-7 h-7 rounded-full bg-stone-200 group-open:bg-primary/10 flex items-center justify-center transition-colors">
                     <span className="text-stone-500 group-open:text-primary text-lg leading-none group-open:rotate-45 inline-block transition-all duration-200">
                       +
                     </span>
@@ -514,7 +464,7 @@ function BodyText({ text }) {
     .filter(Boolean);
 
   return (
-    <div className="space-y-5 text-stone-600 text-base md:text-lg leading-relaxed md:leading-[1.8]">
+    <div className="space-y-4 text-stone-600 text-base md:text-lg leading-relaxed md:leading-[1.8]">
       {paragraphs.map((paragraph, index) => (
         <p key={index}>{renderInline(paragraph)}</p>
       ))}
@@ -559,7 +509,6 @@ function renderInline(text) {
         </a>
       );
     }
-
     if (token.type === "bold") {
       return (
         <strong key={index} className="text-stone-900 font-semibold">
@@ -567,7 +516,6 @@ function renderInline(text) {
         </strong>
       );
     }
-
     return <span key={index}>{token.value}</span>;
   });
 }
@@ -576,19 +524,13 @@ function getIntroSection(post) {
   if (!post) return null;
 
   if (post.intro && (post.intro.heading || post.intro.body)) {
-    return {
-      heading: post.intro.heading || "",
-      body: post.intro.body || "",
-    };
+    return { heading: post.intro.heading || "", body: post.intro.body || "" };
   }
 
   if (Array.isArray(post.sections) && post.sections.length > 0) {
     const first = post.sections[0];
     if (first?.heading || first?.body) {
-      return {
-        heading: first.heading || "",
-        body: first.body || "",
-      };
+      return { heading: first.heading || "", body: first.body || "" };
     }
   }
 
