@@ -248,7 +248,7 @@ function DetailSectionsSection({ heading, sections }) {
           </motion.h2>
         )}
 
-        <div className="space-y-8">
+        <div className="space-y-16 md:space-y-20">
           {sections.map((section, index) => {
             const imageRight = section.imageSide !== "left";
             return (
@@ -258,19 +258,28 @@ function DetailSectionsSection({ heading, sections }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5 }}
-                className="border border-stone-200 rounded-3xl overflow-hidden bg-white shadow-sm"
               >
-                <div className="flex flex-col lg:flex-row min-h-140">
-                  {/* Image — fills its column edge to edge, height matches text */}
-                  <div className={`relative lg:w-1/2 shrink-0 min-h-75 ${imageRight ? "lg:order-2" : "lg:order-1"}`}>
+                <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-16">
+                  {/* Text */}
+                  <div className={`flex-1 ${imageRight ? "lg:order-1" : "lg:order-2"}`}>
+                    {section.title && (
+                      <h3 className="text-2xl md:text-3xl font-bold text-stone-900 tracking-tight leading-snug mb-5">
+                        {section.title}
+                      </h3>
+                    )}
+                    <BodyText text={section.body} />
+                  </div>
+
+                  {/* Image */}
+                  <div className={`w-full lg:w-[48%] shrink-0 ${imageRight ? "lg:order-2" : "lg:order-1"}`}>
                     {section.image ? (
                       <img
                         src={section.image}
                         alt=""
-                        className="absolute inset-0 w-full h-full object-cover"
+                        className="w-full rounded-2xl object-cover"
                       />
                     ) : (
-                      <div className="absolute inset-0">
+                      <div className="w-full aspect-4/3 rounded-2xl overflow-hidden">
                         <iframe
                           title="United States Map"
                           src="https://www.google.com/maps?q=United+States&output=embed"
@@ -280,16 +289,6 @@ function DetailSectionsSection({ heading, sections }) {
                         />
                       </div>
                     )}
-                  </div>
-
-                  {/* Text — padded, fills remaining height */}
-                  <div className={`flex-1 p-10 md:p-12 lg:p-14 flex flex-col justify-start ${imageRight ? "lg:order-1" : "lg:order-2"}`}>
-                    {section.title && (
-                      <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-stone-900 tracking-tight leading-[1.15] mb-6">
-                        {section.title}
-                      </h3>
-                    )}
-                    <BodyText text={section.body} />
                   </div>
                 </div>
               </motion.article>
