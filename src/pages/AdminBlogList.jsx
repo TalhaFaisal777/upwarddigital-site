@@ -342,7 +342,9 @@ export function AdminTabs() {
   return (
     <div className="flex items-center gap-1 mb-8 border-b border-stone-200">
       {tabs.map((t) => {
-        const active = path === t.path || path.startsWith(t.path + "/")
+        const active = t.path === "/admin"
+          ? path === "/admin"
+          : path === t.path || path.startsWith(t.path + "/")
         return (
           <Link
             key={t.path}

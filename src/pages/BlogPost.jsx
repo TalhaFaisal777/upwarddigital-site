@@ -283,7 +283,7 @@ function DetailSectionsSection({ heading, sections }) {
                   </div>
 
                   {/* Text — padded, fills remaining height */}
-                  <div className={`flex-1 p-10 md:p-14 lg:p-16 flex flex-col justify-center ${imageRight ? "lg:order-1" : "lg:order-2"}`}>
+                  <div className={`flex-1 p-10 md:p-12 lg:p-14 flex flex-col justify-start ${imageRight ? "lg:order-1" : "lg:order-2"}`}>
                     {section.title && (
                       <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-stone-900 tracking-tight leading-[1.15] mb-6">
                         {section.title}
