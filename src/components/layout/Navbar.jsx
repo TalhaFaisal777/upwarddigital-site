@@ -252,7 +252,7 @@ function ServicesDropdown({ useDarkOverlay, location }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 8 }}
             transition={{ duration: 0.18 }}
-            className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 bg-white border border-stone-200 rounded-2xl shadow-xl overflow-hidden z-50"
+            className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-60 bg-white border border-stone-200 rounded-2xl shadow-xl overflow-hidden z-50"
           >
             <div className="p-2">
               {serviceLinks.map((s) => {
@@ -262,16 +262,16 @@ function ServicesDropdown({ useDarkOverlay, location }) {
                     key={s.path}
                     to={s.path}
                     onClick={() => setOpen(false)}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors duration-150 group ${
+                    className={`flex items-center gap-2.5 px-2.5 py-2 rounded-xl transition-colors duration-150 group ${
                       isActive ? "bg-primary/10 text-primary" : "hover:bg-stone-50 text-stone-700"
                     }`}
                   >
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${isActive ? "bg-primary text-white" : "bg-stone-100 text-stone-600 group-hover:bg-primary/10 group-hover:text-primary"}`}>
-                      <s.icon className="w-4 h-4" />
+                    <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 ${isActive ? "bg-primary text-white" : "bg-stone-100 text-stone-600 group-hover:bg-primary/10 group-hover:text-primary"}`}>
+                      <s.icon className="w-3.5 h-3.5" />
                     </div>
                     <div>
-                      <div className="text-sm font-semibold leading-tight">{s.name}</div>
-                      <div className="text-xs text-stone-500 leading-tight mt-0.5">{s.description}</div>
+                      <div className="text-xs font-semibold leading-tight">{s.name}</div>
+                      <div className="text-[10px] text-stone-500 leading-tight mt-0.5">{s.description}</div>
                     </div>
                   </Link>
                 )

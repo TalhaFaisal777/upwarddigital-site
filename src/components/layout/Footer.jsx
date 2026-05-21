@@ -68,17 +68,9 @@ export default function Footer() {
                 style={{ filter: "drop-shadow(0 0 18px rgba(96,165,250,0.35)) brightness(1.15)" }}
               />
             </Link>
-            <p className="text-stone-400 text-sm leading-relaxed mb-3">
+            <p className="text-stone-400 text-sm leading-relaxed mb-5">
               Website development, SEO, local SEO, and digital marketing services designed to help your business rank higher, get more leads, and grow online.
             </p>
-            <a
-              href="https://www.linkedin.com/company/upward-digital-co/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-primary text-xs font-medium hover:text-blue-400 transition-colors mb-4"
-            >
-              Follow us on LinkedIn →
-            </a>
             <div className="flex items-center gap-3">
               {socialLinks.map((s) => (
                 <a

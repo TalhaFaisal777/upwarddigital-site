@@ -389,58 +389,24 @@ function ContactInfoCards() {
         </Card>
       </motion.div>
 
-      {/* Map Placeholder */}
+      {/* Google Map */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.4, delay: 0.4 }}
+        className="rounded-2xl overflow-hidden border border-stone-200 shadow-sm"
       >
-        <Card className="overflow-hidden hover:border-primary transition-all duration-500">
-          <div className="relative h-48">
-            {/* Dark gradient base */}
-            <div className="absolute inset-0 bg-gradient-to-br from-stone-100 via-stone-50 to-stone-100" />
-
-            {/* Grid pattern */}
-            <div
-              className="absolute inset-0 opacity-20"
-              style={{
-                backgroundImage:
-                  "linear-gradient(rgba(59,130,246,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.3) 1px, transparent 1px)",
-                backgroundSize: "30px 30px",
-              }}
-            />
-
-            {/* Blue overlay gradient */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-cyan-accent/5" />
-
-            {/* Abstract map elements */}
-            <div className="absolute top-6 left-8 w-20 h-20 rounded-full border border-primary/20" />
-            <div className="absolute bottom-8 right-10 w-16 h-16 rounded-full border border-primary/15" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-primary/5" />
-
-            {/* Diagonal lines */}
-            <div
-              className="absolute inset-0 opacity-10"
-              style={{
-                backgroundImage:
-                  "repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(59,130,246,0.2) 40px, rgba(59,130,246,0.2) 41px)",
-              }}
-            />
-
-            {/* Pin marker */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-              <div className="w-8 h-8 rounded-full bg-primary/30 flex items-center justify-center animate-pulse">
-                <MapPin className="w-4 h-4 text-primary" />
-              </div>
-              <span className="text-xs text-stone-500 mt-2">Kalispell, MT</span>
-            </div>
-
-            {/* Glow spots */}
-            <div className="absolute top-1/4 right-1/4 w-24 h-24 bg-primary/5 rounded-full blur-2xl" />
-            <div className="absolute bottom-1/4 left-1/3 w-20 h-20 bg-cyan-accent/5 rounded-full blur-2xl" />
-          </div>
-        </Card>
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52871637.32961116!2d-161.68771742620467!3d36.01959388156759!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited%20States!5e0!3m2!1sen!2suk!4v1779396647514!5m2!1sen!2suk"
+          width="100%"
+          height="280"
+          style={{ border: 0, display: "block" }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          title="Upward Digital location"
+        />
       </motion.div>
     </motion.div>
   )

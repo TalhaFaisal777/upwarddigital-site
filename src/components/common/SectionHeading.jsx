@@ -9,11 +9,6 @@ export default function SectionHeading({ subtitle, title, description, center = 
       transition={{ duration: 0.5 }}
       className={`mb-14 ${center ? "text-center" : ""}`}
     >
-      {subtitle && (
-        <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-4">
-          — {subtitle} —
-        </span>
-      )}
       <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-4 text-stone-900">
         {title}
       </h2>

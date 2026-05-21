@@ -16,16 +16,6 @@ export default function PageHero({ title, subtitle, description, children }) {
       <div className="absolute bottom-10 right-[8%] w-40 h-40 bg-amber-200/40 rounded-full blur-2xl" />
 
       <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-6 md:px-8 text-center">
-        {subtitle && (
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-block text-primary font-semibold text-[10px] sm:text-xs tracking-[0.2em] uppercase mb-3 sm:mb-4"
-          >
-            — {subtitle} —
-          </motion.span>
-        )}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
