@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { ArrowLeft, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { trackBlogPostClick, trackLead } from "@/lib/pixel";
 
@@ -19,16 +20,14 @@ const SERVICE_ICONS = ["💻", "🔎", "📍", "📣", "📱", "🎨", "🛒", "
 export default function BlogPost() {
   const { slug } = useParams();
   const [post, setPost] = useState(null);
-  const [status, setStatus] = useState("loading"); // loading | ok | notfound | error
+  const [status, setStatus] = useState("loading");
 
   useEffect(() => {
     let cancelled = false;
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 15000);
 
-    fetch(`/api/posts/${encodeURIComponent(slug)}`, {
-      signal: controller.signal,
-    })
+    fetch(`/api/posts/${encodeURIComponent(slug)}`, { signal: controller.signal })
       .then(async (r) => {
         if (r.status === 404) return { ok: false, notfound: true };
         if (!r.ok) throw new Error(`Server ${r.status}`);
@@ -46,15 +45,9 @@ export default function BlogPost() {
           setStatus("error");
         }
       })
-      .catch(() => {
-        if (!cancelled) setStatus("error");
-      });
+      .catch(() => { if (!cancelled) setStatus("error"); });
 
-    return () => {
-      cancelled = true;
-      clearTimeout(timeoutId);
-      controller.abort();
-    };
+    return () => { cancelled = true; clearTimeout(timeoutId); controller.abort(); };
   }, [slug]);
 
   const intro = useMemo(() => getIntroSection(post), [post]);
@@ -63,7 +56,7 @@ export default function BlogPost() {
   if (status === "loading") {
     return (
       <main className="min-h-screen bg-cream flex items-center justify-center">
-        <div className="text-stone-500">Loading…</div>
+        <div className="text-stone-400 text-sm">Loading…</div>
       </main>
     );
   }
@@ -75,9 +68,7 @@ export default function BlogPost() {
       <main className="min-h-screen bg-cream flex items-center justify-center px-6">
         <div className="text-center">
           <p className="text-stone-700 mb-4">Couldn't load this post.</p>
-          <Link to="/blog" className="text-primary underline">
-            Back to all articles
-          </Link>
+          <Link to="/blog" className="text-primary underline">Back to all articles</Link>
         </div>
       </main>
     );
@@ -110,59 +101,87 @@ function HeroSection({ post }) {
   };
 
   return (
-    <section className="relative pt-32 sm:pt-36 pb-14 sm:pb-20 overflow-hidden min-h-[500px] flex items-center">
-      {post.coverImage && (
-        <div className="absolute inset-0 z-0">
-          <img
-            src={post.coverImage}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-stone-900/55 via-stone-900/40 to-cream" />
-        </div>
-      )}
-      {!post.coverImage && (
-        <div className="absolute inset-0 bg-gradient-to-b from-stone-900/15 to-cream" />
+    <section className="relative h-[72vh] min-h-[580px] max-h-[820px] overflow-hidden flex items-center justify-center">
+      {/* Full-bleed image — no cream fade */}
+      {post.coverImage ? (
+        <img
+          src={post.coverImage}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-br from-stone-900 via-primary-dark to-primary" />
       )}
 
+      {/* Cinematic edge vignette only — top and bottom darken, center stays clear */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/65" />
+
+      {/* Subtle dot pattern */}
       <div
-        className="absolute inset-0 opacity-[0.06] pointer-events-none"
+        className="absolute inset-0 opacity-[0.035] pointer-events-none"
         style={{
-          backgroundImage:
-            "radial-gradient(circle, #1c1917 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)",
           backgroundSize: "28px 28px",
         }}
       />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-6 md:px-8 text-center w-full">
-        <div className="text-left mb-7">
+      {/* Back link */}
+      <div className="absolute top-28 sm:top-32 left-0 right-0 z-20">
+        <div className="max-w-5xl mx-auto px-5 sm:px-6 md:px-8">
           <Link
             to="/blog"
-            className="inline-flex items-center gap-2 text-stone-700 hover:text-stone-900 text-sm font-medium transition-colors"
+            className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm text-white text-sm font-medium px-4 py-2 rounded-full border border-white/25 hover:bg-white/25 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             All articles
           </Link>
         </div>
+      </div>
 
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.08] tracking-tight text-stone-900 mb-5">
-          {post.title}
-        </h1>
-
-        {post.hero?.subtitle && (
-          <p className="max-w-3xl mx-auto text-center text-stone-700 text-lg md:text-2xl leading-relaxed mb-8 break-words [overflow-wrap:anywhere]">
-            {post.hero.subtitle}
-          </p>
+      {/* Content */}
+      <div className="relative z-10 max-w-4xl mx-auto px-5 sm:px-6 md:px-8 text-center">
+        {post.category && (
+          <motion.span
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-block text-blue-300 text-[11px] font-bold uppercase tracking-[0.2em] mb-4"
+          >
+            — {post.category} —
+          </motion.span>
         )}
-
-        <a
-          href="#quote-form"
-          onClick={scrollToQuoteForm}
-          className="inline-flex items-center justify-center gap-2 bg-primary text-white px-7 py-3.5 rounded-full text-sm md:text-base font-semibold hover:bg-primary-dark transition-colors"
+        <motion.h1
+          initial={{ opacity: 0, y: 22 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-4xl md:text-5xl lg:text-[3.4rem] font-bold leading-[1.08] tracking-tight text-white mb-5"
         >
-          Get a Quote
-          <ArrowUpRight className="w-4 h-4" />
-        </a>
+          {post.title}
+        </motion.h1>
+        {post.hero?.subtitle && (
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="max-w-2xl mx-auto text-white/80 text-base md:text-lg leading-relaxed mb-8 break-words [overflow-wrap:anywhere]"
+          >
+            {post.hero.subtitle}
+          </motion.p>
+        )}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <a
+            href="#quote-form"
+            onClick={scrollToQuoteForm}
+            className="inline-flex items-center justify-center gap-2 bg-primary text-white px-8 py-4 rounded-full text-sm md:text-base font-semibold hover:bg-primary-dark transition-colors shadow-lg"
+          >
+            Get a Free Quote
+            <ArrowUpRight className="w-4 h-4" />
+          </a>
+        </motion.div>
       </div>
     </section>
   );
@@ -172,19 +191,27 @@ function IntroMapSection({ intro }) {
   if (!intro?.heading && !intro?.body) return null;
 
   return (
-    <section className="py-14 md:py-20 bg-white border-y border-stone-200">
+    <section className="py-16 md:py-24 bg-white border-b border-stone-200">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-start">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6 }}
+          className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center"
+        >
           <div>
+            <span className="inline-block text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-4">
+              — Overview —
+            </span>
             {intro.heading && (
-              <h2 className="text-3xl md:text-4xl font-bold text-stone-900 tracking-tight leading-[1.15] mb-5">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 tracking-tight leading-[1.1] mb-6">
                 {intro.heading}
               </h2>
             )}
             <BodyText text={intro.body} />
           </div>
-
-          <div className="rounded-3xl overflow-hidden border border-stone-200 bg-stone-100">
+          <div className="rounded-3xl overflow-hidden border border-stone-200 shadow-lg">
             <iframe
               title="United States Map"
               src="https://www.google.com/maps?q=United+States&output=embed"
@@ -193,7 +220,7 @@ function IntroMapSection({ intro }) {
               referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -201,21 +228,40 @@ function IntroMapSection({ intro }) {
 
 function ServicesGridSection() {
   return (
-    <section className="py-14 md:py-18 bg-cream border-b border-stone-200">
+    <section className="py-16 md:py-20 bg-cream border-b border-stone-200">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-10"
+        >
+          <span className="inline-block text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
+            — What We Offer —
+          </span>
+          <h2 className="text-2xl md:text-3xl font-bold text-stone-900 tracking-tight leading-[1.15]">
+            Our Digital Services
+          </h2>
+        </motion.div>
+
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 md:gap-5">
           {SERVICE_ITEMS.map((service, index) => (
-            <div
+            <motion.div
               key={service}
-              className="bg-white border border-stone-200 rounded-2xl p-4 text-center"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-30px" }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+              className="bg-white border border-stone-200 rounded-2xl p-4 text-center hover:border-primary/40 hover:shadow-md transition-all duration-200"
             >
-              <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-stone-100 flex items-center justify-center text-xl">
+              <div className="w-11 h-11 mx-auto mb-3 rounded-xl bg-stone-100 flex items-center justify-center text-xl">
                 {SERVICE_ICONS[index]}
               </div>
-              <h3 className="text-sm font-bold text-stone-900 leading-snug">
+              <h3 className="text-xs font-bold text-stone-900 leading-snug">
                 {service}
               </h3>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -228,53 +274,70 @@ function DetailSectionsSection({ heading, sections }) {
 
   return (
     <section className="py-16 md:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8 space-y-0">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
         {heading && (
-          <h3 className="text-center text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-stone-900 mb-12">
-            {heading}
-          </h3>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-14"
+          >
+            <span className="inline-block text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
+              — Details —
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-stone-900">
+              {heading}
+            </h2>
+          </motion.div>
         )}
 
-        {sections.map((section, index) => {
-          const bgClass = index % 2 === 0 ? "bg-cream" : "bg-white";
-          const imageRight = section.imageSide !== "left";
-          return (
-            <article
-              key={`${section.title}-${index}`}
-              className={`${bgClass} border border-stone-200 rounded-3xl p-6 md:p-10 mb-8`}
-            >
-              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-                <div className={imageRight ? "" : "lg:order-2"}>
-                  {section.title && (
-                    <h2 className="text-3xl md:text-4xl font-bold text-stone-900 tracking-tight leading-[1.15] mb-5">
-                      {section.title}
-                    </h2>
-                  )}
-                  <BodyText text={section.body} />
-                </div>
-                <div className={imageRight ? "lg:order-2" : ""}>
-                  {section.image ? (
-                    <img
-                      src={section.image}
-                      alt=""
-                      className="w-full aspect-[4/3] object-cover rounded-2xl border border-stone-200"
-                    />
-                  ) : (
-                    <div className="rounded-2xl overflow-hidden border border-stone-200 bg-stone-100">
-                      <iframe
-                        title="United States Map"
-                        src="https://www.google.com/maps?q=United+States&output=embed"
-                        className="w-full aspect-[4/3]"
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
+        <div className="space-y-8">
+          {sections.map((section, index) => {
+            const isEven = index % 2 === 0;
+            const imageRight = section.imageSide !== "left";
+            return (
+              <motion.article
+                key={`${section.title}-${index}`}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5 }}
+                className={`${isEven ? "bg-cream" : "bg-white"} border border-stone-200 rounded-3xl p-7 md:p-12 overflow-hidden`}
+              >
+                <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+                  <div className={imageRight ? "" : "lg:order-2"}>
+                    {section.title && (
+                      <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-stone-900 tracking-tight leading-[1.15] mb-5">
+                        {section.title}
+                      </h2>
+                    )}
+                    <BodyText text={section.body} />
+                  </div>
+                  <div className={imageRight ? "lg:order-2" : ""}>
+                    {section.image ? (
+                      <img
+                        src={section.image}
+                        alt=""
+                        className="w-full aspect-[4/3] object-cover rounded-2xl border border-stone-200 shadow-md"
                       />
-                    </div>
-                  )}
+                    ) : (
+                      <div className="rounded-2xl overflow-hidden border border-stone-200 shadow-md">
+                        <iframe
+                          title="United States Map"
+                          src="https://www.google.com/maps?q=United+States&output=embed"
+                          className="w-full aspect-[4/3]"
+                          loading="lazy"
+                          referrerPolicy="no-referrer-when-downgrade"
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </article>
-          );
-        })}
+              </motion.article>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
@@ -282,11 +345,7 @@ function DetailSectionsSection({ heading, sections }) {
 
 function QuoteFormSection({ slug }) {
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    service: "",
-    message: "",
+    name: "", email: "", phone: "", service: "", message: "",
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -295,10 +354,7 @@ function QuoteFormSection({ slug }) {
 
   const submit = async (e) => {
     e.preventDefault();
-    trackLead({
-      content_name: "Blog Quote Form",
-      content_category: "lead_form",
-    });
+    trackLead({ content_name: "Blog Quote Form", content_category: "lead_form" });
     setSubmitted(true);
     try {
       await fetch("/api/submit", {
@@ -309,7 +365,6 @@ function QuoteFormSection({ slug }) {
     } catch {
       // optimistic UX: keep thank-you state even if network fails
     }
-
     setTimeout(() => {
       setForm({ name: "", email: "", phone: "", service: "", message: "" });
       setSubmitted(false);
@@ -317,88 +372,80 @@ function QuoteFormSection({ slug }) {
   };
 
   return (
-    <section
-      id="quote-form"
-      className="py-16 md:py-22 bg-cream border-y border-stone-200 scroll-mt-28"
-    >
-      <div className="max-w-4xl mx-auto px-5 sm:px-6 md:px-8">
-        <div className="bg-white border border-stone-200 rounded-3xl p-8 md:p-10 shadow-sm">
-          <div className="text-center mb-7">
-            <h2 className="text-3xl md:text-4xl font-bold text-stone-900 tracking-tight mb-2">
-              Get a free consultation
+    <section id="quote-form" className="py-20 md:py-28 bg-cream border-y border-stone-200 scroll-mt-28">
+      <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="text-center mb-10">
+            <span className="inline-block text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
+              — Free Consultation —
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 tracking-tight leading-[1.1] mb-3">
+              Let's grow your business
             </h2>
-            <p className="text-stone-600 text-sm md:text-base">
-              Tell us about your project and we'll get back within 24 hours.
+            <p className="text-stone-500 text-base md:text-lg">
+              Tell us about your project — we'll respond within 24 hours.
             </p>
           </div>
-          {submitted ? (
-            <div className="text-center py-10">
-              <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto mb-3" />
-              <p className="text-stone-900 font-bold">Thank you!</p>
-              <p className="text-stone-600 text-sm">
-                We'll reply within 24 hours.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={submit} className="grid sm:grid-cols-2 gap-3">
-              <input
-                name="name"
-                placeholder="Full Name"
-                required
-                value={form.name}
-                onChange={handle}
-                className="h-11 rounded-lg border border-stone-300 px-4 text-sm bg-white"
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email Address"
-                required
-                value={form.email}
-                onChange={handle}
-                className="h-11 rounded-lg border border-stone-300 px-4 text-sm bg-white"
-              />
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone / WhatsApp"
-                value={form.phone}
-                onChange={handle}
-                className="h-11 rounded-lg border border-stone-300 px-4 text-sm bg-white"
-              />
-              <select
-                name="service"
-                required
-                value={form.service}
-                onChange={handle}
-                className="h-11 rounded-lg border border-stone-300 px-4 text-sm bg-white cursor-pointer"
-              >
-                <option value="">Select a service</option>
-                <option>Website Development</option>
-                <option>SEO Services</option>
-                <option>Local SEO / Google Maps</option>
-                <option>Google Ads (PPC)</option>
-                <option>Social Media Marketing</option>
-                <option>Branding & Design</option>
-                <option>Other</option>
-              </select>
-              <textarea
-                name="message"
-                placeholder="Project details (optional)"
-                rows={3}
-                value={form.message}
-                onChange={handle}
-                className="sm:col-span-2 rounded-lg border border-stone-300 px-4 py-2 text-sm bg-white"
-              />
-              <button
-                type="submit"
-                className="sm:col-span-2 h-11 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary-dark"
-              >
-                Get my free consultation
-              </button>
-            </form>
-          )}
-        </div>
+
+          <div className="bg-white border border-stone-200 rounded-3xl p-8 md:p-10 shadow-sm">
+            {submitted ? (
+              <div className="text-center py-12">
+                <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center mx-auto mb-4">
+                  <CheckCircle2 className="w-8 h-8 text-emerald-600" />
+                </div>
+                <p className="text-stone-900 font-bold text-lg mb-1">Thank you!</p>
+                <p className="text-stone-500 text-sm">We'll reply within 24 hours.</p>
+              </div>
+            ) : (
+              <form onSubmit={submit} className="grid sm:grid-cols-2 gap-4">
+                <input
+                  name="name" placeholder="Full Name" required
+                  value={form.name} onChange={handle}
+                  className="h-12 rounded-xl border border-stone-300 px-4 text-sm bg-white text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                />
+                <input
+                  type="email" name="email" placeholder="Email Address" required
+                  value={form.email} onChange={handle}
+                  className="h-12 rounded-xl border border-stone-300 px-4 text-sm bg-white text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                />
+                <input
+                  type="tel" name="phone" placeholder="Phone / WhatsApp"
+                  value={form.phone} onChange={handle}
+                  className="h-12 rounded-xl border border-stone-300 px-4 text-sm bg-white text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                />
+                <select
+                  name="service" required value={form.service} onChange={handle}
+                  className="h-12 rounded-xl border border-stone-300 px-4 text-sm bg-white text-stone-900 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors"
+                >
+                  <option value="">Select a service</option>
+                  <option>Website Development</option>
+                  <option>SEO Services</option>
+                  <option>Local SEO / Google Maps</option>
+                  <option>Google Ads (PPC)</option>
+                  <option>Social Media Marketing</option>
+                  <option>Branding & Design</option>
+                  <option>Other</option>
+                </select>
+                <textarea
+                  name="message" placeholder="Project details (optional)" rows={4}
+                  value={form.message} onChange={handle}
+                  className="sm:col-span-2 rounded-xl border border-stone-300 px-4 py-3 text-sm bg-white text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary leading-relaxed transition-colors"
+                />
+                <button
+                  type="submit"
+                  className="sm:col-span-2 h-12 rounded-xl bg-primary text-white text-sm font-semibold hover:bg-primary-dark transition-colors"
+                >
+                  Get my free consultation
+                </button>
+              </form>
+            )}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -409,27 +456,48 @@ function FaqSection({ faq }) {
   if (safeFaq.length === 0) return null;
 
   return (
-    <section className="py-16 md:py-22 bg-white border-b border-stone-200">
-      <div className="max-w-5xl mx-auto px-5 sm:px-6 md:px-8">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-stone-900 mb-10 text-center">
-          Frequently asked questions
-        </h2>
-        <div className="space-y-4">
+    <section className="py-16 md:py-24 bg-white border-b border-stone-200">
+      <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
+        >
+          <span className="inline-block text-primary text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
+            — FAQ —
+          </span>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-stone-900">
+            Frequently asked questions
+          </h2>
+        </motion.div>
+
+        <div className="space-y-3">
           {safeFaq.map((item, index) => (
-            <details
+            <motion.div
               key={`${item.question}-${index}`}
-              className="group bg-cream border border-stone-200 rounded-2xl p-5 md:p-6 cursor-pointer open:bg-white open:border-stone-300"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-20px" }}
+              transition={{ duration: 0.3, delay: index * 0.06 }}
             >
-              <summary className="font-semibold text-stone-900 text-base md:text-lg flex items-center justify-between gap-4 list-none">
-                {item.question}
-                <span className="text-primary group-open:rotate-45 transition-transform text-2xl leading-none">
-                  +
-                </span>
-              </summary>
-              <div className="mt-4 text-stone-600 leading-relaxed text-[15px] md:text-base">
-                {renderInline(item.answer)}
-              </div>
-            </details>
+              <details className="group bg-cream border border-stone-200 rounded-2xl cursor-pointer open:bg-white open:border-stone-300 open:shadow-sm transition-all">
+                <summary className="flex items-center justify-between gap-4 list-none px-6 py-5">
+                  <span className="font-semibold text-stone-900 text-base md:text-lg">
+                    {item.question}
+                  </span>
+                  <span className="flex-shrink-0 w-7 h-7 rounded-full bg-stone-200 group-open:bg-primary/10 flex items-center justify-center transition-colors">
+                    <span className="text-stone-500 group-open:text-primary text-lg leading-none group-open:rotate-45 inline-block transition-all duration-200">
+                      +
+                    </span>
+                  </span>
+                </summary>
+                <div className="px-6 pb-5 pt-4 text-stone-600 leading-relaxed text-sm md:text-base border-t border-stone-100">
+                  {renderInline(item.answer)}
+                </div>
+              </details>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -446,7 +514,7 @@ function BodyText({ text }) {
     .filter(Boolean);
 
   return (
-    <div className="space-y-5 text-stone-700 text-base md:text-lg leading-relaxed md:leading-[1.8]">
+    <div className="space-y-5 text-stone-600 text-base md:text-lg leading-relaxed md:leading-[1.8]">
       {paragraphs.map((paragraph, index) => (
         <p key={index}>{renderInline(paragraph)}</p>
       ))}

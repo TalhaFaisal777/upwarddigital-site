@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react"
+import { motion } from "framer-motion"
 import { Search, Clock, ArrowUpRight, Calendar } from "lucide-react"
 import { Link } from "react-router-dom"
 import PageHero from "@/components/common/PageHero"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 
 export default function Blog() {
@@ -48,8 +48,7 @@ export default function Blog() {
   }
 
   useEffect(() => {
-    fetchPage()
-      .finally(() => setInitialLoading(false))
+    fetchPage().finally(() => setInitialLoading(false))
   }, [])
 
   const categories = useMemo(() => {
@@ -61,8 +60,7 @@ export default function Blog() {
   const filtered = useMemo(() => {
     if (!posts.length) return []
     return posts.filter((p) => {
-      const matchesCat =
-        activeCategory === "All" || p.category === activeCategory
+      const matchesCat = activeCategory === "All" || p.category === activeCategory
       const q = searchQuery.toLowerCase()
       const matchesSearch =
         !q ||
@@ -80,10 +78,7 @@ export default function Blog() {
         title={
           <>
             Insights &{" "}
-            <em className="font-serif italic font-medium text-primary">
-              resources
-            </em>
-            .
+            <em className="font-serif italic font-medium text-primary">resources</em>.
           </>
         }
         subtitle="Our Blog"
@@ -91,45 +86,50 @@ export default function Blog() {
       />
 
       {/* Filters */}
-      <section className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8 -mt-8 relative z-20">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+      <section className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8 -mt-6 relative z-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="bg-white border border-stone-200 rounded-2xl px-5 py-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4"
+        >
           <div className="flex flex-wrap items-center gap-2">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all cursor-pointer ${
+                className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
                   activeCategory === category
-                    ? "bg-primary text-white shadow"
-                    : "bg-white text-stone-600 hover:text-stone-900 border border-stone-200"
+                    ? "bg-primary text-white shadow-sm"
+                    : "bg-stone-100 text-stone-600 hover:bg-stone-200 hover:text-stone-900"
                 }`}
               >
                 {category}
               </button>
             ))}
           </div>
-          <div className="relative w-full md:w-80">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-500" />
+          <div className="relative w-full md:w-72 flex-shrink-0">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
             <Input
               placeholder="Search articles..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
+              className="pl-10 bg-stone-50 border-stone-200 rounded-xl"
             />
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {error && (
         <div className="max-w-3xl mx-auto px-6 mt-10">
-          <div className="p-4 rounded-lg bg-red-50 border border-red-200 text-red-800 text-sm text-center">
+          <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm text-center">
             {error}
           </div>
         </div>
       )}
 
       {initialLoading && !error && (
-        <div className="text-center py-24 text-stone-500">Loading posts…</div>
+        <div className="text-center py-24 text-stone-400 text-sm">Loading posts…</div>
       )}
 
       {!initialLoading && filtered.length === 0 && (
@@ -140,14 +140,19 @@ export default function Blog() {
 
       {/* Featured */}
       {featured && (
-        <section className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8 py-12 md:py-16">
-          <div>
+        <section className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8 pt-10 pb-8 md:pt-14 md:pb-10">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6 }}
+          >
             <Link
               to={`/blog/${featured.slug}`}
-              className="group block bg-white border border-stone-200 rounded-3xl overflow-hidden hover:border-stone-900 transition-colors"
+              className="group block bg-white border border-stone-200 rounded-3xl overflow-hidden hover:shadow-2xl hover:border-stone-300 transition-all duration-500"
             >
               <div className="grid md:grid-cols-2">
-                <div className="relative aspect-[4/3] md:aspect-auto bg-stone-100">
+                <div className="relative aspect-[4/3] md:aspect-auto bg-stone-100 overflow-hidden">
                   {featured.coverImage ? (
                     <img
                       src={featured.coverImage}
@@ -157,19 +162,24 @@ export default function Blog() {
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-primary to-blue-700" />
                   )}
-                </div>
-                <div className="p-8 md:p-10 flex flex-col justify-center">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Badge>Featured</Badge>
-                    <Badge variant="secondary">{featured.category}</Badge>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+                  <div className="absolute top-5 left-5">
+                    <span className="inline-block bg-white/95 backdrop-blur-sm text-primary text-[10px] font-bold uppercase tracking-[0.15em] px-3 py-1.5 rounded-full border border-primary/10">
+                      {featured.category}
+                    </span>
                   </div>
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold leading-tight tracking-tight mb-4 group-hover:text-primary transition-colors">
+                </div>
+                <div className="p-8 md:p-10 lg:p-12 flex flex-col justify-center">
+                  <span className="inline-block text-primary text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
+                    — Featured Article —
+                  </span>
+                  <h2 className="text-2xl md:text-3xl lg:text-[2.2rem] font-bold leading-[1.12] tracking-tight mb-4 text-stone-900 group-hover:text-primary transition-colors duration-300">
                     {featured.title}
                   </h2>
-                  <p className="text-stone-600 leading-relaxed mb-6">
+                  <p className="text-stone-500 leading-relaxed mb-7 text-sm md:text-base line-clamp-3">
                     {featured.excerpt}
                   </p>
-                  <div className="flex items-center gap-4 text-xs text-stone-500 mb-5">
+                  <div className="flex items-center gap-5 text-xs text-stone-400 mb-7">
                     <span className="flex items-center gap-1.5">
                       <Calendar className="w-3.5 h-3.5" />
                       {formatDate(featured.date)}
@@ -179,28 +189,32 @@ export default function Blog() {
                       {featured.readTime}
                     </span>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 text-stone-900 text-sm font-semibold">
+                  <span className="self-start inline-flex items-center gap-2 bg-stone-900 group-hover:bg-primary text-white text-sm font-semibold px-6 py-3 rounded-full transition-colors duration-300">
                     Read article
                     <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </span>
                 </div>
               </div>
             </Link>
-          </div>
+          </motion.div>
         </section>
       )}
 
       {/* Grid */}
       {rest.length > 0 && (
-        <section className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8 pb-20">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {rest.map((post) => (
-              <article
+        <section className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8 pb-24">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
+            {rest.map((post, i) => (
+              <motion.article
                 key={post.id || post.slug}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.4, delay: (i % 3) * 0.08 }}
               >
                 <Link
                   to={`/blog/${post.slug}`}
-                  className="group flex flex-col h-full bg-white border border-stone-200 rounded-3xl overflow-hidden hover:border-stone-900 hover:shadow-lg transition-all"
+                  className="group flex flex-col h-full bg-white border border-stone-200 rounded-3xl overflow-hidden hover:shadow-xl hover:border-stone-300 transition-all duration-300"
                 >
                   <div className="relative aspect-[16/10] bg-stone-100 overflow-hidden">
                     {post.coverImage ? (
@@ -213,30 +227,38 @@ export default function Blog() {
                     ) : (
                       <div className="absolute inset-0 bg-gradient-to-br from-primary to-blue-700" />
                     )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute top-4 left-4">
-                      <span className="inline-block bg-white/95 backdrop-blur text-stone-900 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">
+                      <span className="inline-block bg-white/95 backdrop-blur-sm text-stone-800 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-sm">
                         {post.category}
                       </span>
                     </div>
                   </div>
                   <CardContent className="p-6 flex flex-col flex-1">
-                    <h3 className="text-lg font-bold text-stone-900 leading-snug mb-3 group-hover:text-primary transition-colors">
+                    <h3 className="text-base font-bold text-stone-900 leading-snug mb-3 group-hover:text-primary transition-colors duration-200">
                       {post.title}
                     </h3>
-                    <p className="text-stone-600 text-sm leading-relaxed mb-5 flex-1 line-clamp-3">
+                    <p className="text-stone-500 text-sm leading-relaxed mb-5 flex-1 line-clamp-3">
                       {post.excerpt}
                     </p>
-                    <div className="flex items-center justify-between pt-4 border-t border-stone-200 text-xs text-stone-500">
-                      <span>{formatDate(post.date)}</span>
-                      <span>{post.readTime}</span>
+                    <div className="flex items-center justify-between pt-4 border-t border-stone-100 text-xs text-stone-400">
+                      <span className="flex items-center gap-1.5">
+                        <Calendar className="w-3 h-3" />
+                        {formatDate(post.date)}
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <Clock className="w-3 h-3" />
+                        {post.readTime}
+                      </span>
                     </div>
                   </CardContent>
                 </Link>
-              </article>
+              </motion.article>
             ))}
           </div>
+
           {hasMore && activeCategory === "All" && !searchQuery && (
-            <div className="text-center mt-10">
+            <div className="text-center mt-14">
               <button
                 onClick={() => {
                   if (!nextCursor || loadingMore) return
@@ -244,7 +266,7 @@ export default function Blog() {
                   fetchPage(nextCursor).finally(() => setLoadingMore(false))
                 }}
                 disabled={loadingMore}
-                className="inline-flex items-center gap-2 bg-stone-900 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-primary disabled:opacity-60"
+                className="inline-flex items-center gap-2 bg-stone-900 text-white px-8 py-3.5 rounded-full text-sm font-semibold hover:bg-primary transition-colors duration-300 disabled:opacity-60"
               >
                 {loadingMore ? "Loading…" : "Load more articles"}
               </button>
