@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from "react"
 import { motion } from "framer-motion"
-import { Search, Clock, ArrowUpRight, Calendar } from "lucide-react"
+import { Clock, ArrowUpRight, Calendar } from "lucide-react"
 import { Link } from "react-router-dom"
 import PageHero from "@/components/common/PageHero"
 import { CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
 
 export default function Blog() {
   const [posts, setPosts] = useState([])
@@ -13,8 +12,6 @@ export default function Blog() {
   const [nextCursor, setNextCursor] = useState(null)
   const [hasMore, setHasMore] = useState(false)
   const [error, setError] = useState("")
-  const [activeCategory, setActiveCategory] = useState("All")
-  const [searchQuery, setSearchQuery] = useState("")
 
   const fetchPage = (cursor = null) => {
     const query = new URLSearchParams({ limit: "24" })
@@ -51,74 +48,16 @@ export default function Blog() {
     fetchPage().finally(() => setInitialLoading(false))
   }, [])
 
-  const categories = useMemo(() => {
-    if (!posts.length) return ["All"]
-    const set = new Set(posts.map((p) => p.category).filter(Boolean))
-    return ["All", ...Array.from(set)]
-  }, [posts])
-
-  const filtered = useMemo(() => {
-    if (!posts.length) return []
-    return posts.filter((p) => {
-      const matchesCat = activeCategory === "All" || p.category === activeCategory
-      const q = searchQuery.toLowerCase()
-      const matchesSearch =
-        !q ||
-        p.title.toLowerCase().includes(q) ||
-        (p.excerpt || "").toLowerCase().includes(q)
-      return matchesCat && matchesSearch
-    })
-  }, [posts, activeCategory, searchQuery])
+  const filtered = useMemo(() => posts, [posts])
 
   const [featured, ...rest] = filtered
 
   return (
     <main className="min-h-screen bg-cream text-stone-900">
       <PageHero
-        title={
-          <>
-            Insights &{" "}
-            <em className="not-italic font-bold text-stone-900">resources</em>.
-          </>
-        }
-        subtitle="Our Blog"
-        description="Stay ahead with the latest trends, strategies, and insights in digital marketing, web development, and SEO."
+        title="Blogs"
       />
 
-      {/* Filters */}
-      <section className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8 -mt-6 relative z-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="bg-white border border-stone-200 rounded-2xl px-5 py-4 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4"
-        >
-          <div className="flex flex-wrap items-center gap-2">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all cursor-pointer ${
-                  activeCategory === category
-                    ? "bg-primary text-white shadow-sm"
-                    : "bg-stone-100 text-stone-600 hover:bg-stone-200 hover:text-stone-900"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-          <div className="relative w-full md:w-72 flex-shrink-0">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
-            <Input
-              placeholder="Search articles..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-stone-50 border-stone-200 rounded-xl"
-            />
-          </div>
-        </motion.div>
-      </section>
 
       {error && (
         <div className="max-w-3xl mx-auto px-6 mt-10">

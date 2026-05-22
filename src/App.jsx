@@ -22,6 +22,7 @@ import SeoServices from "@/pages/services/SeoServices"
 import SocialMedia from "@/pages/services/SocialMedia"
 import HostingServices from "@/pages/services/HostingServices"
 import AdsServices from "@/pages/services/AdsServices"
+import NotFound from "@/pages/NotFound"
 
 const pageTransition = {
   initial: { opacity: 0, y: 20 },
@@ -43,8 +44,22 @@ function PageWrapper({ children }) {
   )
 }
 
+const KNOWN_ROUTES = new Set([
+  "/", "/about", "/portfolio", "/blog", "/contact", "/pricing",
+  "/services/website-development", "/services/seo", "/services/social-media",
+  "/services/hosting", "/services/ads",
+])
+
+function isKnownRoute(pathname) {
+  return KNOWN_ROUTES.has(pathname) || pathname.startsWith("/blog/")
+}
+
 function AnimatedRoutes() {
   const location = useLocation()
+
+  if (!isKnownRoute(location.pathname)) {
+    return <NotFound />
+  }
 
   return (
     <AnimatePresence mode="wait">
@@ -56,7 +71,7 @@ function AnimatedRoutes() {
         <Route path="/blog/:slug" element={<PageWrapper><BlogPost /></PageWrapper>} />
         <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
         <Route path="/pricing" element={<PageWrapper><Pricing /></PageWrapper>} />
-        <Route path="/services/web-development" element={<PageWrapper><WebDevelopment /></PageWrapper>} />
+        <Route path="/services/website-development" element={<PageWrapper><WebDevelopment /></PageWrapper>} />
         <Route path="/services/seo" element={<PageWrapper><SeoServices /></PageWrapper>} />
         <Route path="/services/social-media" element={<PageWrapper><SocialMedia /></PageWrapper>} />
         <Route path="/services/hosting" element={<PageWrapper><HostingServices /></PageWrapper>} />

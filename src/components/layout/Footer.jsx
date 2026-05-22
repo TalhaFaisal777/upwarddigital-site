@@ -6,9 +6,8 @@ import {
   Facebook,
   Instagram,
   Linkedin,
-  ArrowUpRight,
 } from "lucide-react"
-import { trackContact, trackSchedule, trackFooterCTAClick } from "@/lib/pixel"
+import { trackContact } from "@/lib/pixel"
 
 const quickLinks = [
   { name: "Home", path: "/" },
@@ -19,7 +18,7 @@ const quickLinks = [
 ]
 
 const services = [
-  { name: "Web Development", path: "/services/web-development" },
+  { name: "Web Development", path: "/services/website-development" },
   { name: "Google SEO Services", path: "/services/seo" },
   { name: "Social Media", path: "/services/social-media" },
   { name: "Hosting Services", path: "/services/hosting" },
@@ -36,24 +35,6 @@ export default function Footer() {
   return (
     <footer className="bg-stone-900 text-stone-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* CTA strip */}
-        <div className="py-12 border-b border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <h5 className="text-3xl md:text-4xl font-bold tracking-tight text-white max-w-xl">
-            Let's build something worth scaling.
-          </h5>
-          <a
-            href="tel:+12013040657"
-            onClick={() => {
-              trackContact({ method: "phone", source: "footer_cta" })
-              trackSchedule({ source: "footer_cta" })
-              trackFooterCTAClick("book_free_call")
-            }}
-            className="inline-flex items-center gap-2 bg-white text-stone-900 px-7 py-3.5 rounded-full font-medium hover:bg-blue-400 hover:text-white transition-colors group"
-          >
-            Book a free call
-            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-          </a>
-        </div>
 
         {/* Main */}
         <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">

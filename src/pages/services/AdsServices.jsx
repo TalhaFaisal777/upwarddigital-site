@@ -1,170 +1,207 @@
 import { motion } from "framer-motion"
-import { Megaphone, Target, TrendingUp, BarChart3, RefreshCw, Users, ArrowUpRight, CheckCircle2 } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 import { Link } from "react-router-dom"
 import PageHero from "@/components/common/PageHero"
-import SectionHeading from "@/components/common/SectionHeading"
 import { useSeoMeta } from "@/hooks/useSeoMeta"
 import { trackContact } from "@/lib/pixel"
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion"
 
 const PHONE_HREF = "tel:+12013040657"
 
-const googleAdsServices = [
-  { title: "Search Campaigns", description: "Capture high-intent buyers at the exact moment they're searching for what you offer." },
-  { title: "Shopping Ads", description: "Product listings that appear directly in Google search results — perfect for e-commerce." },
-  { title: "Display & Remarketing", description: "Re-engage visitors who didn't convert with strategic retargeting across the web." },
-  { title: "Performance Max", description: "AI-driven campaigns across all Google channels — Search, Display, YouTube, Gmail, and Maps." },
-  { title: "Local Service Ads", description: "Google-guaranteed ads for local service businesses that put you at the very top of results." },
-  { title: "YouTube Ads", description: "Video advertising on the world's second-largest search engine to build brand awareness and drive action." },
+const contentSections = [
+  {
+    title: "Google Ads and Meta Ads Agency",
+    titleBlue: true,
+    body: "Upward Digital Co is a certified Google Ads and Meta Ads agency providing professional paid advertising services for businesses across the USA. As a Google Partner and Meta Business Partner, we manage Google Ads campaigns, Facebook Ads, and Instagram Ads that deliver real, measurable results. Our paid advertising specialists create data-driven ad campaigns including Search Ads, Shopping Ads, Display Ads, Retargeting Ads, and Social Media Ads designed to drive leads, sales, and revenue for your business. We focus on maximizing your return on ad spend while minimizing cost-per-lead through continuous optimization and strategic audience targeting.",
+    image: "https://images.unsplash.com/photo-1553484771-371a605b060b?w=1200&q=80",
+    reverse: false,
+  },
+  {
+    title: "PPC and Paid Advertising Services",
+    titleBlue: true,
+    body: "At Upward Digital Co, we provide comprehensive PPC and paid advertising services to help businesses reach the right audience at the right time with the right message. As a trusted paid ads agency, we offer Google Ads management, Meta Ads management, campaign strategy, ad copywriting, audience research, conversion tracking, landing page optimization, and detailed performance reporting. Our certified ads specialists monitor and optimize your campaigns daily to ensure every dollar of your ad budget is working as hard as possible. Whether you need local lead generation or national brand awareness, our paid advertising strategies are built to deliver consistent and profitable results.",
+    image: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=1200&q=80",
+    reverse: true,
+  },
 ]
 
-const metaAdsServices = [
-  { title: "Facebook & Instagram Ads", description: "Highly targeted campaigns on the world's largest social platforms, built for conversions and brand growth." },
-  { title: "Lead Generation Ads", description: "Native lead forms that capture qualified leads without users ever leaving Facebook or Instagram." },
-  { title: "Retargeting Campaigns", description: "Win back website visitors and abandoned carts with precision retargeting on Meta platforms." },
-  { title: "Lookalike Audiences", description: "Find new customers who mirror your best existing customers using Meta's powerful audience tools." },
-  { title: "Video & Reels Ads", description: "Short-form video ads optimised for mobile feeds and Reels — the fastest-growing ad format on Meta." },
-  { title: "Catalogue & Dynamic Ads", description: "Automatically show the right products to the right people based on their browsing behaviour." },
+const process = [
+  {
+    title: "Ads Audit and Competitor Research",
+    body: "Every successful paid advertising campaign starts with a thorough audit and research phase. At Upward Digital Co, we begin by auditing your existing ad accounts to identify wasted spend, missed opportunities, and technical issues affecting performance. We analyze your competitors' ad strategies, messaging, and targeting approaches to understand the competitive landscape. Our team also researches your target audience demographics, interests, behaviors, and purchase intent to build a comprehensive understanding of who we need to reach and how to reach them most effectively with your ads.",
+  },
+  {
+    title: "Campaign Strategy and Structure",
+    body: "With research complete, our team builds a detailed paid advertising strategy and campaign structure designed to achieve your specific business goals. We determine the right campaign types, budget allocation, bidding strategies, and ad formats for your objectives whether that is generating leads, driving e-commerce sales, building brand awareness, or promoting a specific product or service. We structure your campaigns logically with tightly themed ad groups, relevant keywords, and organized audience segments to ensure maximum relevance and quality scores that keep your cost-per-click as low as possible.",
+  },
+  {
+    title: "Ad Creative and Copywriting",
+    body: "High-converting ads require compelling creative and persuasive copy that grabs attention and drives action. Our creative team produces professional ad assets including eye-catching display banners, engaging video ads, compelling social media ad visuals, and persuasive ad copy that communicates your unique value proposition clearly and effectively. We write multiple variations of ad headlines, descriptions, and calls-to-action to enable thorough A/B testing and continuous performance improvement. Every ad we create is designed to capture attention, communicate value, and motivate your target audience to click and convert.",
+  },
+  {
+    title: "Audience Targeting and Bid Management",
+    body: "Precise audience targeting is what separates profitable ad campaigns from wasted budget. Our specialists configure detailed targeting parameters including demographics, interests, behaviors, keywords, geographic locations, device types, and custom audiences built from your existing customer data. For Google Ads, we manage bidding strategies including Target CPA, Target ROAS, and Enhanced CPC to optimize for your specific conversion goals. For Meta Ads, we build and test custom audiences, lookalike audiences, and retargeting audiences to ensure your ads are reaching the people most likely to become customers for your business.",
+  },
+  {
+    title: "Campaign Launch and Daily Optimization",
+    body: "Once your campaigns are set up and approved, we launch them and monitor performance closely, especially in the critical first days when the ad platforms are learning and collecting data. Our team makes daily adjustments to bids, budgets, targeting, ad copy, and creative based on real performance data to continuously improve results. We identify underperforming ads and pause them, scale up successful campaigns, test new audiences and creative variations, and refine bidding strategies based on which keywords and audiences are driving the best return on investment for your specific business goals.",
+  },
+  {
+    title: "Performance Reporting and Scaling",
+    body: "Transparent reporting is a core part of our paid advertising service. We provide weekly performance updates and detailed monthly reports covering all key metrics including impressions, clicks, click-through rate, cost-per-click, conversions, cost-per-lead, and return on ad spend. Our reports are clear and easy to understand, showing you exactly what your ad budget is achieving. As campaigns prove profitable, we work with you to scale budgets strategically to capture more market share and grow your revenue. Our reporting process ensures you always have full visibility into how your advertising investment is performing.",
+  },
 ]
 
-const stats = [
-  { value: "3.5x", label: "Avg. ROAS achieved" },
-  { value: "-40%", label: "Avg. cost-per-lead reduction" },
-  { value: "$2M+", label: "Ad spend managed monthly" },
-  { value: "150+", label: "Active ad accounts" },
+const SIMPLEICON = "https://cdn.simpleicons.org"
+
+const toolPlatforms = [
+  { name: "Google Ads", url: `${SIMPLEICON}/googleads` },
+  { name: "Meta Ads", url: `${SIMPLEICON}/meta/0866FF` },
+  { name: "Facebook", url: `${SIMPLEICON}/facebook/1877F2` },
+  { name: "Instagram", url: `${SIMPLEICON}/instagram` },
+  { name: "YouTube", url: `${SIMPLEICON}/youtube` },
+  { name: "LinkedIn Ads", url: `${SIMPLEICON}/linkedin/0A66C2` },
 ]
 
-const whyUs = [
-  "Google Partner & Meta Business Partner certified",
-  "No long-term contracts — month-to-month flexibility",
-  "Full transparency — you own your ad accounts",
-  "Weekly performance updates, not monthly black boxes",
-  "Dedicated paid ads specialist per account",
-  "Landing page optimisation included to maximise conversions",
+const faqItems = [
+  {
+    question: "What are Google Ads and how do they work?",
+    answer: "Google Ads is a paid advertising platform where your business pays to show ads at the top of Google search results when people search for your products or services. You pay per click (PPC) and only when someone clicks your ad. Google Ads delivers immediate visibility and targeted traffic to your website.",
+  },
+  {
+    question: "What are Meta Ads (Facebook and Instagram Ads)?",
+    answer: "Meta Ads are paid advertisements that appear on Facebook and Instagram. They allow businesses to target specific audiences based on demographics, interests, behaviors, and more. Meta Ads are powerful for building brand awareness, generating leads, and driving sales through highly visual and targeted ad campaigns.",
+  },
+  {
+    question: "How much should I budget for paid advertising?",
+    answer: "Ad budgets depend on your industry, competition, and goals. Most small businesses start with $500 to $2,000 per month for Google Ads or Meta Ads. Our team analyzes your market and recommends a budget that can deliver meaningful results while maximizing your return on ad spend.",
+  },
+  {
+    question: "How long does it take to see results from paid ads?",
+    answer: "Paid advertising can deliver results very quickly, often within days of launching your campaigns. However, optimal performance typically takes 2 to 4 weeks as the ad platforms optimize delivery and our team refines targeting and bidding based on real performance data.",
+  },
+  {
+    question: "What is retargeting and why is it important?",
+    answer: "Retargeting shows ads to people who have previously visited your website but did not convert. These audiences are highly valuable because they already know your brand. Retargeting campaigns typically have much lower costs and higher conversion rates than cold audience campaigns, making them an essential part of any paid advertising strategy.",
+  },
+  {
+    question: "Do you own the ad accounts or do we?",
+    answer: "You always own your ad accounts. We operate as managers within your Google Ads and Meta Ads accounts, never taking ownership. This means all your campaign data, history, and results stay with you. If you ever decide to stop working with us, you keep everything we built.",
+  },
 ]
 
 export default function AdsServices() {
   useSeoMeta({
     title: "Meta Ads & Google Ads Management USA | Upward Digital",
-    description: "Expert Google Ads and Meta Ads management in the USA. PPC campaigns, retargeting, and paid social that deliver real ROI. Google Partner & Meta certified agency.",
-    keywords: "Google Ads management USA, Meta Ads agency, Facebook Ads, PPC management, paid advertising USA, Google PPC agency",
+    description: "Expert Google Ads and Meta Ads management in the USA. PPC campaigns, retargeting, and paid social that deliver real ROI. Google Partner and Meta certified agency.",
+    keywords: "Google Ads management USA, Meta Ads agency, Facebook Ads, PPC management, paid advertising USA",
   })
 
   return (
     <main className="bg-cream min-h-screen">
       <PageHero
-        subtitle="Meta Ads & Google Ads"
-        title={<>Ads That <em className="not-italic font-bold text-stone-900">Actually Convert</em>.</>}
-        description="Certified Google and Meta advertising specialists who manage your budget like it's their own. Data-driven campaigns built to deliver measurable ROI."
+        title="Meta Ads & Google Ads"
+        description="Our certified Google and Meta advertising specialists manage your ad campaigns like it's their own budget, delivering data-driven results and maximum return on ad spend for your business."
       />
 
-      {/* Stats */}
-      <section className="bg-white border-y border-stone-100 py-12">
-        <div className="max-w-5xl mx-auto px-5 sm:px-6 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          {stats.map((s, i) => (
+      {contentSections.map((s, i) => (
+        <section key={s.title} className={`py-20 md:py-28 ${i % 2 === 0 ? "bg-white" : "bg-cream border-t-4 border-stone-200"}`}>
+          <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
             <motion.div
-              key={s.label}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5 }}
+              className={`flex flex-col ${s.reverse ? "md:flex-row-reverse" : "md:flex-row"} gap-12 md:gap-20 items-start`}
             >
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-1">{s.value}</div>
-              <div className="text-stone-500 text-sm">{s.label}</div>
+              <div className="flex-1 max-w-xl">
+                <h2 className={`text-3xl md:text-4xl font-bold mb-6 leading-tight ${s.titleBlue ? "text-primary" : "text-stone-900"}`}>{s.title}</h2>
+                <p className="text-stone-600 text-lg leading-relaxed">{s.body}</p>
+              </div>
+              <div className="flex-1 w-full">
+                <img src={s.image} alt={s.title} className="w-full h-72 md:h-105 object-cover rounded-3xl shadow-md" />
+              </div>
             </motion.div>
-          ))}
+          </div>
+        </section>
+      ))}
+
+      <div className="w-full bg-blue-900 py-12 px-5 sm:px-8">
+        <div className="max-w-7xl mx-auto text-center">
+          <h3 className="text-4xl md:text-5xl font-bold text-white">Advertising Platforms We Manage</h3>
+        </div>
+      </div>
+      <section className="py-14 bg-white border-b border-stone-200">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
+            {toolPlatforms.map((tool) => (
+              <div key={tool.name} className="bg-cream border border-stone-200 rounded-xl p-4 flex flex-col items-center gap-2 shadow-sm">
+                <img src={tool.url} alt={tool.name} className="w-10 h-10 object-contain" />
+                <span className="text-xs font-medium text-stone-700 text-center leading-tight">{tool.name}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Google Ads */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
-          <SectionHeading
-            subtitle="Google Ads"
-            title={<>Dominate Google <em className="not-italic font-bold text-stone-900">search results</em>.</>}
-            description="From Search to Shopping to YouTube — we manage every Google Ads channel to capture demand and grow revenue."
-          />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {googleAdsServices.map((s, i) => (
+      <div className="w-full bg-blue-900 py-12 px-5 sm:px-8">
+        <div className="max-w-7xl mx-auto text-center">
+          <h4 className="text-4xl md:text-5xl font-bold text-white">Our Six-Step Ads Management Process</h4>
+        </div>
+      </div>
+      <section className="py-16 md:py-24 bg-white border-t border-stone-100">
+        <div className="max-w-4xl mx-auto px-5 sm:px-6 md:px-8">
+          <div className="space-y-12 md:space-y-16">
+            {process.map((p, i) => (
               <motion.div
-                key={s.title}
+                key={p.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ delay: i * 0.07 }}
-                className="bg-cream border border-stone-200 rounded-2xl p-6 hover:border-primary/30 hover:shadow-md transition-all duration-300"
+                className="text-center"
               >
-                <div className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
-                  <Target className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-bold text-stone-900 mb-2">{s.title}</h3>
-                <p className="text-stone-600 text-sm leading-relaxed">{s.description}</p>
+                <h3 className="text-3xl md:text-4xl font-bold text-stone-900 mb-5">{p.title}</h3>
+                <p className="text-stone-600 text-lg leading-relaxed">{p.body}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Meta Ads */}
-      <section className="py-16 md:py-24 bg-cream">
-        <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
-          <SectionHeading
-            subtitle="Meta Ads"
-            title={<>Facebook & Instagram ads that <em className="not-italic font-bold text-stone-900">drive results</em>.</>}
-            description="Meta's 3 billion+ users are waiting. We build campaigns that target the right people and turn them into customers."
-          />
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {metaAdsServices.map((s, i) => (
-              <motion.div
-                key={s.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ delay: i * 0.07 }}
-                className="bg-white border border-stone-200 rounded-2xl p-6 hover:border-primary/30 hover:shadow-md transition-all duration-300"
-              >
-                <div className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-4">
-                  <Megaphone className="w-5 h-5" />
-                </div>
-                <h3 className="text-base font-bold text-stone-900 mb-2">{s.title}</h3>
-                <p className="text-stone-600 text-sm leading-relaxed">{s.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Us */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-5xl mx-auto px-5 sm:px-6 md:px-8">
-          <SectionHeading
-            subtitle="Why Upward Digital"
-            title="Your budget, maximised."
-            description="We treat every dollar of ad spend like it's our own. No wasted budget, no vanity metrics — just results."
-          />
-          <div className="grid sm:grid-cols-2 gap-4">
-            {whyUs.map((item, i) => (
+      <section className="py-16 md:py-24 bg-white border-y border-stone-200 relative">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="max-w-3xl mx-auto px-6 md:px-8">
+          <h4 className="text-3xl md:text-4xl font-bold text-stone-900 text-center mb-10">Frequently Asked Questions</h4>
+          <Accordion type="single" collapsible className="w-full">
+            {faqItems.map((item, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: -16 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.06 }}
-                className="flex items-start gap-3 bg-cream border border-stone-200 rounded-xl p-4"
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
               >
-                <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <span className="text-stone-700 text-sm leading-relaxed">{item}</span>
+                <AccordionItem value={`item-${i}`}>
+                  <AccordionTrigger className="text-left text-base">{item.question}</AccordionTrigger>
+                  <AccordionContent className="text-stone-600 leading-relaxed">{item.answer}</AccordionContent>
+                </AccordionItem>
               </motion.div>
             ))}
-          </div>
+          </Accordion>
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-16 md:py-24 bg-cream border-t border-stone-200">
         <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="text-3xl md:text-4xl font-bold text-stone-900 mb-4 tracking-tight">Ready to make your ads work harder?</h2>
-            <p className="text-stone-600 text-lg mb-8">Get a free paid ads audit — we'll show you where your budget is leaking and how to fix it.</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-stone-900 mb-4 tracking-tight">Ready to Make Your Ads Work Harder?</h2>
+            <p className="text-stone-600 text-lg mb-8">Get a free paid ads audit and we will show you where your budget is leaking and how to fix it for better ROI.</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
                 href={PHONE_HREF}
