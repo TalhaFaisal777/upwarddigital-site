@@ -44,7 +44,7 @@ export default function SeoServices() {
     <main className="bg-cream min-h-screen">
       <PageHero
         subtitle="SEO Services"
-        title={<>Rank Higher. <em className="font-serif italic font-medium text-primary">Get Found.</em> Grow.</>}
+        title={<>Rank Higher. <em className="not-italic font-bold text-stone-900">Get Found.</em> Grow.</>}
         description="Data-driven SEO strategies that bring sustained organic growth — not gimmicks. We've helped 200+ businesses across the USA climb Google and stay there."
       />
 
@@ -71,7 +71,7 @@ export default function SeoServices() {
         <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
           <SectionHeading
             subtitle="What's included"
-            title={<>Full-spectrum <em className="font-serif italic font-medium text-primary">SEO coverage</em>.</>}
+            title={<>Full-spectrum <em className="not-italic font-bold text-stone-900">SEO coverage</em>.</>}
             description="Every engagement covers technical, on-page, off-page, and content SEO — not just one slice."
           />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

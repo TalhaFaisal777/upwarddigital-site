@@ -78,7 +78,7 @@ export default function Blog() {
         title={
           <>
             Insights &{" "}
-            <em className="font-serif italic font-medium text-primary">resources</em>.
+            <em className="not-italic font-bold text-stone-900">resources</em>.
           </>
         }
         subtitle="Our Blog"
@@ -170,9 +170,6 @@ export default function Blog() {
                   </div>
                 </div>
                 <div className="p-8 md:p-10 lg:p-12 flex flex-col justify-center">
-                  <span className="inline-block text-primary text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
-                    — Featured Article —
-                  </span>
                   <h2 className="text-2xl md:text-3xl lg:text-[2.2rem] font-bold leading-[1.12] tracking-tight mb-4 text-stone-900 group-hover:text-primary transition-colors duration-300">
                     {featured.title}
                   </h2>

@@ -45,7 +45,7 @@ export default function WebDevelopment() {
     <main className="bg-cream min-h-screen">
       <PageHero
         subtitle="Web Development"
-        title={<>Custom Websites Built to <em className="font-serif italic font-medium text-primary">Perform</em>.</>}
+        title={<>Custom Websites Built to <em className="not-italic font-bold text-stone-900">Perform</em>.</>}
         description="High-performance websites and web applications that load fast, rank well, and turn visitors into customers. No templates — built for your business."
       />
 
@@ -72,7 +72,7 @@ export default function WebDevelopment() {
         <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
           <SectionHeading
             subtitle="What we build"
-            title={<>Everything your <em className="font-serif italic font-medium text-primary">website needs</em>.</>}
+            title={<>Everything your <em className="not-italic font-bold text-stone-900">website needs</em>.</>}
             description="From landing pages to full-scale web platforms, we cover the complete spectrum of web development."
           />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

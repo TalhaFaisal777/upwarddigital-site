@@ -123,7 +123,7 @@ export default function Services() {
   return (
     <main className="bg-cream">
       <PageHero
-        title={<>Services that <em className="font-serif italic font-medium text-primary">drive growth</em>.</>}
+        title={<>Services that <em className="not-italic font-bold text-stone-900">drive growth</em>.</>}
         subtitle="What we offer"
         description="Comprehensive digital solutions tailored to your business goals — under one roof, with one accountable team."
       />
@@ -224,7 +224,7 @@ export default function Services() {
         <div className="max-w-7xl mx-auto px-6 md:px-8">
           <SectionHeading
             subtitle="And more"
-            title={<>The <em className="font-serif italic font-medium text-primary">smaller things</em> that add up to big results.</>}
+            title={<>The <em className="not-italic font-bold text-stone-900">smaller things</em> that add up to big results.</>}
             description="From content to consulting, we cover every digital function so you don't have to manage 5 different vendors."
           />
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -252,7 +252,7 @@ export default function Services() {
       <section className="py-16 md:py-24 bg-stone-900 text-white">
         <div className="max-w-4xl mx-auto px-6 md:px-8 text-center">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-6">
-            Ready to transform your <em className="font-serif italic font-medium text-blue-400">digital presence</em>?
+            Ready to transform your <em className="not-italic font-bold text-stone-900">digital presence</em>?
           </h2>
           <p className="text-stone-400 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
             Let's discuss your project and create a strategy tailored to your goals.

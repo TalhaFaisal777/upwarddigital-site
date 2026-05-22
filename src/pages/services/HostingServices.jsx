@@ -60,7 +60,7 @@ export default function HostingServices() {
     <main className="bg-cream min-h-screen">
       <PageHero
         subtitle="Hosting Services"
-        title={<>Fast. Secure. <em className="font-serif italic font-medium text-primary">Always On.</em></>}
+        title={<>Fast. Secure. <em className="not-italic font-bold text-stone-900">Always On.</em></>}
         description="Enterprise-grade web hosting built for performance and reliability. SSL, CDN, daily backups, and 24/7 expert support — all included."
       />
 
@@ -87,7 +87,7 @@ export default function HostingServices() {
         <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
           <SectionHeading
             subtitle="What's included"
-            title={<>Hosting that <em className="font-serif italic font-medium text-primary">works as hard</em> as you do.</>}
+            title={<>Hosting that <em className="not-italic font-bold text-stone-900">works as hard</em> as you do.</>}
             description="Every hosting plan comes with the performance and security features your business needs to stay online and fast."
           />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -383,7 +383,7 @@ export default function Pricing() {
     <main className="bg-cream">
       {/* 1. Hero */}
       <PageHero
-        title={<>Pricing built for <em className="font-serif italic font-medium text-primary">every</em> business.</>}
+        title={<>Pricing built for <em className="not-italic font-bold text-stone-900">every</em> business.</>}
         subtitle="Pricing"
         description="Simple, transparent pricing that scales with your business. No hidden fees, no surprises."
       />

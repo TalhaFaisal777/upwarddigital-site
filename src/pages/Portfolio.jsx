@@ -99,7 +99,7 @@ export default function Portfolio() {
     <>
       {/* ── Section 1: Page Hero ── */}
       <PageHero
-        title={<>Our work speaks for <em className="font-serif italic font-medium text-primary">itself</em>.</>}
+        title={<>Our work speaks for <em className="not-italic font-bold text-stone-900">itself</em>.</>}
         subtitle="Portfolio"
         description="Explore our portfolio of successful projects across web development, SEO, digital marketing, and brand strategy."
       />
@@ -300,7 +300,7 @@ export default function Portfolio() {
             className="space-y-6"
           >
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight">
-              Have a project <em className="font-serif italic font-medium text-primary">in mind</em>?
+              Have a project <em className="not-italic font-bold text-stone-900">in mind</em>?
             </h2>
             <p className="text-stone-600 text-lg max-w-xl mx-auto">
               Let's bring your vision to life with our expertise.

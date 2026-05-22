@@ -12,7 +12,6 @@ import { trackContact, trackSchedule, trackFooterCTAClick } from "@/lib/pixel"
 
 const quickLinks = [
   { name: "Home", path: "/" },
-  { name: "Services", path: "/services" },
   { name: "Portfolio", path: "/portfolio" },
   { name: "Blog", path: "/blog" },
   { name: "Pricing", path: "/pricing" },
@@ -20,12 +19,11 @@ const quickLinks = [
 ]
 
 const services = [
-  { name: "Web Development", path: "/services" },
-  { name: "SEO Services", path: "/services" },
-  { name: "Digital Marketing", path: "/services" },
-  { name: "Brand Strategy", path: "/services" },
-  { name: "UI/UX Design", path: "/services" },
-  { name: "Content Marketing", path: "/services" },
+  { name: "Web Development", path: "/services/web-development" },
+  { name: "Google SEO Services", path: "/services/seo" },
+  { name: "Social Media", path: "/services/social-media" },
+  { name: "Hosting Services", path: "/services/hosting" },
+  { name: "Meta Ads & Google Ads", path: "/services/ads" },
 ]
 
 const socialLinks = [

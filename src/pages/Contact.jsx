@@ -518,7 +518,7 @@ export default function Contact() {
     <main className="bg-cream">
       {/* 1. Hero */}
       <PageHero
-        title={<>Let's start something <em className="font-serif italic font-medium text-primary">great</em> together.</>}
+        title={<>Let's start something <em className="not-italic font-bold text-stone-900">great</em> together.</>}
         subtitle="Contact Us"
         description="Ready to elevate your digital presence? Get in touch and let's discuss how we can help your business grow."
       />

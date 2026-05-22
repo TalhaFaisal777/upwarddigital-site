@@ -53,7 +53,7 @@ export default function AdsServices() {
     <main className="bg-cream min-h-screen">
       <PageHero
         subtitle="Meta Ads & Google Ads"
-        title={<>Ads That <em className="font-serif italic font-medium text-primary">Actually Convert</em>.</>}
+        title={<>Ads That <em className="not-italic font-bold text-stone-900">Actually Convert</em>.</>}
         description="Certified Google and Meta advertising specialists who manage your budget like it's their own. Data-driven campaigns built to deliver measurable ROI."
       />
 
@@ -80,7 +80,7 @@ export default function AdsServices() {
         <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
           <SectionHeading
             subtitle="Google Ads"
-            title={<>Dominate Google <em className="font-serif italic font-medium text-primary">search results</em>.</>}
+            title={<>Dominate Google <em className="not-italic font-bold text-stone-900">search results</em>.</>}
             description="From Search to Shopping to YouTube — we manage every Google Ads channel to capture demand and grow revenue."
           />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -109,7 +109,7 @@ export default function AdsServices() {
         <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
           <SectionHeading
             subtitle="Meta Ads"
-            title={<>Facebook & Instagram ads that <em className="font-serif italic font-medium text-primary">drive results</em>.</>}
+            title={<>Facebook & Instagram ads that <em className="not-italic font-bold text-stone-900">drive results</em>.</>}
             description="Meta's 3 billion+ users are waiting. We build campaigns that target the right people and turn them into customers."
           />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

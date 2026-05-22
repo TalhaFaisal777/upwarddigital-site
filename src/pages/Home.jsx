@@ -489,7 +489,7 @@ function AboutAndContactSection() {
             </p>
             <p className="text-stone-900 font-semibold pt-2">
               We don't just build websites. We create{" "}
-              <em className="font-serif italic text-primary">
+              <em className="text-stone-900">
                 growth-focused digital systems
               </em>{" "}
               that deliver long-term success.

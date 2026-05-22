@@ -46,7 +46,7 @@ export default function SocialMedia() {
     <main className="bg-cream min-h-screen">
       <PageHero
         subtitle="Social Media Marketing"
-        title={<>Build a Brand People <em className="font-serif italic font-medium text-primary">Actually Follow</em>.</>}
+        title={<>Build a Brand People <em className="not-italic font-bold text-stone-900">Actually Follow</em>.</>}
         description="Strategic social media management that grows your audience, builds genuine engagement, and drives real business results across every platform."
       />
 
@@ -73,7 +73,7 @@ export default function SocialMedia() {
         <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
           <SectionHeading
             subtitle="What we do"
-            title={<>Social media that <em className="font-serif italic font-medium text-primary">works for you</em>.</>}
+            title={<>Social media that <em className="not-italic font-bold text-stone-900">works for you</em>.</>}
             description="End-to-end social media management — from strategy and content to community management and analytics."
           />
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

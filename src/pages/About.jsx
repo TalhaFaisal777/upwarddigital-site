@@ -36,7 +36,7 @@ export default function About() {
   return (
     <main className="bg-cream">
       <PageHero
-        title={<>About <em className="font-serif italic font-medium text-primary">Us</em>.</>}
+        title={<>About <em className="not-italic font-bold text-stone-900">Us</em>.</>}
         subtitle="Our Story"
         description="Discover the team and vision behind one of the fastest-growing digital agencies."
       />
@@ -50,11 +50,8 @@ export default function About() {
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block text-primary font-semibold text-xs tracking-[0.2em] uppercase mb-4">
-              — Who we are —
-            </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-8 text-stone-900">
-              We've been growing brands since <em className="font-serif italic font-medium text-primary">2015</em>.
+              We've been growing brands since <em className="not-italic font-bold text-stone-900">2015</em>.
             </h2>
             <div className="space-y-5 text-stone-600 text-lg leading-relaxed">
               <p>
@@ -143,7 +140,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-6 md:px-8">
           <SectionHeading
             subtitle="The team"
-            title={<>Senior people, <em className="font-serif italic font-medium text-primary">no juniors</em>.</>}
+            title={<>Senior people, <em className="not-italic font-bold text-stone-900">no juniors</em>.</>}
             description="Every project is led by people who've been in the industry long enough to know what actually works."
           />
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -171,11 +168,8 @@ export default function About() {
       <section className="py-16 md:py-24 bg-stone-900 text-white">
         <div className="max-w-7xl mx-auto px-6 md:px-8">
           <div className="text-center mb-14">
-            <span className="inline-block text-blue-400 font-semibold text-xs tracking-[0.2em] uppercase mb-4">
-              — Our Journey —
-            </span>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight">
-              From <em className="font-serif italic font-medium text-blue-400">3 people</em> to industry leader.
+              From <em className="not-italic font-bold text-stone-900">3 people</em> to industry leader.
             </h2>
           </div>
 
@@ -203,7 +197,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-6 md:px-8">
           <SectionHeading
             subtitle="What we stand for"
-            title={<>Values that <em className="font-serif italic font-medium text-primary">show up</em> in our work.</>}
+            title={<>Values that <em className="not-italic font-bold text-stone-900">show up</em> in our work.</>}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {coreValues.map((v, i) => (
