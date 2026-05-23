@@ -38,7 +38,7 @@ const contactInfo = [
     icon: Phone,
     title: "Call Us",
     value: "+1 (201) 304-0657",
-    note: "Mon-Fri 9AM-6PM PST",
+    note: "Mon-Sat 9AM-6PM PST",
   },
   {
     icon: MapPin,
@@ -372,12 +372,8 @@ function ContactInfoCards() {
               <h4 className="font-semibold text-stone-900 mb-2">Office Hours</h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between gap-6">
-                  <span className="text-stone-600">Monday - Friday</span>
+                  <span className="text-stone-600">Monday - Saturday</span>
                   <span className="text-stone-700">9:00 AM - 6:00 PM</span>
-                </div>
-                <div className="flex justify-between gap-6">
-                  <span className="text-stone-600">Saturday</span>
-                  <span className="text-stone-700">10:00 AM - 2:00 PM</span>
                 </div>
                 <div className="flex justify-between gap-6">
                   <span className="text-stone-600">Sunday</span>
