@@ -18,11 +18,11 @@ const quickLinks = [
 ]
 
 const services = [
-  { name: "Web Development", path: "/services/website-development" },
-  { name: "Google SEO Services", path: "/services/seo" },
-  { name: "Social Media", path: "/services/social-media" },
-  { name: "Hosting Services", path: "/services/hosting" },
-  { name: "Meta Ads & Google Ads", path: "/services/ads" },
+  { name: "Web Development", path: "/website-development" },
+  { name: "SEO Services", path: "/seo-services" },
+  { name: "Social Media", path: "/social-media-marketing" },
+  { name: "Hosting Services", path: "/web-hosting-services" },
+  { name: "Meta Ads & Google Ads", path: "/meta-google-ads" },
 ]
 
 const socialLinks = [

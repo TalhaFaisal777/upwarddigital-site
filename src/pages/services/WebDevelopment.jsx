@@ -159,8 +159,8 @@ const faqItems = [
 
 export default function WebDevelopment() {
   useSeoMeta({
-    title: "Web Development Services USA | Custom Websites | Upward Digital",
-    description: "Professional web development services in the USA. Custom websites, e-commerce, and web apps built for speed, SEO, and conversions. Get a free quote today.",
+    title: "website development | Best Web Development & Design Agency",
+    description: "Professional website development services for fast, secure, mobile-friendly, SEO-ready websites that grow your business and generate more leads.",
     keywords: "web development services USA, custom website development, e-commerce development, React development agency, website design USA",
   })
 
@@ -169,7 +169,7 @@ export default function WebDevelopment() {
       <PageHero
         subtitle="Web Development"
         title="Website Development"
-        description="Our custom web development services create fast, secure, mobile-friendly, and SEO-ready websites that improve user experience, build trust, and grow businesses online."
+        description="Professional website development services for fast, secure, mobile-friendly, SEO-ready websites that grow your business and generate more leads."
       />
 
       {/* Content Sections */}
@@ -261,7 +261,7 @@ export default function WebDevelopment() {
       <section className="py-16 md:py-24 bg-white border-y border-stone-200 relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
         <div className="max-w-3xl mx-auto px-6 md:px-8">
-          <h4 className="text-3xl md:text-4xl font-bold text-stone-900 text-center mb-10">Frequently Asked Questions</h4>
+          <h5 className="text-3xl md:text-4xl font-bold text-stone-900 text-center mb-10">Frequently Asked Questions</h5>
           <Accordion type="single" collapsible className="w-full">
             {faqItems.map((item, i) => (
               <motion.div

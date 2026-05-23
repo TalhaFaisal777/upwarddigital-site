@@ -60,7 +60,7 @@ const process = [
 const SIMPLEICON = "https://cdn.simpleicons.org"
 
 const toolPlatforms = [
-  { name: "Amazon AWS", url: `${SIMPLEICON}/amazonaws` },
+  { name: "Amazon AWS", url: "https://img.icons8.com/color/96/amazon-web-services.png" },
   { name: "Cloudflare", url: `${SIMPLEICON}/cloudflare` },
   { name: "NGINX", url: `${SIMPLEICON}/nginx` },
   { name: "Let's Encrypt", url: `${SIMPLEICON}/letsencrypt` },
@@ -97,8 +97,8 @@ const faqItems = [
 
 export default function HostingServices() {
   useSeoMeta({
-    title: "Web Hosting Services USA | Fast & Secure Hosting | Upward Digital",
-    description: "Reliable, fast, and secure web hosting services in the USA. Managed WordPress hosting, daily backups, free SSL, and 24/7 expert support with 99.9% uptime guaranteed.",
+    title: "Web Hosting Services | Guaranteed Secure hosting",
+    description: "Reliable web hosting services with fast speed, strong security, uptime support, and scalable hosting for business websites.",
     keywords: "web hosting services USA, managed WordPress hosting, secure web hosting, fast website hosting, business web hosting",
   })
 
@@ -106,7 +106,7 @@ export default function HostingServices() {
     <main className="bg-cream min-h-screen">
       <PageHero
         title="Web Hosting Services"
-        description="Our enterprise-grade web hosting services deliver lightning-fast load times, 99.9% uptime, daily backups, free SSL, and 24/7 expert support to keep your website always online and performing at its best."
+        description="Reliable web hosting services with fast speed, strong security, uptime support, and scalable hosting for business websites."
       />
 
       {contentSections.map((s, i) => (
@@ -149,11 +149,6 @@ export default function HostingServices() {
         </div>
       </section>
 
-      <div className="w-full bg-blue-900 py-12 px-5 sm:px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <h4 className="text-4xl md:text-5xl font-bold text-white">Our Six-Step Hosting Setup Process</h4>
-        </div>
-      </div>
       <section className="py-16 md:py-24 bg-white border-t border-stone-100">
         <div className="max-w-4xl mx-auto px-5 sm:px-6 md:px-8">
           <div className="space-y-12 md:space-y-16">
@@ -177,7 +172,7 @@ export default function HostingServices() {
       <section className="py-16 md:py-24 bg-white border-y border-stone-200 relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
         <div className="max-w-3xl mx-auto px-6 md:px-8">
-          <h4 className="text-3xl md:text-4xl font-bold text-stone-900 text-center mb-10">Frequently Asked Questions</h4>
+          <h5 className="text-3xl md:text-4xl font-bold text-stone-900 text-center mb-10">Frequently Asked Questions</h5>
           <Accordion type="single" collapsible className="w-full">
             {faqItems.map((item, i) => (
               <motion.div

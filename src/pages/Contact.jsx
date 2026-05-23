@@ -435,7 +435,7 @@ function FAQSection() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-3xl mx-auto px-6 md:px-8">
-        <SectionHeading subtitle="FAQ" title="Frequently Asked Questions" />
+        <h5 className="text-3xl md:text-4xl font-bold text-stone-900 text-center mb-10">Frequently Asked Questions</h5>
 
         <Accordion type="single" collapsible className="w-full">
           {faqItems.map((item, i) => (

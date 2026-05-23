@@ -46,8 +46,8 @@ function PageWrapper({ children }) {
 
 const KNOWN_ROUTES = new Set([
   "/", "/about", "/portfolio", "/blog", "/contact", "/pricing",
-  "/services/website-development", "/services/seo", "/services/social-media",
-  "/services/hosting", "/services/ads",
+  "/website-development", "/seo-services", "/social-media-marketing",
+  "/web-hosting-services", "/meta-google-ads",
 ])
 
 function isKnownRoute(pathname) {
@@ -71,11 +71,11 @@ function AnimatedRoutes() {
         <Route path="/blog/:slug" element={<PageWrapper><BlogPost /></PageWrapper>} />
         <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
         <Route path="/pricing" element={<PageWrapper><Pricing /></PageWrapper>} />
-        <Route path="/services/website-development" element={<PageWrapper><WebDevelopment /></PageWrapper>} />
-        <Route path="/services/seo" element={<PageWrapper><SeoServices /></PageWrapper>} />
-        <Route path="/services/social-media" element={<PageWrapper><SocialMedia /></PageWrapper>} />
-        <Route path="/services/hosting" element={<PageWrapper><HostingServices /></PageWrapper>} />
-        <Route path="/services/ads" element={<PageWrapper><AdsServices /></PageWrapper>} />
+        <Route path="/website-development" element={<PageWrapper><WebDevelopment /></PageWrapper>} />
+        <Route path="/seo-services" element={<PageWrapper><SeoServices /></PageWrapper>} />
+        <Route path="/social-media-marketing" element={<PageWrapper><SocialMedia /></PageWrapper>} />
+        <Route path="/web-hosting-services" element={<PageWrapper><HostingServices /></PageWrapper>} />
+        <Route path="/meta-google-ads" element={<PageWrapper><AdsServices /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   )

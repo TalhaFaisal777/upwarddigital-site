@@ -9,11 +9,11 @@ const PHONE_HREF = "tel:+12013040657"
 const WHATSAPP_HREF = "https://wa.me/15812947936"
 
 const serviceLinks = [
-  { name: "Web Development", path: "/services/website-development", icon: Code2, description: "Custom websites & web apps" },
-  { name: "Google SEO Services", path: "/services/seo", icon: Search, description: "Rank higher, grow organically" },
-  { name: "Social Media", path: "/services/social-media", icon: Share2, description: "Content, community & growth" },
-  { name: "Hosting Services", path: "/services/hosting", icon: Server, description: "Fast, secure & reliable hosting" },
-  { name: "Meta Ads & Google Ads", path: "/services/ads", icon: Megaphone, description: "PPC campaigns that convert" },
+  { name: "Web Development", path: "/website-development", icon: Code2, description: "Custom websites & web apps" },
+  { name: "SEO Services", path: "/seo-services", icon: Search, description: "Rank higher, grow organically" },
+  { name: "Social Media", path: "/social-media-marketing", icon: Share2, description: "Content, community & growth" },
+  { name: "Hosting Services", path: "/web-hosting-services", icon: Server, description: "Fast, secure & reliable hosting" },
+  { name: "Meta Ads & Google Ads", path: "/meta-google-ads", icon: Megaphone, description: "PPC campaigns that convert" },
 ]
 
 const navLinks = [

@@ -16,45 +16,45 @@ const PHONE_HREF = "tel:+12013040657"
 
 const contentSections = [
   {
-    title: "Social Media Marketing Company",
+    title: "Social Media Agency",
     titleBlue: true,
-    body: "Upward Digital Co is a professional social media marketing company offering expert social media management services, social media content creation, and social media strategy for businesses across the USA. We help brands grow their online presence, build engaged communities, and drive real business results through Instagram, Facebook, LinkedIn, TikTok, YouTube, and other major platforms. Whether you need social media management for a small business or a large brand, our team delivers consistent, high-quality content and proven strategies to increase your followers, engagement, and conversions.",
-    image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=1200&q=80",
+    body: "Upward Digital Co is a professional social media agency helping businesses grow their online presence, attract customers, and build strong brand awareness. As a trusted social media marketing agency, we provide complete social media strategy services designed to improve engagement, followers, traffic, and conversions. Our team creates result-driven social media campaign management plans for platforms like Facebook, Instagram, LinkedIn, and TikTok. Whether you need content planning, paid ads, audience targeting, or brand growth, Upward Digital Co works as your reliable social media growth company. We are also a full-service digital marketing company and online marketing company, helping businesses improve visibility across social media, Google, and digital platforms. As an experienced social media advertising company, we create smart campaigns that reach the right audience, generate quality leads, and support long-term business growth through powerful online marketing strategies.",
+    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80",
     reverse: false,
   },
   {
-    title: "Social Media Management Services",
+    title: "Social Media Marketing Company in USA",
     titleBlue: true,
-    body: "At Upward Digital Co, we provide complete social media management services to help businesses build a strong and consistent brand presence online. As a trusted social media agency, we offer content creation, social media strategy, community management, hashtag research, platform optimization, and monthly analytics reporting. Our social media experts create scroll-stopping content tailored to each platform to engage your audience and grow your following. We also manage your comments, messages, and brand reputation to ensure your business stays responsive and professional across all social channels.",
-    image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1200&q=80",
+    body: "Upward Digital Co is a professional social media marketing company in USA helping businesses grow their online presence, reach more customers, and build trust. As a trusted social media agency for Facebook and Instagram ads, we create targeted ad campaigns that drive engagement, traffic, leads, and sales. Our team also works as a social media company for brand awareness, helping brands become more visible across popular platforms. We provide social media management services for local businesses, including content planning, posting, audience engagement, ad management, and performance tracking to help businesses grow faster online.",
+    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&q=80",
     reverse: true,
   },
 ]
 
 const process = [
   {
-    title: "Social Media Audit and Competitor Analysis",
-    body: "Every effective social media strategy starts with a comprehensive audit of your current social media presence. At Upward Digital Co, we analyze your existing profiles, content performance, audience demographics, and engagement rates to identify what is working and what needs improvement. We also conduct a detailed competitor analysis to understand what content strategies are driving results in your industry. Our social media audit gives us the insights we need to build a targeted strategy that positions your brand to stand out from competitors and connect with your ideal customers on every platform.",
+    title: "Pinterest Marketing & Pin Optimization",
+    body: "Our Pinterest marketing and pin optimization services help your business grow visibility, traffic, and brand awareness through high-quality Pinterest content. We manage your Pinterest account with SEO-friendly pin titles, keyword-rich pin descriptions, attractive graphics, and optimized boards. Our Pinterest management strategy focuses on Pinterest SEO, pin design, board optimization, content scheduling, and audience engagement. We create pins that drive website clicks, increase impressions, and improve social media growth. With the right Pinterest marketing strategy, your brand can reach users searching for ideas, products, services, and inspiration. Pinterest management helps turn visual content into traffic and real business leads.",
   },
   {
-    title: "Social Media Strategy and Content Planning",
-    body: "With the audit complete, our team develops a customized social media strategy and content plan designed to achieve your specific business goals. We create a detailed content calendar that outlines post frequency, content themes, platform-specific formats, and optimal posting times for maximum reach and engagement. Our strategy covers all aspects of your social media presence including organic content, community engagement, hashtag strategy, and platform-specific best practices. We make sure every piece of content aligns with your brand voice, visual identity, and business objectives to create a cohesive and professional social media presence.",
+    title: "Facebook Page Management & Ad Strategy",
+    body: "Our Facebook page management and ad strategy services help businesses build a strong online presence, increase engagement, and reach the right audience. We manage your Facebook business page with regular posting, content planning, creative captions, page optimization, and audience interaction. Our Facebook marketing strategy includes Facebook ads, boosted posts, brand awareness campaigns, lead generation ads, and social media advertising. We create engaging Facebook content that improves likes, comments, shares, and page growth. With professional Facebook management services, your business can attract local customers, improve visibility, and generate more leads through targeted Facebook advertising and smart social media management.",
   },
   {
-    title: "Professional Content Creation",
-    body: "High-quality content is the foundation of a successful social media presence. Our creative team produces professional social media content including eye-catching graphics, engaging video reels, informative carousels, compelling captions, and strategic stories tailored to each platform. We create content that reflects your brand identity, communicates your value proposition, and resonates with your target audience. Every piece of content we create is designed to stop the scroll, drive engagement, and encourage your followers to take action. Our content creation process ensures that your social media consistently looks professional, polished, and on-brand.",
+    title: "Instagram Content Creation & Growth Management",
+    body: "Our Instagram content creation and growth management services help your brand look professional, active, and attractive online. We manage your Instagram account with high-quality posts, reels, stories, captions, hashtags, and content calendars. Our Instagram marketing strategy focuses on Instagram growth, audience engagement, profile optimization, reel marketing, brand awareness, and social media content creation. We use keyword-rich captions, trending content ideas, and creative visuals to improve reach and visibility. With professional Instagram management services, your business can grow followers, increase engagement, build trust, and attract potential customers. Instagram marketing helps your brand stay active and competitive online.",
   },
   {
-    title: "Content Publishing and Scheduling",
-    body: "Consistent posting is essential for social media growth and algorithm visibility. Our team handles all content publishing and scheduling across your social media platforms using professional social media management tools to ensure posts go live at the optimal times for your specific audience. We manage posting schedules for Instagram, Facebook, LinkedIn, TikTok, YouTube, and X to maintain a consistent and active presence without you having to worry about timing or logistics. Our scheduling process ensures your content reaches the maximum number of followers at the times when they are most active and engaged.",
+    title: "Twitter/X Posting & Brand Engagement",
+    body: "Our Twitter/X posting and brand engagement services help your business stay active, relevant, and connected with your audience. We manage your Twitter/X account with regular tweets, trending topics, brand updates, hashtags, replies, and engagement posts. Our Twitter marketing strategy focuses on social media engagement, brand awareness, content sharing, audience interaction, and online reputation building. We create short, powerful, and keyword-rich posts that help improve visibility and communication. With professional Twitter/X management services, your business can join industry conversations, connect with customers, share updates, and grow online authority. Twitter/X marketing keeps your brand active and visible every day.",
   },
   {
-    title: "Community Management and Engagement",
-    body: "Building a loyal social media following requires active community management and genuine engagement with your audience. Our team monitors all your social media profiles daily, responding to comments, answering direct messages, engaging with followers, and managing your brand reputation across all platforms. We ensure no customer question or comment goes unanswered, which builds trust and loyalty with your audience. Our community management services also include monitoring brand mentions, handling negative feedback professionally, and fostering a positive community around your brand that keeps followers engaged and coming back.",
+    title: "YouTube Channel Management & Video SEO",
+    body: "Our YouTube channel management and video SEO services help your business grow through powerful video marketing. We manage your YouTube channel with video titles, descriptions, tags, thumbnails, playlists, and channel optimization. Our YouTube marketing strategy focuses on YouTube SEO, video ranking, audience retention, keyword optimization, content planning, and subscriber growth. We create SEO-friendly video descriptions and engaging titles to help your videos appear in YouTube search and Google search. With professional YouTube management services, your brand can increase views, improve visibility, build trust, and generate leads through video content. YouTube marketing is powerful for long-term digital growth.",
   },
   {
-    title: "Analytics Reporting and Strategy Refinement",
-    body: "Social media success requires continuous monitoring and optimization based on real performance data. At Upward Digital Co, we provide detailed monthly social media reports covering all key metrics including follower growth, reach, impressions, engagement rate, profile visits, website clicks, and lead conversions. Our team analyzes what content is performing best, which platforms are driving the most value, and where there are opportunities to improve. We use these insights to continuously refine your content strategy, test new formats, and optimize your social media campaigns to deliver better results month after month.",
+    title: "TikTok Content Strategy & Short-Form Video Growth",
+    body: "Our TikTok content strategy and short-form video growth services help your brand reach a wider audience with creative and engaging videos. We manage your TikTok account with content ideas, trending sounds, captions, hashtags, posting schedules, and short-form video strategy. Our TikTok marketing strategy focuses on TikTok growth, viral content, brand awareness, audience engagement, social media trends, and video marketing. We create short, catchy, and valuable videos that improve reach, followers, and engagement. With professional TikTok management services, your business can connect with modern audiences, increase visibility, and grow faster through creative short-form video content and social media marketing.",
   },
 ]
 
@@ -63,43 +63,40 @@ const SIMPLEICON = "https://cdn.simpleicons.org"
 const toolPlatforms = [
   { name: "Instagram", url: `${SIMPLEICON}/instagram` },
   { name: "Facebook", url: `${SIMPLEICON}/facebook/1877F2` },
-  { name: "LinkedIn", url: `${SIMPLEICON}/linkedin/0A66C2` },
+  { name: "LinkedIn", url: "https://img.icons8.com/color/96/linkedin.png" },
   { name: "TikTok", url: `${SIMPLEICON}/tiktok/000000` },
   { name: "YouTube", url: `${SIMPLEICON}/youtube` },
   { name: "X (Twitter)", url: `${SIMPLEICON}/x/000000` },
+  { name: "Pinterest", url: `${SIMPLEICON}/pinterest/E60023` },
 ]
 
 const faqItems = [
   {
-    question: "What is social media marketing?",
-    answer: "Social media marketing is the process of using social media platforms like Instagram, Facebook, LinkedIn, and TikTok to promote your business, build brand awareness, engage your audience, and drive leads and sales. It includes creating and posting content, managing your profiles, running ads, and analyzing performance.",
+    question: "Why hire a social media agency?",
+    answer: "A social media agency saves time, creates better content, manages your accounts professionally, and helps grow your brand online.",
   },
   {
-    question: "Why does my business need social media marketing?",
-    answer: "Your business needs social media marketing to reach customers where they spend their time online. Social media builds brand awareness, creates trust, drives website traffic, and generates leads. Businesses with active social media presence are seen as more credible and accessible to potential customers.",
+    question: "Does social media improve brand awareness?",
+    answer: "Yes, social media marketing helps more people see your business, remember your brand, and trust your services.",
   },
   {
-    question: "Which social media platforms should my business be on?",
-    answer: "The best platforms depend on your business type and target audience. Most businesses benefit from having a presence on Instagram and Facebook. LinkedIn is essential for B2B companies. TikTok and YouTube are powerful for visual brands and younger audiences. We recommend starting with 2-3 platforms and doing them well.",
+    question: "Is social media marketing good for local businesses?",
+    answer: "Yes, social media marketing is great for local businesses because it helps reach nearby customers and promote products or services online.",
   },
   {
-    question: "How long does it take to see social media results?",
-    answer: "Organic social media growth typically takes 3 to 6 months to show meaningful results in terms of follower growth and engagement. Paid social media advertising can generate leads much faster, often within days of launching. Consistency and quality content are the biggest factors in social media success.",
+    question: "What is social media management?",
+    answer: "Social media management means creating, posting, and managing content on Facebook, Instagram, TikTok, YouTube, Pinterest, and Twitter/X to grow your online presence.",
   },
   {
-    question: "What is included in your social media management service?",
-    answer: "Our social media management service includes a full audit, custom strategy, content calendar, professional content creation, daily publishing, community management, hashtag research, monthly analytics reporting, and ongoing strategy refinement. Everything you need to build and grow a professional social media presence.",
-  },
-  {
-    question: "Can social media marketing help generate leads?",
-    answer: "Yes, social media marketing is a powerful tool for lead generation. Through targeted content, strong calls-to-action, link-in-bio strategies, and paid social advertising, we drive qualified visitors to your website and landing pages where they can become leads and customers for your business.",
+    question: "How often should I post on social media?",
+    answer: "Posting consistently is important. Most businesses should post several times a week to stay active and visible online.",
   },
 ]
 
 export default function SocialMedia() {
   useSeoMeta({
-    title: "Social Media Marketing Services USA | Upward Digital",
-    description: "Professional social media marketing and management services in the USA. Content creation, community management, and growth strategies for Instagram, Facebook, LinkedIn, TikTok, and more.",
+    title: "Social Media Marketing | USA's Top Marketing Agency",
+    description: "Social media marketing services to grow your brand, reach more customers, boost engagement, drive traffic, and generate quality leads.",
     keywords: "social media marketing USA, social media management, Instagram marketing, Facebook marketing, content creation agency",
   })
 
@@ -107,7 +104,7 @@ export default function SocialMedia() {
     <main className="bg-cream min-h-screen">
       <PageHero
         title="Social Media Marketing"
-        description="Our professional social media marketing services help businesses build brand awareness, grow engaged audiences, and drive real business results across all major social platforms."
+        description="Social media marketing services to grow your brand, reach more customers, boost engagement, drive traffic, and generate quality leads."
       />
 
       {/* Content Sections */}
@@ -119,14 +116,14 @@ export default function SocialMedia() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5 }}
-              className={`flex flex-col ${s.reverse ? "md:flex-row-reverse" : "md:flex-row"} gap-12 md:gap-20 items-start`}
+              className={`flex flex-col ${s.reverse ? "md:flex-row-reverse" : "md:flex-row"} gap-12 md:gap-20 items-stretch`}
             >
-              <div className="flex-1 max-w-xl">
+              <div className="flex-1 max-w-xl flex flex-col justify-center">
                 <h2 className={`text-3xl md:text-4xl font-bold mb-6 leading-tight ${s.titleBlue ? "text-primary" : "text-stone-900"}`}>{s.title}</h2>
                 <p className="text-stone-600 text-lg leading-relaxed">{s.body}</p>
               </div>
-              <div className="flex-1 w-full">
-                <img src={s.image} alt={s.title} className="w-full h-72 md:h-105 object-cover rounded-3xl shadow-md" />
+              <div className="flex-1 w-full rounded-3xl shadow-md overflow-hidden" style={{ minHeight: "420px" }}>
+                <img src={s.image} alt={s.title} className="w-full h-full object-cover object-center" style={{ minHeight: "420px" }} />
               </div>
             </motion.div>
           </div>
@@ -141,7 +138,7 @@ export default function SocialMedia() {
       </div>
       <section className="py-14 bg-white border-b border-stone-200">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
+          <div className="grid grid-cols-4 md:grid-cols-7 gap-4">
             {toolPlatforms.map((tool) => (
               <div key={tool.name} className="bg-cream border border-stone-200 rounded-xl p-4 flex flex-col items-center gap-2 shadow-sm">
                 <img src={tool.url} alt={tool.name} className="w-10 h-10 object-contain" />
@@ -152,12 +149,6 @@ export default function SocialMedia() {
         </div>
       </section>
 
-      {/* Process strip */}
-      <div className="w-full bg-blue-900 py-12 px-5 sm:px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <h4 className="text-4xl md:text-5xl font-bold text-white">Our Six-Step Social Media Process</h4>
-        </div>
-      </div>
 
       {/* Process */}
       <section className="py-16 md:py-24 bg-white border-t border-stone-100">
@@ -165,7 +156,7 @@ export default function SocialMedia() {
           <div className="space-y-12 md:space-y-16">
             {process.map((p, i) => (
               <motion.div key={p.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-40px" }} transition={{ delay: i * 0.07 }} className="text-center">
-                <h3 className="text-3xl md:text-4xl font-bold text-stone-900 mb-5">{p.title}</h3>
+                <h5 className="text-3xl md:text-4xl font-bold text-stone-900 mb-5">{p.title}</h5>
                 <p className="text-stone-600 text-lg leading-relaxed">{p.body}</p>
               </motion.div>
             ))}
@@ -177,7 +168,7 @@ export default function SocialMedia() {
       <section className="py-16 md:py-24 bg-white border-y border-stone-200 relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
         <div className="max-w-3xl mx-auto px-6 md:px-8">
-          <h4 className="text-3xl md:text-4xl font-bold text-stone-900 text-center mb-10">Frequently Asked Questions</h4>
+          <h5 className="text-3xl md:text-4xl font-bold text-stone-900 text-center mb-10">Frequently Asked Questions</h5>
           <Accordion type="single" collapsible className="w-full">
             {faqItems.map((item, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-30px" }} transition={{ duration: 0.4, delay: i * 0.05 }}>

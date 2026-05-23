@@ -64,8 +64,6 @@ const toolPlatforms = [
   { name: "Meta Ads", url: `${SIMPLEICON}/meta/0866FF` },
   { name: "Facebook", url: `${SIMPLEICON}/facebook/1877F2` },
   { name: "Instagram", url: `${SIMPLEICON}/instagram` },
-  { name: "YouTube", url: `${SIMPLEICON}/youtube` },
-  { name: "LinkedIn Ads", url: `${SIMPLEICON}/linkedin/0A66C2` },
 ]
 
 const faqItems = [
@@ -97,8 +95,8 @@ const faqItems = [
 
 export default function AdsServices() {
   useSeoMeta({
-    title: "Meta Ads & Google Ads Management USA | Upward Digital",
-    description: "Expert Google Ads and Meta Ads management in the USA. PPC campaigns, retargeting, and paid social that deliver real ROI. Google Partner and Meta certified agency.",
+    title: "Meta Ads & Google Ads | Generate Quality leads & calls",
+    description: "Meta Ads & Google Ads services to increase traffic, leads, calls, and sales with targeted campaigns for business growth.",
     keywords: "Google Ads management USA, Meta Ads agency, Facebook Ads, PPC management, paid advertising USA",
   })
 
@@ -106,7 +104,7 @@ export default function AdsServices() {
     <main className="bg-cream min-h-screen">
       <PageHero
         title="Meta Ads & Google Ads"
-        description="Our certified Google and Meta advertising specialists manage your ad campaigns like it's their own budget, delivering data-driven results and maximum return on ad spend for your business."
+        description="Meta Ads & Google Ads services to increase traffic, leads, calls, and sales with targeted campaigns for business growth."
       />
 
       {contentSections.map((s, i) => (
@@ -138,9 +136,9 @@ export default function AdsServices() {
       </div>
       <section className="py-14 bg-white border-b border-stone-200">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             {toolPlatforms.map((tool) => (
-              <div key={tool.name} className="bg-cream border border-stone-200 rounded-xl p-4 flex flex-col items-center gap-2 shadow-sm">
+              <div key={tool.name} className="bg-cream border border-stone-200 rounded-xl p-4 flex flex-col items-center gap-2 shadow-sm w-36">
                 <img src={tool.url} alt={tool.name} className="w-10 h-10 object-contain" />
                 <span className="text-xs font-medium text-stone-700 text-center leading-tight">{tool.name}</span>
               </div>
@@ -149,11 +147,6 @@ export default function AdsServices() {
         </div>
       </section>
 
-      <div className="w-full bg-blue-900 py-12 px-5 sm:px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <h4 className="text-4xl md:text-5xl font-bold text-white">Our Six-Step Ads Management Process</h4>
-        </div>
-      </div>
       <section className="py-16 md:py-24 bg-white border-t border-stone-100">
         <div className="max-w-4xl mx-auto px-5 sm:px-6 md:px-8">
           <div className="space-y-12 md:space-y-16">
@@ -177,7 +170,7 @@ export default function AdsServices() {
       <section className="py-16 md:py-24 bg-white border-y border-stone-200 relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
         <div className="max-w-3xl mx-auto px-6 md:px-8">
-          <h4 className="text-3xl md:text-4xl font-bold text-stone-900 text-center mb-10">Frequently Asked Questions</h4>
+          <h5 className="text-3xl md:text-4xl font-bold text-stone-900 text-center mb-10">Frequently Asked Questions</h5>
           <Accordion type="single" collapsible className="w-full">
             {faqItems.map((item, i) => (
               <motion.div
