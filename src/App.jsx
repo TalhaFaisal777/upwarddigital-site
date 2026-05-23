@@ -24,6 +24,7 @@ const SeoServices = lazy(() => import("@/pages/services/SeoServices"))
 const SocialMedia = lazy(() => import("@/pages/services/SocialMedia"))
 const HostingServices = lazy(() => import("@/pages/services/HostingServices"))
 const AdsServices = lazy(() => import("@/pages/services/AdsServices"))
+const Sitemap = lazy(() => import("@/pages/Sitemap"))
 const NotFound = lazy(() => import("@/pages/NotFound"))
 
 const pageTransition = {
@@ -49,7 +50,7 @@ function PageWrapper({ children }) {
 const KNOWN_ROUTES = new Set([
   "/", "/about", "/portfolio", "/blog", "/contact", "/pricing",
   "/website-development", "/seo-services", "/social-media-marketing",
-  "/web-hosting-services", "/meta-google-ads",
+  "/web-hosting-services", "/meta-google-ads", "/sitemap",
 ])
 
 function isKnownRoute(pathname) {
@@ -78,6 +79,7 @@ function AnimatedRoutes() {
         <Route path="/social-media-marketing" element={<PageWrapper><SocialMedia /></PageWrapper>} />
         <Route path="/web-hosting-services" element={<PageWrapper><HostingServices /></PageWrapper>} />
         <Route path="/meta-google-ads" element={<PageWrapper><AdsServices /></PageWrapper>} />
+        <Route path="/sitemap" element={<PageWrapper><Sitemap /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   )
