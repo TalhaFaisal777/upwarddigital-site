@@ -833,6 +833,7 @@ function BlogTeaserSection() {
       <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
           <div className="max-w-2xl">
+            <h4 className="text-xl font-bold text-stone-900">Our Blogs</h4>
           </div>
           <Link
             to="/blog"
