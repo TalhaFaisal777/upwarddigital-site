@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Check, X } from "lucide-react"
 import PageHero from "@/components/common/PageHero"
@@ -35,7 +36,7 @@ const pricingTiers = [
     ],
     buttonText: "Get Started",
     buttonVariant: "outline",
-    linkTo: "tel:+12013040657",
+    linkTo: "/contact",
   },
   {
     name: "Growth",
@@ -56,7 +57,7 @@ const pricingTiers = [
     ],
     buttonText: "Get Started",
     buttonVariant: "default",
-    linkTo: "tel:+12013040657",
+    linkTo: "/contact",
   },
   {
     name: "Enterprise",
@@ -231,6 +232,26 @@ function PricingCard({ tier, isAnnual, index }) {
           </ul>
 
           {/* CTA Button */}
+          {tier.linkTo.startsWith("/") ? (
+            <Link
+              to={tier.linkTo}
+              onClick={() => {
+                trackPricingTierClick(tier.name)
+                trackInitiateCheckout({
+                  content_name: tier.name,
+                  content_category: "pricing_tier",
+                  value: price ?? 0,
+                  currency: "USD",
+                })
+                trackContact({ method: "phone", source: `pricing_tier_${tier.name.toLowerCase()}` })
+              }}
+              className="mt-auto"
+            >
+              <Button variant={tier.buttonVariant} size="lg" className="w-full">
+                {tier.buttonText}
+              </Button>
+            </Link>
+          ) : (
           <a
             href={tier.linkTo}
             onClick={() => {
@@ -253,6 +274,7 @@ function PricingCard({ tier, isAnnual, index }) {
               {tier.buttonText}
             </Button>
           </a>
+          )}
         </CardContent>
       </Card>
     </motion.div>
