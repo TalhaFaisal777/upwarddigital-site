@@ -43,10 +43,10 @@ const heroSlides = [
 ]
 
 const services = [
-  { icon: Globe, title: "Web Development", description: "Custom websites, web apps, and e-commerce platforms built for performance and scale.", link: "/services" },
-  { icon: Search, title: "SEO Optimization", description: "Data-driven SEO strategies that boost visibility and drive sustained organic growth.", link: "/services" },
-  { icon: BarChart3, title: "Digital Marketing", description: "Multi-channel campaigns across social, paid, email, and content marketing.", link: "/services" },
-  { icon: Palette, title: "Brand Strategy", description: "Compelling brand identities and strategies that resonate with your audience.", link: "/services" },
+  { icon: Globe, title: "Web Development", description: "Custom websites, web apps, and e-commerce platforms built for performance and scale.", link: "/website-development" },
+  { icon: Search, title: "SEO Optimization", description: "Data-driven SEO strategies that boost visibility and drive sustained organic growth.", link: "/seo-services" },
+  { icon: BarChart3, title: "Digital Marketing", description: "Multi-channel campaigns across social, paid, email, and content marketing.", link: "/meta-google-ads" },
+  { icon: Palette, title: "Brand Strategy", description: "Compelling brand identities and strategies that resonate with your audience.", link: "/website-development" },
 ]
 
 const offerings = [
@@ -54,31 +54,37 @@ const offerings = [
     title: "Google SEO",
     image: "/services/seo.jpg",
     description: "Improve your online visibility and search rankings with proven on-page, off-page, and technical SEO strategies built for sustained organic growth.",
+    link: "/seo-services",
   },
   {
     title: "Google Ads",
     image: "/services/google-ads.jpg",
     description: "Targeted Google Ads campaigns (Search, Display, YouTube) that maximize ROI and bring qualified traffic to your business.",
+    link: "/meta-google-ads",
   },
   {
     title: "Google Maps",
     image: "/services/google-maps.jpg",
     description: "Local SEO and Google Maps optimization to dominate your area, increase store visits, and capture high-intent local searches.",
+    link: "/seo-services",
   },
   {
     title: "Social Media",
     image: "/services/social-media.jpg",
     description: "Social media management and paid social campaigns across Meta, Instagram, TikTok, and LinkedIn that grow your audience and engagement.",
+    link: "/social-media-marketing",
   },
   {
     title: "Website Development",
     image: "/services/web-dev.jpg",
     description: "Custom-built websites that load fast, look beautiful, and turn visitors into customers — built with React, Next.js, WordPress, or Shopify.",
+    link: "/website-development",
   },
   {
     title: "E-Commerce",
     image: "/services/ecommerce.jpg",
     description: "Scalable e-commerce stores on Shopify, WooCommerce, or custom platforms — optimized for conversions, speed, and seamless checkout.",
+    link: "/website-development",
   },
 ]
 
@@ -366,7 +372,7 @@ export default function Home() {
                     {o.description}
                   </p>
                   <Link
-                    to="/services"
+                    to={o.link}
                     onClick={() => trackServiceInterest(o.title)}
                     className="inline-flex items-center gap-1.5 text-stone-900 text-sm font-semibold hover:text-primary transition-colors group/link"
                   >
