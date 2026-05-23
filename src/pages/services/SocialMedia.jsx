@@ -2,7 +2,6 @@ import { motion } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
 import { Link } from "react-router-dom"
 import PageHero from "@/components/common/PageHero"
-import SectionHeading from "@/components/common/SectionHeading"
 import { useSeoMeta } from "@/hooks/useSeoMeta"
 import { trackContact } from "@/lib/pixel"
 import {
@@ -123,7 +122,7 @@ export default function SocialMedia() {
                 <p className="text-stone-600 text-lg leading-relaxed">{s.body}</p>
               </div>
               <div className="flex-1 w-full rounded-3xl shadow-md overflow-hidden" style={{ minHeight: "420px" }}>
-                <img src={s.image} alt={s.title} className="w-full h-full object-cover object-center" style={{ minHeight: "420px" }} />
+                <img src={s.image} alt={s.title} loading="lazy" className="w-full h-full object-cover object-center" style={{ minHeight: "420px" }} />
               </div>
             </motion.div>
           </div>

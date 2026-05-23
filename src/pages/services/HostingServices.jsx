@@ -124,7 +124,7 @@ export default function HostingServices() {
                 <p className="text-stone-600 text-lg leading-relaxed">{s.body}</p>
               </div>
               <div className="flex-1 w-full">
-                <img src={s.image} alt={s.title} className="w-full h-72 md:h-105 object-cover rounded-3xl shadow-md" />
+                <img src={s.image} alt={s.title} loading="lazy" className="w-full h-72 md:h-105 object-cover rounded-3xl shadow-md" />
               </div>
             </motion.div>
           </div>

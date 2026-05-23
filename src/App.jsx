@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react"
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom"
 import { AnimatePresence, motion } from "framer-motion"
 import Navbar from "@/components/layout/Navbar"
@@ -6,23 +7,24 @@ import ScrollToTop from "@/components/common/ScrollToTop"
 import LoadingScreen from "@/components/common/LoadingScreen"
 import FloatingActions from "@/components/common/FloatingActions"
 import usePixelTracking from "@/hooks/usePixelTracking"
-import Home from "@/pages/Home"
-import About from "@/pages/About"
-import Portfolio from "@/pages/Portfolio"
-import Blog from "@/pages/Blog"
-import Contact from "@/pages/Contact"
-import Pricing from "@/pages/Pricing"
-import BlogPost from "@/pages/BlogPost"
-import Admin from "@/pages/Admin"
-import AdminBlogList from "@/pages/AdminBlogList"
-import AdminBlogEditor from "@/pages/AdminBlogEditor"
-import AdMeta from "@/pages/ads/AdMeta"
-import WebDevelopment from "@/pages/services/WebDevelopment"
-import SeoServices from "@/pages/services/SeoServices"
-import SocialMedia from "@/pages/services/SocialMedia"
-import HostingServices from "@/pages/services/HostingServices"
-import AdsServices from "@/pages/services/AdsServices"
-import NotFound from "@/pages/NotFound"
+
+const Home = lazy(() => import("@/pages/Home"))
+const About = lazy(() => import("@/pages/About"))
+const Portfolio = lazy(() => import("@/pages/Portfolio"))
+const Blog = lazy(() => import("@/pages/Blog"))
+const Contact = lazy(() => import("@/pages/Contact"))
+const Pricing = lazy(() => import("@/pages/Pricing"))
+const BlogPost = lazy(() => import("@/pages/BlogPost"))
+const Admin = lazy(() => import("@/pages/Admin"))
+const AdminBlogList = lazy(() => import("@/pages/AdminBlogList"))
+const AdminBlogEditor = lazy(() => import("@/pages/AdminBlogEditor"))
+const AdMeta = lazy(() => import("@/pages/ads/AdMeta"))
+const WebDevelopment = lazy(() => import("@/pages/services/WebDevelopment"))
+const SeoServices = lazy(() => import("@/pages/services/SeoServices"))
+const SocialMedia = lazy(() => import("@/pages/services/SocialMedia"))
+const HostingServices = lazy(() => import("@/pages/services/HostingServices"))
+const AdsServices = lazy(() => import("@/pages/services/AdsServices"))
+const NotFound = lazy(() => import("@/pages/NotFound"))
 
 const pageTransition = {
   initial: { opacity: 0, y: 20 },
@@ -87,7 +89,9 @@ function MainLayout() {
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <main className="flex-1">
-        <AnimatedRoutes />
+        <Suspense fallback={<div className="min-h-screen bg-cream" />}>
+          <AnimatedRoutes />
+        </Suspense>
       </main>
       <Footer />
       <FloatingActions />

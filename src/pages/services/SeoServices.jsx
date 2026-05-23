@@ -2,7 +2,6 @@ import { motion } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
 import { Link } from "react-router-dom"
 import PageHero from "@/components/common/PageHero"
-import SectionHeading from "@/components/common/SectionHeading"
 import { useSeoMeta } from "@/hooks/useSeoMeta"
 import { trackContact } from "@/lib/pixel"
 import {
