@@ -18,14 +18,14 @@ const contentSections = [
     title: "Web Hosting Services Company",
     titleBlue: true,
     body: "Upward Digital Co provides reliable, fast, and secure web hosting services for businesses across the USA. As a trusted web hosting company, we offer managed WordPress hosting, business web hosting, and enterprise hosting solutions with 99.9% uptime, free SSL certificates, daily backups, and 24/7 expert support. Our hosting infrastructure is built for speed and security, using SSD servers, global CDN distribution, and advanced firewall protection to keep your website fast, safe, and always online. Whether you are launching a new website or migrating an existing one, our professional hosting services deliver the performance and reliability your business needs.",
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=65&auto=format&fit=crop",
     reverse: false,
   },
   {
     title: "Managed WordPress Hosting Services",
     titleBlue: true,
     body: "At Upward Digital Co, we specialize in managed WordPress hosting that takes the complexity out of running a high-performance website. Our managed hosting services include automatic WordPress updates, daily backups with one-click restore, malware scanning, staging environments, and server-level performance optimization. We handle all the technical server management so you can focus on running your business. Our hosting packages include free SSL certificates, DDoS protection, global CDN access, and priority support from real hosting experts who understand WordPress. Fast, secure, and fully managed hosting for businesses that need reliability they can count on.",
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=65&auto=format&fit=crop",
     reverse: true,
   },
 ]

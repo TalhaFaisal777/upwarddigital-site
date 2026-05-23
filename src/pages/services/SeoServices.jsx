@@ -19,14 +19,14 @@ const contentSections = [
     title: "Local SEO Agency",
     titleBlue: true,
     body: "Upward Digital is a professional local SEO agency helping businesses improve local search visibility, rank higher on Google Maps, and attract more nearby customers. As a trusted local SEO agency, Upward Digital focuses on Google Business Profile optimization, Google Maps SEO, local citations, business listings, NAP consistency, local keyword targeting, and local search engine optimization. Our local SEO agency helps your business appear in local search results, near me searches, and the Google local 3-pack. With a results-driven local SEO strategy, Upward Digital provides local SEO audit, competitor analysis, review management, local landing pages, service area SEO, and location-based SEO. For small businesses, contractors, doctors, restaurants, law firms, dentists, plumbers, and service-based companies, our local SEO agency can increase calls, website traffic, direction requests, and local leads. Upward Digital understands how to optimize your online presence, improve Google Maps ranking, build local authority, and grow your business online. If you want more local customers, more Google visibility, and more business from your area, Upward Digital is the local SEO agency that can help.",
-    image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&q=65&auto=format&fit=crop",
     reverse: false,
   },
   {
     title: "Local SEO Services to Rank on Google Maps",
     titleBlue: true,
     body: "Local SEO services to rank on Google Maps help local businesses improve online visibility, attract nearby customers, and appear in local search results. With professional local SEO services, your business can optimize Google Business Profile, improve Google Maps ranking, build local citations, and target location-based keywords. Local SEO focuses on Google Maps SEO, local business listings, NAP consistency, customer reviews, and near me search optimization to help your company rank higher when people search for your services. A strong local SEO strategy also includes local keyword targeting, local landing pages, service area SEO, local schema markup, and local competitor analysis. Whether you run a small business, restaurant, clinic, law firm, contractor service, or home service company, local SEO services can increase calls, website visits, direction requests, and real local leads. Google Maps SEO and local search optimization make your business more visible, trusted, and easy to find.",
-    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=65&auto=format&fit=crop",
     reverse: true,
   },
 ]

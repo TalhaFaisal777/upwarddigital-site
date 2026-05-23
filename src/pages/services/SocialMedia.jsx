@@ -19,14 +19,14 @@ const contentSections = [
     title: "Social Media Agency",
     titleBlue: true,
     body: "Upward Digital Co is a professional social media agency helping businesses grow their online presence, attract customers, and build strong brand awareness. As a trusted social media marketing agency, we provide complete social media strategy services designed to improve engagement, followers, traffic, and conversions. Our team creates result-driven social media campaign management plans for platforms like Facebook, Instagram, LinkedIn, and TikTok. Whether you need content planning, paid ads, audience targeting, or brand growth, Upward Digital Co works as your reliable social media growth company. We are also a full-service digital marketing company and online marketing company, helping businesses improve visibility across social media, Google, and digital platforms. As an experienced social media advertising company, we create smart campaigns that reach the right audience, generate quality leads, and support long-term business growth through powerful online marketing strategies.",
-    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=65&auto=format&fit=crop",
     reverse: false,
   },
   {
     title: "Social Media Marketing Company in USA",
     titleBlue: true,
     body: "Upward Digital Co is a professional social media marketing company in USA helping businesses grow their online presence, reach more customers, and build trust. As a trusted social media agency for Facebook and Instagram ads, we create targeted ad campaigns that drive engagement, traffic, leads, and sales. Our team also works as a social media company for brand awareness, helping brands become more visible across popular platforms. We provide social media management services for local businesses, including content planning, posting, audience engagement, ad management, and performance tracking to help businesses grow faster online.",
-    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=65&auto=format&fit=crop",
     reverse: true,
   },
 ]

@@ -18,14 +18,14 @@ const contentSections = [
     title: "Google Ads and Meta Ads Agency",
     titleBlue: true,
     body: "Upward Digital Co is a certified Google Ads and Meta Ads agency providing professional paid advertising services for businesses across the USA. As a Google Partner and Meta Business Partner, we manage Google Ads campaigns, Facebook Ads, and Instagram Ads that deliver real, measurable results. Our paid advertising specialists create data-driven ad campaigns including Search Ads, Shopping Ads, Display Ads, Retargeting Ads, and Social Media Ads designed to drive leads, sales, and revenue for your business. We focus on maximizing your return on ad spend while minimizing cost-per-lead through continuous optimization and strategic audience targeting.",
-    image: "https://images.unsplash.com/photo-1553484771-371a605b060b?w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1553484771-371a605b060b?w=800&q=65&auto=format&fit=crop",
     reverse: false,
   },
   {
     title: "PPC and Paid Advertising Services",
     titleBlue: true,
     body: "At Upward Digital Co, we provide comprehensive PPC and paid advertising services to help businesses reach the right audience at the right time with the right message. As a trusted paid ads agency, we offer Google Ads management, Meta Ads management, campaign strategy, ad copywriting, audience research, conversion tracking, landing page optimization, and detailed performance reporting. Our certified ads specialists monitor and optimize your campaigns daily to ensure every dollar of your ad budget is working as hard as possible. Whether you need local lead generation or national brand awareness, our paid advertising strategies are built to deliver consistent and profitable results.",
-    image: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=65&auto=format&fit=crop",
     reverse: true,
   },
 ]
