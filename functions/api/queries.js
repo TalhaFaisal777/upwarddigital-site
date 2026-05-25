@@ -41,14 +41,16 @@ export async function onRequestGet({ request, env }) {
   // Newest first — keys are `query:{epoch_ms}:{uuid}`
   allKeys.sort((a, b) => (a.name < b.name ? 1 : a.name > b.name ? -1 : 0))
 
-  // Fetch all (parallel)
+  // Fetch all (parallel) — inject _kvKey so the client can delete without guessing
   const submissions = (
     await Promise.all(
       allKeys.map(async (k) => {
         const raw = await env.QUERIES.get(k.name)
         if (!raw) return null
         try {
-          return JSON.parse(raw)
+          const parsed = JSON.parse(raw)
+          parsed._kvKey = k.name
+          return parsed
         } catch {
           return null
         }
