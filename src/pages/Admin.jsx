@@ -33,14 +33,6 @@ export default function Admin() {
         setLoginError("Wrong password.")
         return
       }
-      // Detect "API not running" — Vite dev returns the SPA index.html
-      const ct = res.headers.get("content-type") || ""
-      if (!ct.includes("application/json")) {
-        setLoginError(
-          "API endpoint not reachable. The admin panel only works on the deployed site (upwarddigitalco.com) or via `wrangler pages dev`. The Vite dev server doesn't run Cloudflare Pages Functions."
-        )
-        return
-      }
       if (!res.ok) {
         const data = await res.json().catch(() => ({}))
         setLoginError(data.error || `Server error (${res.status})`)
@@ -64,13 +56,6 @@ export default function Admin() {
       if (res.status === 401) {
         sessionStorage.removeItem(TOKEN_KEY)
         setToken(null)
-        return
-      }
-      const ct = res.headers.get("content-type") || ""
-      if (!ct.includes("application/json")) {
-        setError(
-          "API endpoint returned non-JSON. Admin only works on the deployed site or via `wrangler pages dev` — the Vite dev server doesn't run Cloudflare Pages Functions."
-        )
         return
       }
       const data = await res.json()
@@ -104,8 +89,7 @@ export default function Admin() {
     // Server keys are `query:{epoch}:{uuid}` so we reconstruct.
     const sub = submissions.find((s) => s.id === id)
     if (!sub) return
-    const epoch = new Date(sub.created_at).getTime()
-    const key = `query:${epoch}:${id}`
+    const key = sub._kvKey || `query:${new Date(sub.created_at).getTime()}:${id}`
     try {
       const res = await fetch(`/api/queries/${encodeURIComponent(key)}`, {
         method: "DELETE",

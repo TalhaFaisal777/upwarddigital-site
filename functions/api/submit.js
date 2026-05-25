@@ -21,8 +21,11 @@ export async function onRequestPost({ request, env }) {
       typeof str === "string" ? str.slice(0, max) : str
 
     const id = crypto.randomUUID()
+    const epoch = Date.now()
+    const kvKey = `query:${epoch}:${id}`
     const submission = {
       id,
+      _kvKey: kvKey,
       source: truncate(data.source || "unknown", 100),
       name: truncate(data.name || "", 200),
       email: truncate(data.email || "", 200),
@@ -32,7 +35,7 @@ export async function onRequestPost({ request, env }) {
       budget: truncate(data.budget || "", 100),
       website: truncate(data.website || "", 300),
       message: truncate(data.message || "", 5000),
-      created_at: new Date().toISOString(),
+      created_at: new Date(epoch).toISOString(),
       ip: request.headers.get("cf-connecting-ip") || null,
       user_agent: truncate(request.headers.get("user-agent") || "", 400),
       referer: truncate(request.headers.get("referer") || "", 500),
@@ -40,8 +43,7 @@ export async function onRequestPost({ request, env }) {
 
     // 1. Store in KV
     if (env.QUERIES) {
-      const key = `query:${Date.now()}:${id}`
-      await env.QUERIES.put(key, JSON.stringify(submission))
+      await env.QUERIES.put(kvKey, JSON.stringify(submission))
     } else {
       console.error("QUERIES KV namespace not bound — submission not stored.")
     }
