@@ -266,7 +266,7 @@ export default function AdminBlogEditor() {
 
           <Card
             title="4) Detail sections"
-            description="After services: first item can use center H3 heading, then side-by-side H2 + paragraph + image blocks."
+            description="After services: first item can use center H3 heading, then side-by-side H3 + paragraph + image blocks."
           >
             <Field
               label="Center heading (H3, first detail area)"
@@ -290,7 +290,7 @@ export default function AdminBlogEditor() {
               }}
               renderItem={(item, update) => (
                 <>
-                  <Field label="Section title (H2)">
+                  <Field label="Section title (H3)">
                     <Input
                       value={item.title}
                       onChange={(e) => update("title", e.target.value)}
