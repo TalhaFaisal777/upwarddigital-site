@@ -39,13 +39,6 @@ export default function AdminBlogList() {
         setLoginError("Wrong password.")
         return
       }
-      const ct = res.headers.get("content-type") || ""
-      if (!ct.includes("application/json")) {
-        setLoginError(
-          "API not reachable. Admin only works on the deployed site or via wrangler."
-        )
-        return
-      }
       if (!res.ok) {
         const data = await res.json().catch(() => ({}))
         setLoginError(data.error || `Server error (${res.status})`)
@@ -69,11 +62,6 @@ export default function AdminBlogList() {
       if (res.status === 401) {
         sessionStorage.removeItem(TOKEN_KEY)
         setToken(null)
-        return
-      }
-      const ct = res.headers.get("content-type") || ""
-      if (!ct.includes("application/json")) {
-        setError("API returned non-JSON. Test on the deployed site.")
         return
       }
       const data = await res.json()

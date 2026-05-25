@@ -72,10 +72,6 @@ export default function AdminBlogEditor() {
         headers: { Authorization: `Bearer ${password}` },
       });
       if (res.status === 401) return setLoginError("Wrong password.");
-      const ct = res.headers.get("content-type") || "";
-      if (!ct.includes("application/json")) {
-        return setLoginError("API not reachable — deploy or run wrangler.");
-      }
       sessionStorage.setItem(TOKEN_KEY, password);
       setToken(password);
     } catch (err) {
