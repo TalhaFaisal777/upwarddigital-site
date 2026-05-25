@@ -43,6 +43,8 @@ const EMPTY_POST = {
   },
   detailHeading: "Service Details",
   detailSections: [],
+  processSections: [],
+  showProcessSections: true,
   showQuoteForm: true,
   faq: [],
   seo: { metaTitle: "", metaDescription: "", keywords: [] },
@@ -328,7 +330,43 @@ export default function AdminBlogEditor() {
           </Card>
 
           <Card
-            title="5) Quote form"
+            title="5) Centered process steps"
+            description="Centered heading + paragraph blocks — like the screenshot layout. Toggle visibility without deleting content."
+          >
+            <Toggle
+              checked={post.showProcessSections}
+              onChange={(v) => updateField("showProcessSections", v)}
+              label={post.showProcessSections ? "Visible on blog post" : "Hidden from blog post"}
+            />
+            <RepeaterList
+              items={post.processSections}
+              onChange={(v) => updateField("processSections", v)}
+              emptyValue={{ title: "", body: "" }}
+              renderItem={(item, update) => (
+                <>
+                  <Field label="Title (centered heading)">
+                    <Input
+                      value={item.title}
+                      onChange={(e) => update("title", e.target.value)}
+                      placeholder="Smart Business Website Planning"
+                    />
+                  </Field>
+                  <Field label="Details (centered paragraph)">
+                    <RichTextarea
+                      value={item.body}
+                      onChange={(e) => update("body", e.target.value)}
+                      rows={5}
+                      placeholder="Write the paragraph that appears below the heading..."
+                    />
+                  </Field>
+                </>
+              )}
+              addLabel="Add step"
+            />
+          </Card>
+
+          <Card
+            title="6) Quote form"
             description="Quote form is displayed after all detail sections."
           >
             <Toggle
@@ -338,7 +376,7 @@ export default function AdminBlogEditor() {
             />
           </Card>
 
-          <Card title="6) FAQ" description="Styled FAQ at bottom of the post.">
+          <Card title="7) FAQ" description="Styled FAQ at bottom of the post.">
             <RepeaterList
               items={post.faq}
               onChange={(v) => updateField("faq", v)}
@@ -365,7 +403,7 @@ export default function AdminBlogEditor() {
           </Card>
 
           <Card
-            title="7) Meta & SEO"
+            title="8) Meta & SEO"
             description="Blog list and search metadata."
           >
             <div className="grid sm:grid-cols-2 gap-4">
@@ -506,6 +544,8 @@ function hydrateLoadedPost(raw) {
     intro,
     detailHeading: raw.detailHeading || raw.sectionsTitle || "Service Details",
     detailSections,
+    processSections: Array.isArray(raw.processSections) ? raw.processSections.map((s) => ({ title: s.title || "", body: s.body || "" })) : [],
+    showProcessSections: raw.showProcessSections !== false,
     showQuoteForm: raw.showQuoteForm !== false,
   };
 }
@@ -542,10 +582,16 @@ function buildPayload(post) {
     })),
   ];
 
+  const processSections = Array.isArray(post.processSections)
+    ? post.processSections.map((s) => ({ title: s.title || "", body: s.body || "" }))
+    : [];
+
   return {
     ...post,
     intro: { heading: introHeading, body: introBody },
     detailSections,
+    processSections,
+    showProcessSections: post.showProcessSections !== false,
     sections,
     imageStrip: [],
     serviceCards: [],
