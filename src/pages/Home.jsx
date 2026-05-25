@@ -854,7 +854,7 @@ function BlogTeaserSection() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
             >
               <Link
-                to={`/blog/${post.slug}`}
+                to={`/${post.slug}`}
                 onClick={() => trackBlogPostClick(post.title)}
                 className="group flex flex-col h-full bg-white border border-stone-200 rounded-3xl overflow-hidden hover:border-stone-900 hover:shadow-lg transition-all duration-300"
               >

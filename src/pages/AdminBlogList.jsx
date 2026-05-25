@@ -225,7 +225,7 @@ export default function AdminBlogList() {
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-2 justify-end">
                           <a
-                            href={`/blog/${p.slug}`}
+                            href={`/${p.slug}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             title="View live"

@@ -48,22 +48,8 @@ function PageWrapper({ children }) {
   )
 }
 
-const KNOWN_ROUTES = new Set([
-  "/", "/about", "/portfolio", "/blog", "/contact", "/pricing",
-  "/website-development", "/seo-services", "/social-media-marketing",
-  "/web-hosting-services", "/meta-google-ads", "/sitemap",
-])
-
-function isKnownRoute(pathname) {
-  return KNOWN_ROUTES.has(pathname) || pathname.startsWith("/blog/")
-}
-
 function AnimatedRoutes() {
   const location = useLocation()
-
-  if (!isKnownRoute(location.pathname)) {
-    return <NotFound />
-  }
 
   return (
     <AnimatePresence mode="wait">
@@ -72,7 +58,6 @@ function AnimatedRoutes() {
         <Route path="/about" element={<PageWrapper><About /></PageWrapper>} />
         <Route path="/portfolio" element={<PageWrapper><Portfolio /></PageWrapper>} />
         <Route path="/blog" element={<PageWrapper><Blog /></PageWrapper>} />
-        <Route path="/blog/:slug" element={<PageWrapper><BlogPost /></PageWrapper>} />
         <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
         <Route path="/pricing" element={<PageWrapper><Pricing /></PageWrapper>} />
         <Route path="/website-development" element={<PageWrapper><WebDevelopment /></PageWrapper>} />
@@ -81,6 +66,7 @@ function AnimatedRoutes() {
         <Route path="/web-hosting-services" element={<PageWrapper><HostingServices /></PageWrapper>} />
         <Route path="/meta-google-ads" element={<PageWrapper><AdsServices /></PageWrapper>} />
         <Route path="/sitemap" element={<PageWrapper><Sitemap /></PageWrapper>} />
+        <Route path="/:slug" element={<PageWrapper><BlogPost /></PageWrapper>} />
       </Routes>
     </AnimatePresence>
   )

@@ -161,7 +161,7 @@ export default function AdminBlogEditor() {
       <AdminTopBar onLogout={handleLogout}>
         {post.slug && !isNew && (
           <a
-            href={`/blog/${post.slug}`}
+            href={`/${post.slug}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-stone-300 text-stone-700 text-sm hover:bg-stone-50"

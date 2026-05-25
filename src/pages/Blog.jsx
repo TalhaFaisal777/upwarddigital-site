@@ -83,7 +83,7 @@ export default function Blog() {
             transition={{ duration: 0.6 }}
           >
             <Link
-              to={`/blog/${featured.slug}`}
+              to={`/${featured.slug}`}
               className="group block bg-white border border-stone-200 rounded-3xl overflow-hidden hover:shadow-2xl hover:border-stone-300 transition-all duration-500"
             >
               <div className="grid md:grid-cols-2">
@@ -145,7 +145,7 @@ export default function Blog() {
                 transition={{ duration: 0.4, delay: (i % 3) * 0.08 }}
               >
                 <Link
-                  to={`/blog/${post.slug}`}
+                  to={`/${post.slug}`}
                   className="group flex flex-col h-full bg-white border border-stone-200 rounded-3xl overflow-hidden hover:shadow-xl hover:border-stone-300 transition-all duration-300"
                 >
                   <div className="relative aspect-[16/10] bg-stone-100 overflow-hidden">
