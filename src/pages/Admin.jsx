@@ -83,30 +83,31 @@ export default function Admin() {
     setSubmissions(null)
   }
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("Delete this submission permanently?")) return
-    // Find the KV key from the submission's id and created_at — but the
-    // function uses the full key; we don't have that on the client.
-    // Server keys are `query:{epoch}:{uuid}` so we reconstruct.
+  const handleDelete = (id) => {
     const sub = submissions.find((s) => s.id === id)
     if (!sub) return
     const key = sub._kvKey || `query:${new Date(sub.created_at).getTime()}:${id}`
-    try {
-      const res = await fetch("/api/queries", {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ key }),
-      })
-      if (!res.ok) {
-        toast.error("Delete failed.")
-        return
-      }
-      setSubmissions((curr) => curr.filter((s) => s.id !== id))
-      if (selected?.id === id) setSelected(null)
-      toast.success("Submission deleted.")
-    } catch (err) {
-      toast.error("Delete failed: " + err.message)
-    }
+    toast("Delete this submission permanently?", {
+      action: {
+        label: "Delete",
+        onClick: async () => {
+          try {
+            const res = await fetch("/api/queries", {
+              method: "DELETE",
+              headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+              body: JSON.stringify({ key }),
+            })
+            if (!res.ok) { toast.error("Delete failed."); return }
+            setSubmissions((curr) => curr.filter((s) => s.id !== id))
+            if (selected?.id === id) setSelected(null)
+            toast.success("Submission deleted.")
+          } catch (err) {
+            toast.error("Delete failed: " + err.message)
+          }
+        },
+      },
+      cancel: { label: "Cancel", onClick: () => {} },
+    })
   }
 
   const filtered = useMemo(() => {

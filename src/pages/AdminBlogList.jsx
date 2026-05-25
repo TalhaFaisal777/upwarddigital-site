@@ -89,22 +89,26 @@ export default function AdminBlogList() {
     setPosts(null)
   }
 
-  const handleDelete = async (post) => {
-    if (!confirm(`Delete "${post.title}" permanently?`)) return
-    try {
-      const res = await fetch(`/api/admin/posts/${encodeURIComponent(post.id)}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      if (!res.ok) {
-        toast.error("Delete failed.")
-        return
-      }
-      setPosts((curr) => curr.filter((p) => p.id !== post.id))
-      toast.success("Post deleted.")
-    } catch (err) {
-      toast.error("Delete failed: " + err.message)
-    }
+  const handleDelete = (post) => {
+    toast(`Delete "${post.title}" permanently?`, {
+      action: {
+        label: "Delete",
+        onClick: async () => {
+          try {
+            const res = await fetch(`/api/admin/posts/${encodeURIComponent(post.id)}`, {
+              method: "DELETE",
+              headers: { Authorization: `Bearer ${token}` },
+            })
+            if (!res.ok) { toast.error("Delete failed."); return }
+            setPosts((curr) => curr.filter((p) => p.id !== post.id))
+            toast.success("Post deleted.")
+          } catch (err) {
+            toast.error("Delete failed: " + err.message)
+          }
+        },
+      },
+      cancel: { label: "Cancel", onClick: () => {} },
+    })
   }
 
   if (!token) {
