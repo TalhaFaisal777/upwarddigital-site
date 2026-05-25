@@ -20,10 +20,6 @@ export default function Blog() {
     return fetch(`/api/posts?${query.toString()}`)
       .then(async (r) => {
         if (!r.ok) throw new Error(`Server ${r.status}`)
-        const ct = r.headers.get("content-type") || ""
-        if (!ct.includes("application/json")) {
-          throw new Error("API not reachable in dev — deploy or use wrangler.")
-        }
         return r.json()
       })
       .then((data) => {

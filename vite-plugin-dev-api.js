@@ -63,12 +63,14 @@ const SEED_POSTS = [
 ]
 
 function getPostsDb() {
-  const db = readFile(POSTS_FILE)
-  if (Object.keys(db).length === 0) {
+  // Only seed when the file doesn't exist yet — never re-seed after manual deletes
+  if (!fs.existsSync(POSTS_FILE)) {
+    const db = {}
     for (const p of SEED_POSTS) db[p.id] = p
     writeFile(POSTS_FILE, db)
+    return db
   }
-  return db
+  return readFile(POSTS_FILE)
 }
 
 function slugify(s) {
@@ -192,6 +194,38 @@ export default function devApiPlugin() {
             delete db[key]
             writeFile(SUBMISSIONS_FILE, db)
             return json(res, { ok: true })
+          }
+
+          // ── GET /api/posts (public blog listing) ────────────────────────
+          if (req.method === "GET" && p === "/api/posts") {
+            const db = getPostsDb()
+            const all = Object.values(db).sort((a, b) =>
+              new Date(b.updatedAt || b.createdAt) - new Date(a.updatedAt || a.createdAt))
+            const limit = Math.min(Number(url.searchParams.get("limit")) || 24, 100)
+            const cursorParam = url.searchParams.get("cursor")
+            const startIdx = cursorParam ? parseInt(cursorParam, 10) : 0
+            const page = all.slice(startIdx, startIdx + limit)
+            const nextIdx = startIdx + limit
+            const hasMore = nextIdx < all.length
+            return json(res, {
+              ok: true,
+              posts: page.map((p) => ({
+                id: p.id, slug: p.slug, title: p.title, excerpt: p.excerpt,
+                category: p.category, author: p.author, date: p.date,
+                readTime: p.readTime, coverImage: p.coverImage, updatedAt: p.updatedAt,
+              })),
+              nextCursor: hasMore ? String(nextIdx) : null,
+              hasMore,
+            })
+          }
+
+          // ── GET /api/posts/:slug (public single post) ───────────────────
+          if (req.method === "GET" && /^\/api\/posts\/[^/]+$/.test(p)) {
+            const slug = decodeURIComponent(p.replace("/api/posts/", ""))
+            const db = getPostsDb()
+            const post = Object.values(db).find((p) => p.slug === slug || p.id === slug) || null
+            if (!post) return json(res, { ok: false, error: "Not found" }, 404)
+            return json(res, { ok: true, post })
           }
 
           // ── GET /api/admin/posts ─────────────────────────────────────────
