@@ -9,7 +9,7 @@ export async function onRequestDelete({ params, request, env }) {
   if (!env.QUERIES) {
     return jsonResponse({ ok: false, error: "QUERIES KV not bound" }, 500)
   }
-  await env.QUERIES.delete(params.key)
+  await env.QUERIES.delete(decodeURIComponent(params.key))
   return jsonResponse({ ok: true })
 }
 
