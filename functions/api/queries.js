@@ -71,11 +71,30 @@ function jsonResponse(body, status = 200) {
   })
 }
 
+export async function onRequestDelete({ request, env }) {
+  const auth = request.headers.get("authorization") || ""
+  const expected = `Bearer ${env.ADMIN_PASSWORD || ""}`
+  if (!env.ADMIN_PASSWORD || auth !== expected) {
+    return jsonResponse({ ok: false, error: "Unauthorized" }, 401)
+  }
+  if (!env.QUERIES) {
+    return jsonResponse({ ok: false, error: "QUERIES KV not bound" }, 500)
+  }
+  try {
+    const { key } = await request.json()
+    if (!key) return jsonResponse({ ok: false, error: "key required" }, 400)
+    await env.QUERIES.delete(key)
+    return jsonResponse({ ok: true })
+  } catch (e) {
+    return jsonResponse({ ok: false, error: String(e) }, 500)
+  }
+}
+
 export async function onRequestOptions() {
   return new Response(null, {
     headers: {
       "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Methods": "GET, DELETE, OPTIONS",
       "Access-Control-Allow-Headers": "Authorization, Content-Type",
     },
   })

@@ -186,10 +186,11 @@ export default function devApiPlugin() {
             return json(res, { ok: true, count: submissions.length, submissions })
           }
 
-          // ── DELETE /api/queries/:key ─────────────────────────────────────
-          if (req.method === "DELETE" && p.startsWith("/api/queries/")) {
+          // ── DELETE /api/queries (key in body) ───────────────────────────
+          if (req.method === "DELETE" && p === "/api/queries") {
             if (!isAuth(req)) return json(res, { ok: false, error: "Unauthorized" }, 401)
-            const key = decodeURIComponent(p.replace("/api/queries/", ""))
+            const { key } = await readBody(req)
+            if (!key) return json(res, { ok: false, error: "key required" }, 400)
             const db = readFile(SUBMISSIONS_FILE)
             delete db[key]
             writeFile(SUBMISSIONS_FILE, db)

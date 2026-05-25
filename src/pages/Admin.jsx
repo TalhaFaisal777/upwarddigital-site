@@ -91,9 +91,10 @@ export default function Admin() {
     if (!sub) return
     const key = sub._kvKey || `query:${new Date(sub.created_at).getTime()}:${id}`
     try {
-      const res = await fetch(`/api/queries/${encodeURIComponent(key)}`, {
+      const res = await fetch("/api/queries", {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ key }),
       })
       if (!res.ok) {
         alert("Delete failed.")
