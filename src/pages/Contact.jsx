@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/accordion"
 import { useNoIndex } from "@/hooks/useNoIndex"
 import { trackLead, trackContact } from "@/lib/pixel"
+import { toast } from "sonner"
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 
@@ -164,7 +165,7 @@ function ContactForm() {
       console.error("Submission failed:", err)
     }
 
-    alert("Thank you! We'll get back to you within 24 hours.")
+    toast.success("Thank you! We'll get back to you within 24 hours.")
     setFormData({
       name: "",
       email: "",

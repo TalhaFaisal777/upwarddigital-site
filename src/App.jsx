@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react"
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom"
 import { AnimatePresence, motion } from "framer-motion"
+import { Toaster } from "sonner"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 import ScrollToTop from "@/components/common/ScrollToTop"
@@ -104,6 +105,7 @@ function MainLayout() {
 function App() {
   return (
     <Router>
+      <Toaster position="top-right" richColors closeButton />
       <ScrollToTop />
       <Routes>
         <Route path="/ads/preview" element={<AdMeta />} />

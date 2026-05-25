@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react"
 import { Lock, RefreshCw, Trash2, Mail, Phone, Globe, Search, LogOut, Inbox } from "lucide-react"
 import { useNoIndex } from "@/hooks/useNoIndex"
 import { AdminTabs } from "@/pages/AdminBlogList"
+import { toast } from "sonner"
 
 const TOKEN_KEY = "ud_admin_token"
 
@@ -83,7 +84,7 @@ export default function Admin() {
   }
 
   const handleDelete = async (id) => {
-    if (!confirm("Delete this submission permanently?")) return
+    if (!window.confirm("Delete this submission permanently?")) return
     // Find the KV key from the submission's id and created_at — but the
     // function uses the full key; we don't have that on the client.
     // Server keys are `query:{epoch}:{uuid}` so we reconstruct.
@@ -97,13 +98,14 @@ export default function Admin() {
         body: JSON.stringify({ key }),
       })
       if (!res.ok) {
-        alert("Delete failed.")
+        toast.error("Delete failed.")
         return
       }
       setSubmissions((curr) => curr.filter((s) => s.id !== id))
       if (selected?.id === id) setSelected(null)
+      toast.success("Submission deleted.")
     } catch (err) {
-      alert("Delete failed: " + err.message)
+      toast.error("Delete failed: " + err.message)
     }
   }
 

@@ -4,6 +4,7 @@ import { ArrowLeft, Save, Plus, Upload, X, Trash2, Eye, Link2 } from "lucide-rea
 import { useNoIndex } from "@/hooks/useNoIndex";
 import { uploadImage } from "@/lib/imageUpload";
 import { LoginScreen, AdminTopBar, AdminTabs } from "@/pages/AdminBlogList";
+import { toast } from "sonner";
 
 const TOKEN_KEY = "ud_admin_token";
 
@@ -88,12 +89,12 @@ export default function AdminBlogEditor() {
       .then((r) => r.json())
       .then((data) => {
         if (!data.ok || !data.post) {
-          alert("Post not found");
+          toast.error("Post not found");
           return;
         }
         setPost(hydrateLoadedPost(data.post));
       })
-      .catch((err) => alert("Load failed: " + err.message))
+      .catch((err) => toast.error("Load failed: " + err.message))
       .finally(() => setLoadingPost(false));
   }, [token, id, isNew]);
 

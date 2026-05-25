@@ -11,6 +11,7 @@ import {
   ExternalLink,
 } from "lucide-react"
 import { useNoIndex } from "@/hooks/useNoIndex"
+import { toast } from "sonner"
 
 const TOKEN_KEY = "ud_admin_token"
 
@@ -96,12 +97,13 @@ export default function AdminBlogList() {
         headers: { Authorization: `Bearer ${token}` },
       })
       if (!res.ok) {
-        alert("Delete failed.")
+        toast.error("Delete failed.")
         return
       }
       setPosts((curr) => curr.filter((p) => p.id !== post.id))
+      toast.success("Post deleted.")
     } catch (err) {
-      alert("Delete failed: " + err.message)
+      toast.error("Delete failed: " + err.message)
     }
   }
 
