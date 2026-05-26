@@ -255,7 +255,7 @@ function ProcessStepsSection({ steps }) {
               )}
               {step.body && (
                 <p className="text-stone-600 text-lg leading-relaxed max-w-3xl mx-auto">
-                  {step.body}
+                  {renderInline(step.body)}
                 </p>
               )}
             </motion.div>
