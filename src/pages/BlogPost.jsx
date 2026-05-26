@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, CheckCircle2, ChevronDown } from "lucide-react";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { trackBlogPostClick, trackLead } from "@/lib/pixel";
 
 const SERVICE_ITEMS = [
@@ -360,33 +361,26 @@ function FaqSection({ faq }) {
   if (safeFaq.length === 0) return null;
 
   return (
-    <section className="border-t border-b border-stone-200">
+    <section className="bg-white border-y border-stone-200 relative">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
       <div className="bg-blue-900 py-12 md:py-16 px-5 sm:px-6 md:px-8 text-center">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-white">
           Frequently Asked Questions
         </h2>
       </div>
-      <div className="bg-stone-50 py-12 md:py-16">
-        <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 space-y-3">
+      <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 py-12 md:py-16">
+        <Accordion type="single" collapsible className="w-full">
           {safeFaq.map((item, index) => (
-            <details
-              key={`${item.question}-${index}`}
-              className="group bg-white border border-stone-200 rounded-2xl cursor-pointer open:border-primary/30 open:shadow-sm transition-all"
-            >
-              <summary className="flex items-center justify-between gap-4 list-none px-6 py-5">
-                <h4 className="font-semibold text-stone-900 text-base md:text-lg capitalize">
-                  {item.question}
-                </h4>
-                <span className="shrink-0 w-7 h-7 rounded-full bg-stone-100 group-open:bg-primary/10 flex items-center justify-center transition-colors">
-                  <span className="text-stone-500 group-open:text-primary text-lg leading-none group-open:rotate-45 inline-block transition-all duration-200">+</span>
-                </span>
-              </summary>
-              <div className="px-6 pb-5 pt-4 text-stone-600 leading-relaxed text-sm md:text-base border-t border-stone-100 capitalize">
+            <AccordionItem key={index} value={`item-${index}`}>
+              <AccordionTrigger className="text-left text-base capitalize">
+                {item.question}
+              </AccordionTrigger>
+              <AccordionContent className="text-stone-600 leading-relaxed capitalize">
                 {renderInline(item.answer)}
-              </div>
-            </details>
+              </AccordionContent>
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       </div>
     </section>
   );
