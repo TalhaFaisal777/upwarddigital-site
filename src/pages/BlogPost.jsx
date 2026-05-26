@@ -469,9 +469,9 @@ function FaqSection({ faq }) {
             >
               <details className="group bg-white border border-stone-200 rounded-2xl cursor-pointer open:border-primary/30 open:shadow-sm transition-all">
                 <summary className="flex items-center justify-between gap-4 list-none px-6 py-5">
-                  <span className="font-semibold text-stone-900 text-base md:text-lg capitalize">
+                  <h4 className="font-semibold text-stone-900 text-base md:text-lg capitalize">
                     {item.question}
-                  </span>
+                  </h4>
                   <span className="shrink-0 w-7 h-7 rounded-full bg-stone-100 group-open:bg-primary/10 flex items-center justify-center transition-colors">
                     <span className="text-stone-500 group-open:text-primary text-lg leading-none group-open:rotate-45 inline-block transition-all duration-200">
                       +
