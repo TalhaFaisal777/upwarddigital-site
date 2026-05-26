@@ -81,7 +81,7 @@ export default function BlogPost() {
       <IntroMapSection intro={intro} />
       <ServicesGridSection />
       <DetailSectionsSection
-        heading={post.detailHeading || "Service Details"}
+        heading={post.detailHeading || ""}
         sections={detailSections}
       />
       {post.showProcessSections !== false && Array.isArray(post.processSections) && post.processSections.length > 0 && (
