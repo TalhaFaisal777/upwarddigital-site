@@ -446,18 +446,21 @@ function FaqSection({ faq }) {
   if (safeFaq.length === 0) return null;
 
   return (
-    <section className="py-16 md:py-24 bg-stone-50 border-t border-b border-stone-200">
-      <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8">
+    <section className="border-t border-b border-stone-200">
+      <div className="bg-primary py-12 md:py-16 px-5 sm:px-6 md:px-8">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5 }}
-          className="text-center text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-stone-900 mb-12"
+          className="text-center text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-white"
         >
           Frequently Asked Questions
         </motion.h2>
+      </div>
 
+      <div className="bg-stone-50 py-12 md:py-16">
+      <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8">
         <div className="space-y-3">
           {safeFaq.map((item, index) => (
             <motion.div
@@ -485,6 +488,7 @@ function FaqSection({ faq }) {
             </motion.div>
           ))}
         </div>
+      </div>
       </div>
     </section>
   );
