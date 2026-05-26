@@ -249,7 +249,7 @@ function ProcessStepsSection({ steps }) {
               className="text-center"
             >
               {step.title && (
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-stone-900 mb-5 leading-tight tracking-tight">
+                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-stone-900 mb-5 leading-tight tracking-tight">
                   {step.title}
                 </h3>
               )}
@@ -299,7 +299,7 @@ function DetailSectionsSection({ heading, sections }) {
                   {/* Text */}
                   <div className={`flex-1 ${imageRight ? "lg:order-1" : "lg:order-2"}`}>
                     {section.title && (
-                      <h3 className="text-2xl md:text-3xl font-bold text-stone-900 tracking-tight leading-snug mb-5">
+                      <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-stone-900 tracking-tight leading-snug mb-5">
                         {section.title}
                       </h3>
                     )}
