@@ -447,7 +447,7 @@ function FaqSection({ faq }) {
 
   return (
     <section className="border-t border-b border-stone-200">
-      <div className="bg-primary py-12 md:py-16 px-5 sm:px-6 md:px-8">
+      <div className="bg-blue-900 py-12 md:py-16 px-5 sm:px-6 md:px-8">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
