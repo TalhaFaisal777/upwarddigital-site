@@ -186,7 +186,7 @@ function IntroMapSection({ intro }) {
         >
           <div>
             {intro.heading && (
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 tracking-tight leading-[1.1] mb-6">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-stone-900 tracking-tight leading-[1.1] mb-6">
                 {intro.heading}
               </h2>
             )}
