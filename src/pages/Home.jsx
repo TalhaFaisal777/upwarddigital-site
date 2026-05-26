@@ -221,7 +221,7 @@ export default function Home() {
             transition={{ duration: 0.7 }}
             className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white max-w-5xl mb-3 sm:mb-4"
           >
-            Upward Digital LLC
+            Upward Digital Co
           </motion.h1>
 
           <motion.p
@@ -468,7 +468,7 @@ function AboutAndContactSection() {
             About Us
           </span>
           <h2 className="text-2xl md:text-3xl font-bold leading-[1.2] tracking-tight mb-6 text-stone-900">
-            Upward Digital LLC, USA's Leading Web Development & SEO Agency
+            Upward Digital Co, USA's Leading Web Development & SEO Agency
           </h2>
 
           <div className="space-y-5 text-stone-600 text-base md:text-lg leading-relaxed">
