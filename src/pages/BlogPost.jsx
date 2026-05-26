@@ -470,18 +470,42 @@ function getDetailSections(post) {
 function updateMeta(post) {
   if (typeof document === "undefined") return;
   const seo = post.seo || {};
-  document.title = seo.metaTitle || post.title;
-  setMeta("description", seo.metaDescription || post.excerpt);
-  setMeta("keywords", (seo.keywords || []).join(", "));
+  const title = seo.metaTitle || post.title;
+  const description = seo.metaDescription || post.excerpt || "";
+  const url = window.location.href;
+
+  document.title = title;
+
+  setMetaName("description", description);
+  setMetaName("keywords", (seo.keywords || []).join(", "));
+
+  setMetaProp("og:title", title);
+  setMetaProp("og:description", description);
+  setMetaProp("og:url", url);
+  setMetaProp("og:type", "article");
+
+  setMetaName("twitter:title", title);
+  setMetaName("twitter:description", description);
+
+  setCanonical(url);
 }
 
-function setMeta(name, content) {
+function setMetaName(name, content) {
   if (!content) return;
   let el = document.querySelector(`meta[name="${name}"]`);
-  if (!el) {
-    el = document.createElement("meta");
-    el.setAttribute("name", name);
-    document.head.appendChild(el);
-  }
+  if (!el) { el = document.createElement("meta"); el.setAttribute("name", name); document.head.appendChild(el); }
   el.setAttribute("content", content);
+}
+
+function setMetaProp(property, content) {
+  if (!content) return;
+  let el = document.querySelector(`meta[property="${property}"]`);
+  if (!el) { el = document.createElement("meta"); el.setAttribute("property", property); document.head.appendChild(el); }
+  el.setAttribute("content", content);
+}
+
+function setCanonical(url) {
+  let el = document.querySelector('link[rel="canonical"]');
+  if (!el) { el = document.createElement("link"); el.setAttribute("rel", "canonical"); document.head.appendChild(el); }
+  el.setAttribute("href", url);
 }
