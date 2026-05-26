@@ -446,7 +446,7 @@ function FaqSection({ faq }) {
   if (safeFaq.length === 0) return null;
 
   return (
-    <section className="py-16 md:py-24 bg-white border-b border-stone-200">
+    <section className="py-16 md:py-24 bg-stone-50 border-t border-b border-stone-200">
       <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -455,7 +455,7 @@ function FaqSection({ faq }) {
           transition={{ duration: 0.5 }}
           className="text-center text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] text-stone-900 mb-12"
         >
-          Frequently asked questions
+          Frequently Asked Questions
         </motion.h2>
 
         <div className="space-y-3">
@@ -467,18 +467,18 @@ function FaqSection({ faq }) {
               viewport={{ once: true, margin: "-20px" }}
               transition={{ duration: 0.3, delay: index * 0.06 }}
             >
-              <details className="group bg-cream border border-stone-200 rounded-2xl cursor-pointer open:bg-white open:border-stone-300 open:shadow-sm transition-all">
+              <details className="group bg-white border border-stone-200 rounded-2xl cursor-pointer open:border-primary/30 open:shadow-sm transition-all">
                 <summary className="flex items-center justify-between gap-4 list-none px-6 py-5">
-                  <span className="font-semibold text-stone-900 text-base md:text-lg">
+                  <span className="font-semibold text-stone-900 text-base md:text-lg capitalize">
                     {item.question}
                   </span>
-                  <span className="shrink-0 w-7 h-7 rounded-full bg-stone-200 group-open:bg-primary/10 flex items-center justify-center transition-colors">
+                  <span className="shrink-0 w-7 h-7 rounded-full bg-stone-100 group-open:bg-primary/10 flex items-center justify-center transition-colors">
                     <span className="text-stone-500 group-open:text-primary text-lg leading-none group-open:rotate-45 inline-block transition-all duration-200">
                       +
                     </span>
                   </span>
                 </summary>
-                <div className="px-6 pb-5 pt-4 text-stone-600 leading-relaxed text-sm md:text-base border-t border-stone-100">
+                <div className="px-6 pb-5 pt-4 text-stone-600 leading-relaxed text-sm md:text-base border-t border-stone-100 capitalize">
                   {renderInline(item.answer)}
                 </div>
               </details>
