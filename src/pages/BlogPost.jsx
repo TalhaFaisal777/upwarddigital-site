@@ -108,7 +108,7 @@ function HeroSection({ post }) {
         ? <img src={post.coverImage} alt="" fetchpriority="high" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
         : <div className="absolute inset-0 bg-linear-to-br from-stone-900 via-primary-dark to-primary" />
       }
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/5 to-black/30" />
+      <div className="absolute inset-0 bg-black/35" />
 
       <Link
         to="/blog"
