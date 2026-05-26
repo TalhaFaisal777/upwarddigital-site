@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { ArrowLeft, Save, Plus, Upload, X, Trash2, Eye, Link2 } from "lucide-react";
 import { useNoIndex } from "@/hooks/useNoIndex";
-import { uploadImage } from "@/lib/imageUpload";
+import { uploadHeroImage, uploadDetailImage } from "@/lib/imageUpload";
 import { LoginScreen, AdminTopBar, AdminTabs } from "@/pages/AdminBlogList";
 import { toast } from "sonner";
 
@@ -310,6 +310,7 @@ export default function AdminBlogEditor() {
                       <ImagePicker
                         value={item.image}
                         onChange={(v) => update("image", v)}
+                        variant="detail"
                       />
                     </Field>
                     <Field label="Image side">
@@ -764,7 +765,7 @@ function Toggle({ checked, onChange, label }) {
   );
 }
 
-function ImagePicker({ value, onChange }) {
+function ImagePicker({ value, onChange, variant = "hero" }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
 
@@ -774,7 +775,7 @@ function ImagePicker({ value, onChange }) {
     setUploading(true);
     setError("");
     try {
-      const dataUrl = await uploadImage(file);
+      const dataUrl = variant === "detail" ? await uploadDetailImage(file) : await uploadHeroImage(file);
       onChange(dataUrl);
     } catch (err) {
       setError(err.message);

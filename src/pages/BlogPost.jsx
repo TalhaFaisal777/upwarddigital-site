@@ -106,7 +106,7 @@ function HeroSection({ post }) {
   return (
     <section className="relative h-[72vh] min-h-[580px] max-h-[820px] overflow-hidden flex items-center justify-center">
       {post.coverImage ? (
-        <img src={post.coverImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <img src={post.coverImage} alt="" fetchpriority="high" decoding="async" className="absolute inset-0 w-full h-full object-cover" />
       ) : (
         <div className="absolute inset-0 bg-gradient-to-br from-stone-900 via-primary-dark to-primary" />
       )}
@@ -312,6 +312,8 @@ function DetailSectionsSection({ heading, sections }) {
                       <img
                         src={section.image}
                         alt=""
+                        loading="lazy"
+                        decoding="async"
                         className="w-full rounded-2xl object-cover"
                       />
                     ) : (
