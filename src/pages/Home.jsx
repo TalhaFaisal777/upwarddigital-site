@@ -18,7 +18,6 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { trackContact, trackSchedule, trackServiceInterest, trackLead, trackBlogPostClick } from "@/lib/pixel"
-import { blogPosts } from "@/data/blogPosts"
 import SectionHeading from "@/components/common/SectionHeading"
 import ServiceCard from "@/components/common/ServiceCard"
 const PHONE_HREF = "tel:+12013040657"
@@ -824,10 +823,18 @@ function TestimonialCard({ t, highlighted }) {
 }
 
 // ────────────────────────────────────────────────────────────────────────────
-// Blog teaser section — links to /blog/:slug detail pages
-// ────────────────────────────────────────────────────────────────────────────
 function BlogTeaserSection() {
-  const featured = blogPosts.slice(0, 3)
+  const [posts, setPosts] = useState([])
+
+  useEffect(() => {
+    fetch("/api/posts?limit=3")
+      .then((r) => r.json())
+      .then((data) => { if (data.ok) setPosts(data.posts || []) })
+      .catch(() => {})
+  }, [])
+
+  if (posts.length === 0) return null
+
   return (
     <section className="py-16 md:py-24 bg-white border-t border-stone-200">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
@@ -845,7 +852,7 @@ function BlogTeaserSection() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-          {featured.map((post, i) => (
+          {posts.map((post, i) => (
             <motion.article
               key={post.slug}
               initial={{ opacity: 0, y: 30 }}
@@ -859,12 +866,14 @@ function BlogTeaserSection() {
                 className="group flex flex-col h-full bg-white border border-stone-200 rounded-3xl overflow-hidden hover:border-stone-900 hover:shadow-lg transition-all duration-300"
               >
                 <div className="relative aspect-[16/10] overflow-hidden bg-stone-100">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
+                  {post.coverImage && (
+                    <img
+                      src={post.coverImage}
+                      alt={post.title}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                  )}
                   <div className="absolute top-4 left-4">
                     <span className="inline-block bg-white/95 backdrop-blur text-stone-900 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">
                       {post.category}
@@ -880,9 +889,7 @@ function BlogTeaserSection() {
                   </p>
                   <div className="flex items-center justify-between pt-4 border-t border-stone-200 text-xs text-stone-500">
                     <span>{post.date}</span>
-                    <span className="flex items-center gap-1">
-                      {post.readTime}
-                    </span>
+                    <span>{post.readTime}</span>
                   </div>
                 </div>
               </Link>
