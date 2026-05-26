@@ -122,7 +122,7 @@ function HeroSection({ post }) {
         <motion.h1
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.3, delay: 0 }}
           className="text-4xl md:text-5xl lg:text-[3.4rem] font-bold leading-[1.08] tracking-tight text-white mb-5"
         >
           {post.title}
@@ -201,7 +201,7 @@ function ProcessStepsSection({ steps }) {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
-            transition={{ delay: i * 0.07, duration: 0.45 }}
+            transition={{ delay: i * 0.03, duration: 0.2 }}
             className="text-center"
           >
             {step.title && (
@@ -241,7 +241,7 @@ function DetailSectionsSection({ heading, sections }) {
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.25 }}
                 className="flex flex-col lg:flex-row items-start gap-10 lg:gap-16"
               >
                 <div className={`flex-1 ${imageRight ? "lg:order-1" : "lg:order-2"}`}>
@@ -417,15 +417,14 @@ function renderInline(text) {
   return tokens.map((token, index) => {
     if (typeof token === "string") return token;
     if (token.type === "link") {
-      const isInternal = token.href.startsWith("/");
-      return (
-        <a key={index} href={token.href}
-          target={isInternal ? undefined : "_blank"}
-          rel={isInternal ? undefined : "noopener noreferrer"}
-          className="text-primary font-medium underline decoration-primary/30 underline-offset-4 hover:decoration-primary">
-          {token.text}
-        </a>
-      );
+      const isInternal = token.href.startsWith("/") || /upwarddigitalco\.com/.test(token.href);
+      const to = isInternal && !token.href.startsWith("/")
+        ? new URL(token.href).pathname
+        : token.href;
+      const cls = "text-primary font-medium underline decoration-primary/30 underline-offset-4 hover:decoration-primary";
+      return isInternal
+        ? <Link key={index} to={to} className={cls}>{token.text}</Link>
+        : <a key={index} href={token.href} target="_blank" rel="noopener noreferrer" className={cls}>{token.text}</a>;
     }
     if (token.type === "bold") {
       return <strong key={index} className="text-stone-900 font-semibold">{token.value}</strong>;
