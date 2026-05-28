@@ -92,7 +92,7 @@ export default function Blog() {
                     <img
                       src={featured.coverImage}
                       alt={featured.title}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300 will-change-transform"
+                      className="absolute inset-0 w-full h-full object-cover"
                     />
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-primary to-blue-700" />
@@ -148,7 +148,7 @@ export default function Blog() {
                         src={post.coverImage}
                         alt={post.title}
                         loading="lazy"
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300 will-change-transform"
+                        className="absolute inset-0 w-full h-full object-cover"
                       />
                     ) : (
                       <div className="absolute inset-0 bg-gradient-to-br from-primary to-blue-700" />

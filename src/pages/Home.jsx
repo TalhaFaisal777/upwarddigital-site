@@ -357,7 +357,7 @@ export default function Home() {
                     src={o.image}
                     alt={o.title}
                     loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300 will-change-transform"
+                    className="absolute inset-0 w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-stone-900/40 via-transparent to-transparent" />
                 </div>
@@ -678,7 +678,7 @@ function TestimonialsSection() {
         </div>
 
         {/* Desktop: 3 cards visible, center highlighted */}
-        <div className="hidden md:block overflow-hidden py-8">
+        <div className="hidden md:block overflow-hidden" style={{ height: "420px" }}>
           <motion.div
             animate={{ x: `${desktopX}%` }}
             transition={
@@ -692,7 +692,7 @@ function TestimonialsSection() {
             {trackCards.map((t, i) => (
               <div
                 key={i}
-                className="px-3 shrink-0 flex items-center"
+                className="px-3 shrink-0 flex items-stretch"
                 style={{ width: `${cardPct}%` }}
               >
                 <TestimonialCard
@@ -769,10 +769,10 @@ function TestimonialsSection() {
 function TestimonialCard({ t, highlighted }) {
   return (
     <div
-      className={`relative w-full rounded-3xl border transition-all duration-700 ${
+      className={`relative w-full min-h-90 rounded-3xl border p-8 md:p-9 transition-[border-color,box-shadow,opacity,background-color] duration-500 ${
         highlighted
-          ? "bg-white border-stone-900 shadow-2xl scale-100 p-9 md:p-10"
-          : "bg-white/70 border-stone-200 shadow-sm scale-90 opacity-60 p-7 md:p-8"
+          ? "bg-white border-stone-900 shadow-2xl opacity-100"
+          : "bg-white/70 border-stone-200 shadow-sm opacity-60"
       }`}
     >
       <Quote
@@ -865,7 +865,7 @@ function BlogTeaserSection() {
                       src={post.coverImage}
                       alt={post.title}
                       loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300 will-change-transform"
+                      className="absolute inset-0 w-full h-full object-cover"
                     />
                   )}
                   <div className="absolute top-4 left-4">
