@@ -77,10 +77,10 @@ export default function Blog() {
       {featured && (
         <section className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8 pt-10 pb-8 md:pt-14 md:pb-10">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
           >
             <Link
               to={`/${featured.slug}`}

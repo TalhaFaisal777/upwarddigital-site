@@ -206,8 +206,8 @@ export default function Home() {
           {/* Eyebrow */}
           <motion.div
             key={`eb-${activeSlide}`}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
             className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-medium tracking-[0.18em] sm:tracking-[0.2em] uppercase text-white mb-5 sm:mb-8"
           >
@@ -216,8 +216,8 @@ export default function Home() {
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.7 }}
             className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-white max-w-5xl mb-3 sm:mb-4"
           >
@@ -225,8 +225,8 @@ export default function Home() {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-base sm:text-lg md:text-xl text-blue-400 max-w-2xl mb-3 leading-relaxed"
           >
@@ -234,8 +234,8 @@ export default function Home() {
           </motion.p>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-base sm:text-lg md:text-xl text-stone-200 max-w-2xl mb-8 sm:mb-10 leading-relaxed"
           >
@@ -244,8 +244,8 @@ export default function Home() {
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3"
           >
@@ -322,8 +322,8 @@ export default function Home() {
       <section className="py-16 md:py-24 bg-white border-y border-stone-900/10">
         <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5 }}
             className="mb-14 max-w-4xl mx-auto text-center"
@@ -345,8 +345,8 @@ export default function Home() {
             {offerings.map((o, i) => (
               <motion.article
                 key={o.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
                 className="group flex flex-col bg-white border border-stone-200 rounded-3xl overflow-hidden hover:border-stone-900 hover:shadow-lg transition-[border-color,box-shadow] duration-200"
@@ -458,8 +458,8 @@ function AboutAndContactSection() {
       <div className="relative max-w-7xl mx-auto px-5 sm:px-6 md:px-8 grid lg:grid-cols-2 gap-10 lg:gap-14 items-stretch">
         {/* LEFT — About content */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6 }}
           className="flex flex-col justify-center"
@@ -504,8 +504,8 @@ function AboutAndContactSection() {
 
         {/* RIGHT — Contact form */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, delay: 0.15 }}
           className="h-full"
