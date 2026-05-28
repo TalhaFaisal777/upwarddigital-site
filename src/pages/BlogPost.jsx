@@ -56,8 +56,36 @@ export default function BlogPost() {
 
   if (status === "loading") {
     return (
-      <main className="min-h-screen bg-cream flex items-center justify-center">
-        <p className="text-stone-400 text-sm">Loading…</p>
+      <main className="bg-cream animate-pulse">
+        {/* Hero skeleton */}
+        <div className="h-[72vh] min-h-145 max-h-205 bg-stone-200" />
+        {/* Intro skeleton */}
+        <div className="py-16 bg-white border-b border-stone-200">
+          <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8 grid lg:grid-cols-2 gap-10">
+            <div className="space-y-4">
+              <div className="h-8 bg-stone-200 rounded-xl w-3/4" />
+              <div className="h-4 bg-stone-100 rounded w-full" />
+              <div className="h-4 bg-stone-100 rounded w-5/6" />
+              <div className="h-4 bg-stone-100 rounded w-4/6" />
+            </div>
+            <div className="h-64 bg-stone-200 rounded-3xl" />
+          </div>
+        </div>
+        {/* Detail skeleton */}
+        <div className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-5 sm:px-6 md:px-8 space-y-16">
+            {[1, 2].map((i) => (
+              <div key={i} className="flex flex-col lg:flex-row gap-10">
+                <div className="flex-1 space-y-4">
+                  <div className="h-7 bg-stone-200 rounded-xl w-2/3" />
+                  <div className="h-4 bg-stone-100 rounded w-full" />
+                  <div className="h-4 bg-stone-100 rounded w-5/6" />
+                </div>
+                <div className="w-full lg:w-[48%] h-56 bg-stone-200 rounded-2xl" />
+              </div>
+            ))}
+          </div>
+        </div>
       </main>
     );
   }
