@@ -449,10 +449,9 @@ function renderInline(text) {
       const to = isInternal && !token.href.startsWith("/")
         ? new URL(token.href).pathname
         : token.href;
-      const cls = "text-primary font-medium underline decoration-primary/30 underline-offset-4 hover:decoration-primary";
       return isInternal
-        ? <Link key={index} to={to} className={cls}>{token.text}</Link>
-        : <a key={index} href={token.href} target="_blank" rel="noopener noreferrer" className={cls}>{token.text}</a>;
+        ? <Link key={index} to={to} className="text-primary font-medium underline decoration-primary/30 underline-offset-4 hover:decoration-primary">{token.text}</Link>
+        : <a key={index} href={token.href} target="_blank" rel="noopener noreferrer">{token.text}</a>;
     }
     if (token.type === "bold") {
       return <strong key={index} className="text-stone-900 font-semibold">{token.value}</strong>;
