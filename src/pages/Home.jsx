@@ -769,7 +769,7 @@ function TestimonialsSection() {
 function TestimonialCard({ t, highlighted }) {
   return (
     <div
-      className={`relative w-full min-h-90 rounded-3xl border p-8 md:p-9 transition-[border-color,box-shadow,opacity,background-color] duration-500 ${
+      className={`relative w-full h-full rounded-3xl border p-8 flex flex-col transition-[border-color,box-shadow,opacity,background-color] duration-500 ${
         highlighted
           ? "bg-white border-stone-900 shadow-2xl opacity-100"
           : "bg-white/70 border-stone-200 shadow-sm opacity-60"
@@ -791,20 +791,12 @@ function TestimonialCard({ t, highlighted }) {
           />
         ))}
       </div>
-      <blockquote
-        className={`leading-relaxed text-stone-700 mb-6 ${
-          highlighted
-            ? "text-base md:text-lg font-medium"
-            : "text-sm line-clamp-4"
-        }`}
-      >
+      <blockquote className="leading-relaxed text-stone-700 mb-6 text-sm md:text-base flex-1 overflow-hidden line-clamp-6">
         "{t.quote}"
       </blockquote>
-      <div className="flex items-center gap-4 pt-5 border-t border-stone-200">
+      <div className="flex items-center gap-4 pt-5 border-t border-stone-200 mt-auto">
         <div
-          className={`rounded-full bg-primary text-white flex items-center justify-center font-bold shrink-0 ${
-            highlighted ? "w-12 h-12 text-sm" : "w-10 h-10 text-xs"
-          }`}
+          className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-bold shrink-0 text-xs"
         >
           {t.initials}
         </div>
