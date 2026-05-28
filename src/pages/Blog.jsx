@@ -136,14 +136,8 @@ export default function Blog() {
       {rest.length > 0 && (
         <section className="max-w-6xl mx-auto px-5 sm:px-6 md:px-8 pb-24">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
-            {rest.map((post, i) => (
-              <motion.article
-                key={post.id || post.slug}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.4, delay: (i % 3) * 0.08 }}
-              >
+            {rest.map((post) => (
+              <article key={post.id || post.slug}>
                 <Link
                   to={`/${post.slug}`}
                   className="group flex flex-col h-full bg-white border border-stone-200 rounded-3xl overflow-hidden hover:shadow-xl hover:border-stone-300 transition-[border-color,box-shadow] duration-200"
@@ -185,7 +179,7 @@ export default function Blog() {
                     </div>
                   </CardContent>
                 </Link>
-              </motion.article>
+              </article>
             ))}
           </div>
 

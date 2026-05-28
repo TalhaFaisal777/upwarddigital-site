@@ -852,14 +852,8 @@ function BlogTeaserSection() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
-          {posts.map((post, i) => (
-            <motion.article
-              key={post.slug}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-            >
+          {posts.map((post) => (
+            <article key={post.slug}>
               <Link
                 to={`/${post.slug}`}
                 onClick={() => trackBlogPostClick(post.title)}
@@ -893,7 +887,7 @@ function BlogTeaserSection() {
                   </div>
                 </div>
               </Link>
-            </motion.article>
+            </article>
           ))}
         </div>
       </div>
