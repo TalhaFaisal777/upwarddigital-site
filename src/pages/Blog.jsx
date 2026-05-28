@@ -84,7 +84,7 @@ export default function Blog() {
           >
             <Link
               to={`/${featured.slug}`}
-              className="group block bg-white border border-stone-200 rounded-3xl overflow-hidden hover:shadow-2xl hover:border-stone-300 transition-all duration-500"
+              className="group block bg-white border border-stone-200 rounded-3xl overflow-hidden hover:shadow-2xl hover:border-stone-300 transition-[border-color,box-shadow] duration-200"
             >
               <div className="grid md:grid-cols-2">
                 <div className="relative aspect-[4/3] md:aspect-auto bg-stone-100 overflow-hidden">
@@ -92,7 +92,7 @@ export default function Blog() {
                     <img
                       src={featured.coverImage}
                       alt={featured.title}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300 will-change-transform"
                     />
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-primary to-blue-700" />
@@ -146,7 +146,7 @@ export default function Blog() {
               >
                 <Link
                   to={`/${post.slug}`}
-                  className="group flex flex-col h-full bg-white border border-stone-200 rounded-3xl overflow-hidden hover:shadow-xl hover:border-stone-300 transition-all duration-300"
+                  className="group flex flex-col h-full bg-white border border-stone-200 rounded-3xl overflow-hidden hover:shadow-xl hover:border-stone-300 transition-[border-color,box-shadow] duration-200"
                 >
                   <div className="relative aspect-[16/10] bg-stone-100 overflow-hidden">
                     {post.coverImage ? (
@@ -154,7 +154,7 @@ export default function Blog() {
                         src={post.coverImage}
                         alt={post.title}
                         loading="lazy"
-                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300 will-change-transform"
                       />
                     ) : (
                       <div className="absolute inset-0 bg-gradient-to-br from-primary to-blue-700" />

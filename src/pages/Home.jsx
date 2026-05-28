@@ -349,7 +349,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: (i % 3) * 0.1 }}
-                className="group flex flex-col bg-white border border-stone-200 rounded-3xl overflow-hidden hover:border-stone-900 hover:shadow-lg transition-all duration-300"
+                className="group flex flex-col bg-white border border-stone-200 rounded-3xl overflow-hidden hover:border-stone-900 hover:shadow-lg transition-[border-color,box-shadow] duration-200"
               >
                 {/* Image */}
                 <div className="relative h-48 overflow-hidden bg-stone-100">
@@ -357,7 +357,7 @@ export default function Home() {
                     src={o.image}
                     alt={o.title}
                     loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300 will-change-transform"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-stone-900/40 via-transparent to-transparent" />
                 </div>
@@ -863,7 +863,7 @@ function BlogTeaserSection() {
               <Link
                 to={`/${post.slug}`}
                 onClick={() => trackBlogPostClick(post.title)}
-                className="group flex flex-col h-full bg-white border border-stone-200 rounded-3xl overflow-hidden hover:border-stone-900 hover:shadow-lg transition-all duration-300"
+                className="group flex flex-col h-full bg-white border border-stone-200 rounded-3xl overflow-hidden hover:border-stone-900 hover:shadow-lg transition-[border-color,box-shadow] duration-200"
               >
                 <div className="relative aspect-[16/10] overflow-hidden bg-stone-100">
                   {post.coverImage && (
@@ -871,7 +871,7 @@ function BlogTeaserSection() {
                       src={post.coverImage}
                       alt={post.title}
                       loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-300 will-change-transform"
                     />
                   )}
                   <div className="absolute top-4 left-4">
