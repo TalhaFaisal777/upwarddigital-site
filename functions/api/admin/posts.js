@@ -74,6 +74,10 @@ function normalizePost(input, isNew) {
     detailSections: Array.isArray(input.detailSections)
       ? input.detailSections
       : [],
+    processSections: Array.isArray(input.processSections)
+      ? input.processSections
+      : [],
+    showProcessSections: input.showProcessSections !== false,
     imageStrip: Array.isArray(input.imageStrip) ? input.imageStrip : [],
     serviceCards: Array.isArray(input.serviceCards) ? input.serviceCards : [],
     showQuoteForm: input.showQuoteForm !== false,
