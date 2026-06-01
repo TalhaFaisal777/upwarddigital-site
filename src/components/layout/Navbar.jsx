@@ -167,7 +167,7 @@ export default function Navbar() {
             >
               <div className="flex flex-col h-full">
                 <div className="flex items-center justify-between p-6 border-b border-stone-900/10">
-                  <img src="/logo.png" alt="UpwardDigital" className="h-10 w-auto object-contain" />
+                  <img src="/logo.png" alt="UpwardDigital" className="h-14 w-auto object-contain" />
                   <button
                     onClick={() => setMobileOpen(false)}
                     className="p-2 text-stone-600 hover:text-stone-900"

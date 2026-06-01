@@ -43,8 +43,8 @@ export default function Footer() {
               <img
                 src="/logo.png"
                 alt="UpwardDigital"
-                className="h-16 w-auto object-contain"
-                style={{ filter: "drop-shadow(0 0 18px rgba(96,165,250,0.35)) brightness(1.15)" }}
+                className="h-24 w-auto object-contain"
+                style={{ filter: "drop-shadow(0 0 18px rgba(96,165,250,0.35)) brightness(1.3)" }}
               />
             </Link>
             <p className="text-stone-400 text-sm leading-relaxed mb-5">
