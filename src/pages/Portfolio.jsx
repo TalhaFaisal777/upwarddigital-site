@@ -17,30 +17,30 @@ const categories = ["All", "Web Design", "SEO"]
 const projects = [
   {
     id: 1,
-    name: "Snowflake Limousine",
+    name: "Mark S. Murphy DDS",
     category: "Web Design",
     description:
-      "Luxury chauffeur and airport transfer service across Colorado's mountain destinations.",
-    url: "https://snowflakelimo.com/",
-    image: "/portfolio/snowflake-limousine.jpg",
+      "Gentle, high-tech family and cosmetic dentistry practice serving Castro Valley and Hayward, CA with a modern patient-first website.",
+    url: "https://www.markmurphydds.com/",
+    image: "/portfolio/mark-murphy-dds.jpg",
   },
   {
     id: 2,
-    name: "Dublin City Cab",
-    category: "SEO",
+    name: "Killingsworth Family Dentistry",
+    category: "Web Design",
     description:
-      "Taxi and airport transfer service for the Dublin, California area with strong local search presence.",
-    url: "https://dublincitycab.com/",
-    image: "/portfolio/dublin-city-cab.jpg",
+      "Family dental practice in Parker, CO offering general, cosmetic, and restorative dentistry with a conversion-focused website.",
+    url: "https://www.killingsworthfamilydentistry.com/",
+    image: "/portfolio/killingsworth-dentistry.jpg",
   },
   {
     id: 3,
-    name: "Tri-Valley Airport Shuttle",
+    name: "Dental Associates",
     category: "SEO",
     description:
-      "Reliable Bay Area airport shuttle serving SFO, OAK, and SJC with optimized local rankings.",
-    url: "https://trivalleyairportshuttle.com/",
-    image: "/portfolio/tri-valley-airport-shuttle.jpg",
+      "Multi-location dental group across Wisconsin ranking for high-intent local searches and driving consistent new patient bookings.",
+    url: "https://www.dentalassociates.com/",
+    image: "/portfolio/dental-associates.jpg",
   },
   {
     id: 4,
@@ -71,20 +71,20 @@ const projects = [
   },
   {
     id: 7,
-    name: "GA Konnect LLC",
-    category: "Web Design",
+    name: "Pacific Dental Care",
+    category: "SEO",
     description:
-      "Professional car and limo service across Atlanta with airport, executive, and event transportation.",
-    url: "https://gakonnectllc.com/",
-    image: "/portfolio/ga-konnect.jpg",
+      "California dental practice offering Invisalign, Fastbraces, and general dentistry, ranking page 1 for local search terms.",
+    url: "https://www.pacificdental.com/",
+    image: "/portfolio/pacific-dental.jpg",
   },
 ]
 
 const caseStudyResults = [
-  "40% increase in user engagement",
+  "55% increase in new patient appointment bookings",
   "60% reduction in bounce rate",
-  "3x faster page load times",
-  "250% increase in trial-to-paid conversion",
+  "Page 1 Google ranking in under 90 days",
+  "3x more 5-star Google reviews",
 ]
 
 export default function Portfolio() {
@@ -220,9 +220,9 @@ export default function Portfolio() {
                     </h3>
                   </div>
                   <p className="text-stone-600 leading-relaxed">
-                    Snowflake Limousine needed a modern booking experience that
-                    reflected their premium service and made it effortless for
-                    travelers to reserve airport transfers across Colorado.
+                    Mark S. Murphy DDS had an outdated website with no online
+                    booking, poor mobile experience, and almost no visibility
+                    in local Google search results.
                   </p>
                 </CardContent>
               </Card>
@@ -246,9 +246,10 @@ export default function Portfolio() {
                     </h3>
                   </div>
                   <p className="text-stone-600 leading-relaxed">
-                    We built a polished, mobile-first website with a streamlined
-                    quote and booking flow, clear fleet presentation, and local
-                    SEO foundations to capture high-intent travelers.
+                    We redesigned the site from scratch — mobile-first, fast,
+                    with online appointment booking — then launched a full local
+                    SEO campaign targeting high-intent dental searches in their
+                    area.
                   </p>
                 </CardContent>
               </Card>
