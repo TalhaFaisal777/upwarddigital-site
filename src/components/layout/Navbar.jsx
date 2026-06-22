@@ -6,7 +6,7 @@ import WhatsAppIcon from "@/components/common/WhatsAppIcon"
 import { trackContact } from "@/lib/pixel"
 
 const PHONE_HREF = "tel:+12013040657"
-const WHATSAPP_HREF = "https://wa.me/15812947936"
+const WHATSAPP_HREF = "https://wa.me/18125596487"
 
 const serviceLinks = [
   { name: "Web Development", path: "/website-development", icon: Code2, description: "Custom websites & web apps" },
