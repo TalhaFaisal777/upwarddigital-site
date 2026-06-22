@@ -2,7 +2,7 @@ import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 import {
   Home, Info, Briefcase, BookOpen, Phone, Tag,
-  Globe, Search, Share2, Server, Megaphone, ArrowUpRight, Map,
+  Globe, Search, Share2, Server, Megaphone, ArrowUpRight, Map, FileText,
 } from "lucide-react"
 import { useSeoMeta } from "@/hooks/useSeoMeta"
 
@@ -21,6 +21,12 @@ const servicePages = [
   { label: "Social Media Marketing", path: "/social-media-marketing", icon: Share2, description: "Grow your brand on social platforms", color: "from-violet-500 to-violet-600" },
   { label: "Web Hosting Services", path: "/web-hosting-services", icon: Server, description: "Reliable hosting with 99.9% uptime", color: "from-amber-500 to-amber-600" },
   { label: "Meta & Google Ads", path: "/meta-google-ads", icon: Megaphone, description: "Paid advertising that drives real ROI", color: "from-rose-500 to-rose-600" },
+]
+
+const blogPosts = [
+  { label: "The Complete Local SEO Guide for Service Businesses in 2026", path: "/local-seo-guide-service-businesses-2026", description: "How to dominate Google's local pack and Map results." },
+  { label: "How Much Does Website Development Cost in the USA in 2026?", path: "/website-development-cost-usa-2026", description: "Real numbers from over 120 projects we've delivered." },
+  { label: "Google Ads vs SEO: Which Should Your Business Invest In First?", path: "/google-ads-vs-seo-which-is-better", description: "The honest answer most agencies won't give you." },
 ]
 
 const stagger = {
@@ -158,6 +164,49 @@ export default function Sitemap() {
                 </motion.div>
               )
             })}
+          </motion.div>
+
+          {/* ── Blog Posts ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-4 mt-20 mb-10"
+          >
+            <div className="w-1 h-8 rounded-full bg-emerald-500" />
+            <h2 className="text-2xl font-bold text-stone-900 tracking-tight">Blog Posts</h2>
+            <div className="flex-1 h-px bg-stone-200" />
+            <span className="text-xs text-stone-400 font-medium">{blogPosts.length} posts</span>
+          </motion.div>
+
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-40px" }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          >
+            {blogPosts.map((post) => (
+              <motion.div key={post.path} variants={fadeUp}>
+                <Link
+                  to={post.path}
+                  className="group relative flex flex-col justify-between h-full p-6 bg-white border border-stone-200 rounded-2xl shadow-sm hover:shadow-lg hover:border-stone-300 hover:-translate-y-1 transition-all duration-250 overflow-hidden"
+                >
+                  <div className="absolute inset-x-0 bottom-0 h-0.5 bg-linear-to-r from-emerald-500/0 via-emerald-500 to-emerald-500/0 scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="w-11 h-11 rounded-xl bg-emerald-50 group-hover:bg-emerald-100 flex items-center justify-center transition-colors duration-200">
+                      <FileText className="w-5 h-5 text-emerald-600" />
+                    </div>
+                    <ArrowUpRight className="w-4 h-4 text-stone-300 group-hover:text-emerald-500 transition-colors duration-200 mt-1" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-stone-900 group-hover:text-emerald-600 transition-colors duration-200 mb-1 leading-snug">{post.label}</p>
+                    <p className="text-sm text-stone-500 leading-snug mb-3">{post.description}</p>
+                    <span className="text-xs text-stone-400 font-mono bg-stone-50 px-2 py-0.5 rounded-md break-all">{post.path}</span>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
           </motion.div>
 
           {/* ── CTA ── */}
