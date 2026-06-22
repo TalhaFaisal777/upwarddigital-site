@@ -24,9 +24,13 @@ const servicePages = [
 ]
 
 const blogPosts = [
-  { label: "The Complete Local SEO Guide for Service Businesses in 2026", path: "/local-seo-guide-service-businesses-2026", description: "How to dominate Google's local pack and Map results." },
-  { label: "How Much Does Website Development Cost in the USA in 2026?", path: "/website-development-cost-usa-2026", description: "Real numbers from over 120 projects we've delivered." },
-  { label: "Google Ads vs SEO: Which Should Your Business Invest In First?", path: "/google-ads-vs-seo-which-is-better", description: "The honest answer most agencies won't give you." },
+  { label: "Small Business Website Development in NYC", path: "/small-business-website-development-in-nyc", description: "Affordable, high-quality websites built for NYC small businesses." },
+  { label: "Website Redesign Services in NYC", path: "/website-redesign-services-in-nyc", description: "Modernize your outdated website and convert more visitors." },
+  { label: "Website Development Company in NYC", path: "/website-development-company-in-nyc", description: "Custom website development solutions for NYC businesses." },
+  { label: "Ecommerce Website Development in NYC", path: "/ecommerce-website-development-in-nyc", description: "Build a high-converting online store tailored to your brand." },
+  { label: "Custom Website Development in NYC", path: "/custom-website-development-in-nyc", description: "Fully bespoke websites designed and built from scratch." },
+  { label: "WordPress Website Development in NYC", path: "/wordpress-website-development-in-nyc", description: "Powerful WordPress sites built for speed and scalability." },
+  { label: "Website Development Services in NYC", path: "/website-development-services-in-nyc", description: "End-to-end web development services for NYC-based companies." },
 ]
 
 const stagger = {
