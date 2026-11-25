@@ -1,16 +1,48 @@
-# React + Vite
+# Upward Digital — Agency Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Marketing website for **Upward Digital**, a web development and SEO agency. Live at **[upwarddigitalco.com](https://upwarddigitalco.com)**.
 
-Currently, two official plugins are available:
+It is a React single-page app with a small serverless backend on Cloudflare: lead forms, an admin panel and a blog CMS, without a separate server or database.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- **Lead capture**: home and contact forms post to a Cloudflare Pages Function, are stored in Cloudflare KV, and trigger an email notification through Resend.
+- **Admin panel** (`/admin`): password-protected table of form submissions.
+- **Blog CMS** (`/admin/blog`): create, edit and publish posts; posts are stored in KV and served from `/api/posts`.
+- **SEO**: per-page meta tags, `noindex` on utility pages, sitemap page and SPA redirects.
+- **Ads tracking**: Meta Pixel integration through a small React hook.
+- **UI**: Tailwind CSS v4, Radix UI primitives, Framer Motion page transitions, sliders and scroll animations, responsive mobile drawer.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
 
-## Expanding the ESLint configuration
+| Layer | Tools |
+|---|---|
+| Frontend | React 18, Vite, React Router, Tailwind CSS v4, Radix UI, Framer Motion, lucide-react |
+| Backend | Cloudflare Pages Functions (`functions/`) |
+| Storage | Cloudflare KV |
+| Email | Resend |
+| Hosting | Cloudflare Pages (auto-deploys from `master`) |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Project structure
+
+```
+src/
+  pages/            Home, Services, Portfolio, Blog, Pricing, Contact, Admin, blog editor
+  components/       layout (Navbar, Footer), common sections, ui primitives
+  hooks/            SEO meta, noindex, pixel tracking
+functions/
+  api/submit.js     form submissions -> KV + email
+  api/queries.js    admin: list submissions
+  api/posts.js      public blog posts
+  api/admin/posts   admin: create / update / delete posts
+```
+
+## Run locally
+
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build
+```
+
+Cloudflare setup (KV binding `QUERIES`, `ADMIN_PASSWORD`, `RESEND_API_KEY`, `NOTIFICATION_EMAIL`) is described in [ADMIN_SETUP.md](ADMIN_SETUP.md).
