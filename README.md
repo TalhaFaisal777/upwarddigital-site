@@ -1,48 +1,23 @@
-# Upward Digital — Agency Website
+# Upward Digital website
 
-Marketing website for **Upward Digital**, a web development and SEO agency. Live at **[upwarddigitalco.com](https://upwarddigitalco.com)**.
+This is the website for Upward Digital, a small web development and SEO agency. It's live at [upwarddigitalco.com](https://upwarddigitalco.com).
 
-It is a React single-page app with a small serverless backend on Cloudflare: lead forms, an admin panel and a blog CMS, without a separate server or database.
+It's a React app built with Vite, hosted on Cloudflare Pages. There's no separate backend server. The few backend bits it needs run as Cloudflare Pages Functions in the `functions/` folder:
 
-## Features
+- The contact and consultation forms post to `/api/submit`. Submissions are saved in Cloudflare KV and an email notification goes out through Resend.
+- `/admin` is a password-protected page to read those submissions.
+- `/admin/blog` is a small blog editor. Posts are stored in KV and the public blog reads them from `/api/posts`.
 
-- **Lead capture**: home and contact forms post to a Cloudflare Pages Function, are stored in Cloudflare KV, and trigger an email notification through Resend.
-- **Admin panel** (`/admin`): password-protected table of form submissions.
-- **Blog CMS** (`/admin/blog`): create, edit and publish posts; posts are stored in KV and served from `/api/posts`.
-- **SEO**: per-page meta tags, `noindex` on utility pages, sitemap page and SPA redirects.
-- **Ads tracking**: Meta Pixel integration through a small React hook.
-- **UI**: Tailwind CSS v4, Radix UI primitives, Framer Motion page transitions, sliders and scroll animations, responsive mobile drawer.
+Other things in here: per-page SEO meta tags (and `noindex` on utility pages), a Meta Pixel hook for ad tracking, and page transitions and sliders with Framer Motion.
 
-## Tech stack
+Stack: React 18, Vite, React Router, Tailwind CSS v4, Radix UI, Framer Motion, Cloudflare Pages Functions, Cloudflare KV, Resend.
 
-| Layer | Tools |
-|---|---|
-| Frontend | React 18, Vite, React Router, Tailwind CSS v4, Radix UI, Framer Motion, lucide-react |
-| Backend | Cloudflare Pages Functions (`functions/`) |
-| Storage | Cloudflare KV |
-| Email | Resend |
-| Hosting | Cloudflare Pages (auto-deploys from `master`) |
-
-## Project structure
-
-```
-src/
-  pages/            Home, Services, Portfolio, Blog, Pricing, Contact, Admin, blog editor
-  components/       layout (Navbar, Footer), common sections, ui primitives
-  hooks/            SEO meta, noindex, pixel tracking
-functions/
-  api/submit.js     form submissions -> KV + email
-  api/queries.js    admin: list submissions
-  api/posts.js      public blog posts
-  api/admin/posts   admin: create / update / delete posts
-```
-
-## Run locally
+## Running it locally
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173
+npm run dev
 npm run build
 ```
 
-Cloudflare setup (KV binding `QUERIES`, `ADMIN_PASSWORD`, `RESEND_API_KEY`, `NOTIFICATION_EMAIL`) is described in [ADMIN_SETUP.md](ADMIN_SETUP.md).
+The Cloudflare setup (the `QUERIES` KV binding and the env vars for the admin password and Resend) is written up in [ADMIN_SETUP.md](ADMIN_SETUP.md).
